@@ -1,4 +1,5 @@
 # ASW 2017
+Projeto: Jogo de Poker online
 ## Entregas
 * 19 de Março -> 1ª entrega [x]
 * 16 de Abril -> 2ª entrega [ ]
