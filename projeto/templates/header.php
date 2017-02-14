@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	
-	<title>Online Poker</title>
+	<title><?php echo $siteName; ?></title>
 	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
 	<!-- jQuery -->
@@ -26,7 +26,7 @@
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
 	      		</button>
-	      		<a class="navbar-brand" href="<?php echo $baseURL; ?>">Poker Online</a>
+	      		<a class="navbar-brand" href="<?php echo $baseURL; ?>"><?php echo $siteName; ?></a>
 	    	</div>
 
 		    <!-- Collect the nav links, forms, and other content for toggling -->
