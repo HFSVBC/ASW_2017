@@ -16,7 +16,7 @@
 	<script type="text/javascript" src="custom/js/main.js"></script>
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 	  	<div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
 		    <div class="navbar-header">
@@ -39,7 +39,7 @@
 	      				if (!isset($_SESSION['loggedIn'])){
 	      					echo "	
 					        	<li id='log-btn'><a href='#'>Log In</a></li>
-					        	<li id='reg-btn'><a href='#'>Registar</a></li>";
+					        	<li id='reg-btn'><a href='#'>Registar</a></li>" ;
 	      				}else{
 	      					echo "
 	      						<li class='dropdown'>
@@ -47,7 +47,7 @@
           							<ul class='dropdown-menu'>
 							            <li><a href='#'>Perfil</a></li>
 							            <li role='separator' class='divider'></li>
-							            <li><a href='#'>Log Out</a></li>
+							            <li><a href='app/logout.php'>Log Out</a></li>
 							        </ul>
           						</li>
 								";
@@ -81,6 +81,60 @@
 					    </div>
 					</div>
 					<div class="checkbox">
+    					<label>
+      						<input type="checkbox" name="rememberMe"> Lembrar-me
+    					</label>
+  					</div>    			
+	      		</div>
+	      		<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			        <button type="submit" class="btn btn-primary">Entrar</button>
+	      		</div>
+    		</div><!-- /.modal-content -->
+    		</form>
+  		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<!-- formulario do registo -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="regModal">
+  		<div class="modal-dialog" role="document">
+	      	<form method="post" action="app/login.php" id="regForm">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        			<h4 class="modal-title">Registar</h4>
+      			</div>
+	      		<div class="modal-body">
+	      			<div class="form-group">
+					    <label for="username">Nome de Utilizador</label>
+					    <div class="input-group">
+						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+						    <input type="text" class="form-control" id="username" name="username">
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="password">Password</label>
+					    <div class="input-group">
+						    <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
+						    <input type="password" class="form-control" id="password" name="password">
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="username">Email</label>
+					    <div class="input-group">
+						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+						    <input type="email" class="form-control" id="email" name="email">
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="username">Sexo</label>
+					    <select type="checkbox" class="form-control" id="sexo" name="sexo">
+					    	<option value="f">Feminino</option>
+					    	<option value="m">Masculino</option>
+					    	<option value="ND">Prefiro nao dizer</option>
+					    </select>
+					</div>
+					<div class="form-group">
     					<label>
       						<input type="checkbox" name="rememberMe"> Lembrar-me
     					</label>
