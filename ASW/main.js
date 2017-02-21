@@ -15,11 +15,6 @@ $(window).on("load", function(){
 		$('#regin').modal('hide');
 	})
 
-	$(function () {
-        $('#datetimepicker4').datetimepicker();
-    });
-
-
 
 	$('.carousel').carousel('cycle');
 

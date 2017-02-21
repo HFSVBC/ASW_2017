@@ -7,11 +7,10 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css">
-	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="main.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   	<link rel="stylesheet" href="/resources/demos/style.css">
   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
 	<title>
@@ -21,9 +20,10 @@
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top">
   		<div class="container">
-    		<img id ="brand" src="https://pbs.twimg.com/profile_images/488721011550867456/f7DY81JB.png"><a href="#"></a>
 
-    		<h2 id="titulo">Poker online</h2>
+  			<h2 id="titulo"><a id="titulo" href="#"> Poker online</a></h2>
+
+    		<img id ="brand" class="img-rounded" src="https://pbs.twimg.com/profile_images/488721011550867456/f7DY81JB.png"><a href="#"></a>
 
     		<span class="glyphicon glyphicon glyphicon-user" aria-hidden="true"></span>
 
@@ -43,8 +43,8 @@
       <div class="modal-body">
         <form>
   			<div class="form-group">
-    			<label for="exampleInputEmail1">Nickname</label>
-    			<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+    			<label for="username">Nickname</label>
+    			<input type="text" class="form-control" id="username" placeholder="username">
   			</div>
   			<div class="form-group">
     			<label for="exampleInputPassword1">Password</label>
@@ -74,33 +74,30 @@
       <div class="modal-body">
         <form>
   			<div class="form-group">
-    			<label for="exampleInputEmail1">Nickname</label>
-    			<input type="text" class="form-control" id="exampleInputEmail1" >
+    			<label for="username">Nickname</label>
+    			<input type="text" class="form-control" id="username" >
   			</div>
   			<div class="form-group">
-    			<label for="exampleInputEmail1">Nome</label>
-    			<input type="text" class="form-control" id="exampleInputEmail1" >
+    			<label for="name">Nome</label>
+    			<input type="text" class="form-control" id="name" >
   			</div>
   			 <div class="form-group">
-    			<label for="exampleInputEmail1">Apelido</label>
-    			<input type="text" class="form-control" id="exampleInputEmail1" >
+    			<label for="name">Apelido</label>
+    			<input type="text" class="form-control" id="name" >
   			</div>
 
   			<div class="form-group">
-				<label for="username">Sexo</label>
+				<label for="sexo">Sexo</label>
 					<select type="checkbox" class="form-control" id="sexo" name="sexo">
 					  	<option value="f">Feminino</option>
 					   	<option value="m">Masculino</option>
 					   	<option value="ND">Prefiro nao dizer</option>
 					</select>
 			</div>
-			<div class="container">
-    			<div class="row">
-        			<div class='col-sm-6'>
-            			<input type='text' class="form-control" id='datetimepicker4' />
-        			</div>
-        		</div>
-        	</div>
+			<div class="form-group">
+    			<label for="datepicker">Data</label>
+    				<input type='text' class="form-control" id='datetimepicker4'>
+            </div>
 			<div class="form-group">
     			<label for="inputEmail3">Email</label>
       			<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
@@ -120,7 +117,7 @@
    			</div>
   			<div class="checkbox">
     			<label>
-    	  			<input type="checkbox"> Check me out
+    	  			<input type="checkbox"> Concordo com os Termos e Condições
     			</label>
   			</div>
   
@@ -171,6 +168,28 @@
 </div>
 
 
+<!-- Corpo do site-->
 
+<div id="campos2">
+      <h3>Joga poker online para seres o melhor</h3>
+      <p id="texto">
+        Poker. No nosso site podes te divertir e aprender a jogar
+        começando com o modo de jogo conhecido <i>"Hold'em"</i>.
+        Joga com outro adversário e desafia-te a ti mesmo.
+        Regista-te e junta-te ao nosso mundo.
+      </p>
+</div>
+
+<div id="campos3">
+<img src="hold.jpg" class="img-rounded" id="imgH">
+</div>
+
+
+<!-- play -->
+<div id="buton">
+<a id="jogar" href="#"><img src="play.jpg" class="img-rounded" id="jogar"><p id="text"> JOGAR</p></a>
+</div>
+
+<footer class="footer"><div class="container">Copyright © 2017</div></footer>
 </body>
 </html>

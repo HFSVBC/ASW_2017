@@ -1,30 +1,37 @@
 #brand{
-	width: 40px;
+
+	width: 60px;
 	position: relative;
-	right: 250px;
-	top:5px;
-	bottom: 5px;
+	right: 230px;
+	bottom: 20px;
 
 }
 
 #titulo{
 
-	text-align: center;
-	width: 15px;
+	right: 55% !important ; 
 	height: 5px;
-	position: relative;
+	top:5px;
+	position: relative ;
+	text-decoration: none;
+	color: red;
+	font-weight: bolder;
 }
 
+#titulo:hover{
+	color:#8B0000;
+}
 .glyphicon-user{
 	font-size: 25px;
-	left:850px;
+	left:830px;
 	position: relative;
-	top:15px;
+	top: -5px;
 }
 
 a{
 	left: 95%;
 	position: relative;
+	top:-5px;
 }
 
 #myCaroussel{
@@ -59,4 +66,73 @@ a > .left, a> .rigth {
 #img3{
 	position: relative;
 	width: 80%;
+}
+
+
+h3{
+  color:#8B0000;
+  font-weight: bold;
+  font-size: 30px;
+  width: 450px;
+}
+
+#campos2{
+  position: absolute;
+  width: 250px;
+  height: 700px;
+  left: 250px;
+
+}
+
+#texto{
+  font-size: 20px;
+  color: black;
+  width: 350px;
+  border-left: 5px solid  #86592d;
+  border-radius: 2px;
+  padding-left: 5px;
+}
+
+#imgH{
+	width: 350px;
+	top: 20px;
+	left: 800px;
+	position: relative;
+}
+
+#jogar{
+	width: 350px !important;
+	height: 200px !important;
+	right:25% !important;
+	top:50px !important;
+	color:white !important;
+	position: relative;
+	z-index: -1;
+}
+
+#buton{
+	width: 650px;
+	height: 550px;
+	position: relative;
+}
+
+#text{
+	color: white;
+	font-size: 35px;
+	z-index: 1;
+	right: 50px;
+	bottom: 70px;
+	position: relative;
+	font-weight: bolder;
+	width: 100px;
+	height: 5px;
+}
+
+.footer {
+    position: absolute;
+ 	bottom: 0 auto; 
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #cccccc;
 }
