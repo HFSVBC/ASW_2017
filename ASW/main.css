@@ -1,0 +1,62 @@
+#brand{
+	width: 40px;
+	position: relative;
+	right: 250px;
+	top:5px;
+	bottom: 5px;
+
+}
+
+#titulo{
+
+	text-align: center;
+	width: 15px;
+	height: 5px;
+	position: relative;
+}
+
+.glyphicon-user{
+	font-size: 25px;
+	left:850px;
+	position: relative;
+	top:15px;
+}
+
+a{
+	left: 95%;
+	position: relative;
+}
+
+#myCaroussel{
+	width: 750px;
+	position: relative;
+	
+}
+
+#myCaroussel2{
+	width: 750px;
+	position: relative;
+	left:25%;
+}
+
+
+
+a > .left, a> .rigth {
+	position: relative;
+	left: 5px;
+	right: 5px;
+}
+
+
+#img1{
+	position: relative;
+	width: 95%;}
+
+#img2{
+	position: relative;
+	width: 85%;
+}
+#img3{
+	position: relative;
+	width: 80%;
+}
