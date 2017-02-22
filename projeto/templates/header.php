@@ -17,6 +17,8 @@
 
 	<!-- custom js -->
 	<script type="text/javascript" src="custom/js/main.js"></script>
+	<!-- custom css -->
+	<link rel="stylesheet" type="text/css" href="custom/css/main.css">
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -187,7 +189,7 @@
 	      		</div>
 	      		<div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-			        <button type="submit" class="btn btn-primary">Entrar</button>
+			        <button type="submit" class="btn btn-primary">Registar</button>
 	      		</div>
     		</div><!-- /.modal-content -->
     		</form>
