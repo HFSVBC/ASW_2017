@@ -7,10 +7,4 @@ $(window).on('load', function(){
 		$('#regModal').modal('show');
 		
 	});
-	$.datetimepicker.setLocale('pt');
-	$("#birthDate").datetimepicker({
-		timepicker:false,
- 		format:'d/m/Y',
- 		maxDate:'+1970/01/01'//today is maximum date calendar
-	});
 });
