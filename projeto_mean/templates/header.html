@@ -11,9 +11,6 @@
 	<!-- Bootstrap -->
 	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.min.css">
 	<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<!-- Date Picker -->
-	<link rel="stylesheet" type="text/css" href="assets/datetimepicker/jquery.datetimepicker.min.css">
-	<script type="text/javascript" src="assets/datetimepicker/jquery.datetimepicker.full.min.js"></script>
 
 	<!-- custom js -->
 	<script type="text/javascript" src="custom/js/main.js"></script>
@@ -107,81 +104,39 @@
         			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         			<h4 class="modal-title">Registar</h4>
       			</div>
-	      		<div class="modal-body row">
-					<div class="form-group col-xs-12 col-md-6">
-					    <label for="name">Nome *</label>
+	      		<div class="modal-body">
+	      			<div class="form-group">
+					    <label for="username">Nome de Utilizador</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-						    <input type="text" class="form-control" id="name" name="name" required>
+						    <input type="text" class="form-control" id="username" name="username">
 					    </div>
 					</div>
-					<div class="form-group col-xs-12 col-md-6">
-					    <label for="surname">Apelido *</label>
-					    <div class="input-group">
-						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-						    <input type="text" class="form-control" id="surname" name="surname" required>
-					    </div>
-					</div>
-					<div class="form-group col-xs-12 col-md-6">
-					    <label for="username">Nome de Utilizador *</label>
-					    <div class="input-group">
-						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-						    <input type="text" class="form-control" id="username" name="username" required>
-					    </div>
-					</div>
-					<div class="form-group col-xs-12 col-md-6">
-					    <label for="email">Email *</label>
-					    <div class="input-group">
-						    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div>
-						    <input type="email" class="form-control" id="email" name="email" required>
-					    </div>
-					</div>
-					<div class="form-group col-xs-12 col-md-6">
-					    <label for="password">Password *</label>
+					<div class="form-group">
+					    <label for="password">Password</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
-						    <input type="password" class="form-control" id="password" name="password" required>
+						    <input type="password" class="form-control" id="password" name="password">
 					    </div>
 					</div>
-					<div class="form-group col-xs-12 col-md-6">
-					    <label for="confPassword">Confirmar Password *</label>
+					<div class="form-group">
+					    <label for="username">Email</label>
 					    <div class="input-group">
-						    <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
-						    <input type="password" class="form-control" id="confPassword" name="confPassword" required>
+						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+						    <input type="email" class="form-control" id="email" name="email">
 					    </div>
 					</div>
-					<div class="form-group col-xs-12 col-md-6">
-					    <label for="birthDate">Data de Nascimento *</label>
-					    <div class="input-group">
-						    <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
-						    <input type="text" class="form-control" id="birthDate" name="birthDate" required onkeydown="return false">
-					    </div>
-					</div>
-					<div class="form-group col-xs-12 col-md-6">
-					    <label for="sexo">Sexo *</label>
-					    <select type="checkbox" class="form-control" id="sexo" name="sexo" required>
+					<div class="form-group">
+					    <label for="username">Sexo</label>
+					    <select type="checkbox" class="form-control" id="sexo" name="sexo">
 					    	<option value="f">Feminino</option>
 					    	<option value="m">Masculino</option>
-					    	<option value="ND" selected>Prefiro Não Dizer</option>
+					    	<option value="ND">Prefiro nao dizer</option>
 					    </select>
 					</div>
-					<div class="form-group col-md-12">
-					    <label for="avatar">Avatar *</label>
-					    <div class="input-group">
-						    <div class="input-group-addon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></div>
-						    <input type="file" class="form-control" id="avatar" name="avatar" required>
-						    <div class="input-group-addon"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
-					    </div>
-					</div>
-					<div class="form-group col-md-12">
-					    <label for="username">Captcha *</label>
-					    <div class="input-group">
-						    <div class="g-recaptcha" data-sitekey="6Le6cxYUAAAAAIH7dPUCg4Kr-jEtZSAKCIvwylq3"></div>
-					    </div>
-					</div>
-					<div class="form-group col-md-12">
-    					<label for="confPolicys">
-      						<input type="checkbox" name="confPolicys" id="confPolicys" required> Concordo com os Termos e Condições
+					<div class="form-group">
+    					<label>
+      						<input type="checkbox" name="rememberMe"> Lembrar-me
     					</label>
   					</div>    			
 	      		</div>
@@ -192,5 +147,4 @@
     		</div><!-- /.modal-content -->
     		</form>
   		</div><!-- /.modal-dialog -->
-  		<script src='http://www.google.com/recaptcha/api.js'></script>
 	</div><!-- /.modal -->
