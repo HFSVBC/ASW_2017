@@ -13,7 +13,7 @@
     			'name'     => $name,
     			'username' => $username,
     		);
-    	header("Location: ".$baseURL);
+    	header("Location: ../");
     }
     else{
     	echo "Utilizador/Password Errado(a)";
