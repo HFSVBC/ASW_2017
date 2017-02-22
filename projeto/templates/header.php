@@ -14,6 +14,8 @@
 	<!-- Date Picker -->
 	<link rel="stylesheet" type="text/css" href="assets/datetimepicker/jquery.datetimepicker.min.css">
 	<script type="text/javascript" src="assets/datetimepicker/jquery.datetimepicker.full.min.js"></script>
+	<!-- recaptcha -->
+  	<script src='https://www.google.com/recaptcha/api.js'></script>
 
 	<!-- custom js -->
 	<script type="text/javascript" src="custom/js/main.js"></script>
@@ -178,7 +180,7 @@
 					<div class="form-group col-md-12">
 					    <label for="username">Captcha *</label>
 					    <div class="input-group">
-						    <div class="g-recaptcha" data-sitekey="6Le6cxYUAAAAAIH7dPUCg4Kr-jEtZSAKCIvwylq3"></div>
+						    <div class="g-recaptcha" data-sitekey="6LdydxYUAAAAAITNNEGJOOkAjfAlRdyDwSW-xWvp"></div>
 					    </div>
 					</div>
 					<div class="form-group col-md-12">
@@ -194,5 +196,4 @@
     		</div><!-- /.modal-content -->
     		</form>
   		</div><!-- /.modal-dialog -->
-  		<script src='http://www.google.com/recaptcha/api.js'></script>
 	</div><!-- /.modal -->
