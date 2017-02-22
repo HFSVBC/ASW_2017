@@ -102,7 +102,7 @@
 
 	<!-- formulario do registo -->
 	<div class="modal fade" tabindex="-1" role="dialog" id="regModal">
-  		<div class="modal-dialog" role="document">
+  		<div class="modal-dialog modal-lg" role="document">
 	      	<form method="post" action="app/login.php" id="regForm">
     		<div class="modal-content">
       			<div class="modal-header">
