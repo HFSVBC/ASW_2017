@@ -1,3 +1,15 @@
+body{
+	background: url(../images/backgroundPic.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+/*navbar
+-----------------------------------------------*/
+.navbar-inverse{
+	background-color: rgba(34, 34, 34, 0.8);
+}
 /*footer
 -----------------------------------------------*/
 #footerAndCopyright{
