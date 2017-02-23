@@ -22,3 +22,20 @@ body{
 	color: #616161;
 	margin: 10px 0;
 }
+/*Register From
+-----------------------------------------------*/
+#country_input-group, .country-select, #country{
+	width: 100%;
+}
+#country{
+	height: 34px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    border-radius: 4px;
+}
+.country-select > .flag-dropdown{
+	background-color: #eee;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    border-radius: 4px 0 0 4px;
+}

@@ -14,6 +14,9 @@
 	<!-- Date Picker -->
 	<link rel="stylesheet" type="text/css" href="assets/datetimepicker/jquery.datetimepicker.min.css">
 	<script type="text/javascript" src="assets/datetimepicker/jquery.datetimepicker.full.min.js"></script>
+	<!-- Country Select -->
+	<link rel="stylesheet" type="text/css" href="assets/country_select/css/countrySelect.min.css">
+	<script type="text/javascript" src="assets/country_select/js/countrySelect.min.js"></script>
 	<!-- recaptcha -->
   	<script src='https://www.google.com/recaptcha/api.js'></script>
 
@@ -169,12 +172,18 @@
 					    	<option value="ND" selected>Prefiro Não Dizer</option>
 					    </select>
 					</div>
-					<div class="form-group col-md-12">
+					<div class="form-group col-xs-12 col-md-6">
 					    <label for="avatar">Avatar *</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></div>
 						    <input type="file" class="form-control" id="avatar" name="avatar" required>
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
+					    </div>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+					    <label for="country">País *</label>
+					    <div class="input-group" id="country_input-group">
+						    <input type="text" id="country" name="country" required>
 					    </div>
 					</div>
 					<div class="form-group col-md-12">
