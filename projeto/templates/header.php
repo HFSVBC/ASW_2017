@@ -19,7 +19,9 @@
 	<script type="text/javascript" src="assets/country_select/js/countrySelect.min.js"></script>
 	<!-- recaptcha -->
   	<script src='https://www.google.com/recaptcha/api.js'></script>
-
+  	<!-- Google Fonts -->
+  	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+  	
 	<!-- custom js -->
 	<script type="text/javascript" src="custom/js/main.js"></script>
 	<!-- custom css -->

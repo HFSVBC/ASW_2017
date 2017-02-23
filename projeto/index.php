@@ -5,7 +5,7 @@
  	session_regenerate_id(true);
  	include "templates/header.php"; 
 ?>
-
+<h1 id="slogan">May the flop be with you</h1>
 <?php
  	include "templates/footer.php"; 
 ?>
