@@ -16,4 +16,26 @@ $(window).on('load', function(){
 	$("#country").countrySelect({
 		"preferredCountries": ["pt"],
 	});
+
+	showCon($("#dist"));
+
+	$("#dist").on("change", function(){
+		showCon($(this));
+	});
 });
+
+var showCon = function(obg){
+	var distVal = $(obg).val();
+	var i=0;
+	$("#con > option").each(function(){
+		if($(this).attr("data-parentDist")==distVal){
+			$(this).show();
+			if (i==0){
+				$("#con").val($(this).val());
+			}
+			i++;
+		}else{
+			$(this).hide();
+		}
+	});
+}

@@ -186,6 +186,39 @@
 						    <input type="text" id="country" name="country" required>
 					    </div>
 					</div>
+					<div class="form-group col-xs-12 col-md-6">
+					    <label for="dist">Distrito *</label>
+					    <select type="checkbox" class="form-control" id="dist" name="dist" required>
+					    	<?php 
+					    		$sql    = "SELECT nome, id FROM dist_con WHERE tipo = 0";
+					    		$result = $conn->query($sql);
+					    		$output = "";
+					    		if ($result->num_rows > 0) {
+					    			while ($row = $result->fetch_assoc()) {
+									    $output.="<option value='".$row['id']."'>".$row['nome']."</option>";
+									}
+								}
+								echo $output;
+					    	?>
+					    </select>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+					    <label for="con">Concelho *</label>
+					    <select type="checkbox" class="form-control" id="con" name="con" required>
+					    	<?php 
+					    		$sql    = "SELECT nome, id, parent_id FROM dist_con WHERE tipo = 1";
+					    		$result = $conn->query($sql);
+					    		$output = "";
+					    		if ($result->num_rows > 0) {
+					    			while ($row = $result->fetch_assoc()) {
+									    $output.="<option value='".$row['id']."' data-parentDist='".$row['parent_id']."'>".$row['nome']."</option>";
+									}
+								}
+								echo $output;
+								$conn->close();
+					    	?>
+					    </select>
+					</div>
 					<div class="form-group col-md-12">
 					    <label for="username">Captcha *</label>
 					    <div class="input-group">
