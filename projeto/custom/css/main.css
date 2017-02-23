@@ -1,13 +1,11 @@
 body{
-	background: url(../images/backgroundPic.jpg) no-repeat center center fixed; 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+	background: #f3f3f3;
+	padding: 50px 36px;
 }
 /*navbar
 -----------------------------------------------*/
 .navbar-inverse{
+	margin-bottom: 0;
 	background-color: rgba(34, 34, 34, 0.8);
 }
 /*home page
@@ -24,6 +22,47 @@ body{
 	font-size: 100px;
 	text-align: center;
 }
+/*profile page
+-----------------------------------------------*/
+#PP-header{
+	background: #bfbfbf;
+	padding: 20px;
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    height: 150px;
+}
+#name-Cont{
+	padding-left: 50px;
+}
+#SButton-cont{
+	height: 115px;
+	position: relative;
+	margin-top: -15px;
+}
+#SButton{
+	position: absolute;
+    top: 50%;
+    padding: 5px 10px;
+    background: #536dfe;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#PP-body{
+	margin-top: 180px;
+}
+#mainProfCont, #leftProfCont{
+	background: #ffffff;
+	padding: 20px 15px;
+}
+#mainProfCont{
+	padding-right: 10px;
+}
+#leftProfCont{
+	padding-left: 10px;
+}
 /*footer
 -----------------------------------------------*/
 #footerAndCopyright{
@@ -31,6 +70,7 @@ body{
 	position: fixed;
 	width: 100%;
 	bottom: 0;
+	left: 0;
 }
 #footerAndCopyright > p{
 	color: #616161;

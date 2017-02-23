@@ -7,25 +7,25 @@
 	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
 	<!-- jQuery -->
-	<script type="text/javascript" src="assets/jquery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="<?php echo $baseURL; ?>assets/jquery/jquery-3.1.1.min.js"></script>
 	<!-- Bootstrap -->
-	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.min.css">
-	<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo $baseURL; ?>assets/bootstrap/css/bootstrap.min.css">
+	<script type="text/javascript" src="<?php echo $baseURL; ?>assets/bootstrap/js/bootstrap.min.js"></script>
 	<!-- Date Picker -->
-	<link rel="stylesheet" type="text/css" href="assets/datetimepicker/jquery.datetimepicker.min.css">
-	<script type="text/javascript" src="assets/datetimepicker/jquery.datetimepicker.full.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo $baseURL; ?>assets/datetimepicker/jquery.datetimepicker.min.css">
+	<script type="text/javascript" src="<?php echo $baseURL; ?>assets/datetimepicker/jquery.datetimepicker.full.min.js"></script>
 	<!-- Country Select -->
-	<link rel="stylesheet" type="text/css" href="assets/country_select/css/countrySelect.min.css">
-	<script type="text/javascript" src="assets/country_select/js/countrySelect.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo $baseURL; ?>assets/country_select/css/countrySelect.min.css">
+	<script type="text/javascript" src="<?php echo $baseURL; ?>assets/country_select/js/countrySelect.min.js"></script>
 	<!-- recaptcha -->
   	<script src='https://www.google.com/recaptcha/api.js'></script>
   	<!-- Google Fonts -->
   	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-  	
+
 	<!-- custom js -->
-	<script type="text/javascript" src="custom/js/main.js"></script>
+	<script type="text/javascript" src="<?php echo $baseURL; ?>custom/js/main.js"></script>
 	<!-- custom css -->
-	<link rel="stylesheet" type="text/css" href="custom/css/main.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo $baseURL; ?>custom/css/main.css">
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -57,9 +57,9 @@
 	      						<li class='dropdown'>
           							<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Bem vindo, ".$_SESSION['loggedIn']['name']." <span class='caret'></span></a>
           							<ul class='dropdown-menu'>
-							            <li><a href='#'>Perfil</a></li>
+							            <li><a href='".$baseURL."Profile'>Perfil</a></li>
 							            <li role='separator' class='divider'></li>
-							            <li><a href='app/logout.php'>Log Out</a></li>
+							            <li><a href='".$baseURL."app/logout.php'>Log Out</a></li>
 							        </ul>
           						</li>
 								";

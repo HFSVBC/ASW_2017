@@ -1,7 +1,7 @@
 <?php 
 	require_once("config.php");
     require_once('../../fykXspR43K/loginSession.php');
-    $name     = "guest";
+    $name     = "ASW17";
     $password =  "guest";
     $username = "guest";
 

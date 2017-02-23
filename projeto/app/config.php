@@ -1,3 +1,3 @@
 <?php
-	$baseURL  = "http://localhost/projeto/";
+	$baseURL  = "https://home.hugocurado.info/~asw17/";
 	$siteName = "Poker Online";
