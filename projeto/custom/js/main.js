@@ -7,6 +7,7 @@ $(window).on('load', function(){
 		$('#regModal').modal('show');
 		
 	});
+	$("#regInModal").prop('disabled', true);
 	$.datetimepicker.setLocale('pt');
 	$("#birthDate").datetimepicker({
 		timepicker:false,

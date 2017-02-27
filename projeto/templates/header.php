@@ -235,7 +235,7 @@
 	      		</div>
 	      		<div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-			        <button type="submit" class="btn btn-primary">Registar</button>
+			        <button type="submit" id="regInModal" class="btn btn-primary">Registar</button>
 	      		</div>
     		</div><!-- /.modal-content -->
     		</form>
