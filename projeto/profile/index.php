@@ -4,6 +4,10 @@
     require_once('../../fykXspR43K/loginSession.php');
  	session_regenerate_id(true);
  	include "../templates/header.php"; 
+
+ 	if (!isset($_SESSION['loggedIn'])){
+ 		header("Location: ".$baseURL);
+ 	}
 ?>
 <article id="profilePage">
 	<header id="PP-header">
@@ -27,14 +31,14 @@
 							    <label for="name">Nome</label>
 							    <div class="input-group">
 								    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-								    <input type="text" class="form-control" id="name" name="name">
+								    <input type="text" class="form-control" id="name" name="name" value="<?php echo $_SESSION['loggedIn']['name'];?>">
 							    </div>
 							</div>
 							<div class="form-group col-xs-12 col-md-6">
 							    <label for="surname">Apelido</label>
 							    <div class="input-group">
 								    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-								    <input type="text" class="form-control" id="surname" name="surname">
+								    <input type="text" class="form-control" id="surname" name="surname" value="<?php echo $_SESSION['loggedIn']['surname'];?>">
 							    </div>
 							</div>
 						</div>
@@ -43,14 +47,14 @@
 							    <label for="username">Username</label>
 							    <div class="input-group">
 								    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-								    <input type="text" class="form-control" id="username" name="username" readonly>
+								    <input type="text" class="form-control" id="username" name="username" value="<?php echo $_SESSION['loggedIn']['username'];?>" readonly>
 							    </div>
 							</div>
 							<div class="form-group col-xs-12 col-md-6">
 							    <label for="email">Email</label>
 							    <div class="input-group">
 								    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-								    <input type="email" class="form-control" id="email" name="email">
+								    <input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['loggedIn']['email'];?>">
 							    </div>
 							</div>
 						</div>

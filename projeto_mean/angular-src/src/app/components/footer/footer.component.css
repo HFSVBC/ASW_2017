@@ -1,0 +1,13 @@
+/*footer
+-----------------------------------------------*/
+#footerAndCopyright{
+	background: #212121;
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+}
+#footerAndCopyright > p{
+	color: #616161;
+	margin: 10px 0;
+}

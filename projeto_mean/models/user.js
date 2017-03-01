@@ -4,8 +4,13 @@ const config     = require('../config/database');
 
 // User Schema
 const UserSchema = mongoose.Schema({
-	name    : {
-		type   : String
+	fName    : {
+		type   : String,
+		reuired: true
+	},
+	lName    : {
+		type   : String,
+		reuired: true
 	},
 	email   : {
 		type   : String,
@@ -18,6 +23,27 @@ const UserSchema = mongoose.Schema({
 	password: {
 		type   : String,
 		reuired: true		
+	},
+	sex: {
+		type   : String,
+		reuired: true		
+	},
+	birthDate: {
+		type   : String,
+		reuired: true		
+	},
+	country: {
+		type   : String,
+		reuired: true		
+	},
+	county: {
+		type   : String		
+	},
+	district: {
+		type   : String		
+	},
+	avatar: {
+		type   : String	
 	}
 });
 

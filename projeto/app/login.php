@@ -1,7 +1,9 @@
 <?php 
 	require_once("config.php");
     require_once('../../fykXspR43K/loginSession.php');
-    $name     = "ASW17";
+    $name     = "John";
+    $surname  = "Doe";
+    $email    = "johndoe@gmail.com";
     $password =  "guest";
     $username = "guest";
 
@@ -11,6 +13,8 @@
     if($username===$sent_username && $password===$sent_password){
     	$_SESSION['loggedIn'] = array(
     			'name'     => $name,
+                'surname'  => $surname,
+                'email'    => $email,
     			'username' => $username,
     		);
     	header("Location: ../");
