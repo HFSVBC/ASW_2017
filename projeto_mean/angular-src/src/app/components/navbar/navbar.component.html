@@ -17,16 +17,17 @@
 		        
       		</ul>
       		<ul class="nav navbar-nav navbar-right">
-	        	<li id='log-btn' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/login']">Log In</a></li>
-	        	<li id='reg-btn' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/register']">Registar</a></li>
-					<li class='dropdown' [routerLinkActive]="['active']">
-						<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Bem vindo, <span class='caret'></span></a>
-						<ul class='dropdown-menu'>
-				            <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/profile']">Perfil</a></li>
-				            <li role='separator' class='divider'></li>
-				            <li><a (click)="onLogoutClick()" href="#">Log Out</a></li>
-			        	</ul>
-					</li>
+	        	<li *ngIf="!authService.loggedIn()" id='log-btn' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/login']">Log In</a></li>
+	        	<li *ngIf="!authService.loggedIn()" id='reg-btn' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/register']">Registar</a></li>
+				<li *ngIf="authService.loggedIn()" class='dropdown' [routerLinkActive]="['active']">
+					<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Bem vindo, {{user.username}} <span class='caret'></span></a>
+					<ul class='dropdown-menu'>
+			            <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/dashboard']">Dashboard</a></li>
+			            <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/profile']">Perfil</a></li>
+			            <li role='separator' class='divider'></li>
+			            <li><a (click)="onLogoutClick()" href="#">Log Out</a></li>
+		        	</ul>
+				</li>
       		</ul>
     	</div><!-- /.navbar-collapse -->
   	</div><!-- /.container-fluid -->

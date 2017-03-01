@@ -1,0 +1,50 @@
+/*profile page
+-----------------------------------------------*/
+#profilePage{
+	padding: 0 50px;
+}
+#PP-header{
+	background: #bfbfbf;
+	padding: 20px;
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    height: 150px;
+}
+#name-Cont{
+	padding-left: 50px;
+}
+#SButton-cont{
+	height: 115px;
+	position: relative;
+	margin-top: -15px;
+}
+#SButton{
+	position: absolute;
+    top: 50%;
+    padding: 5px 10px;
+    background: #536dfe;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#PP-body{
+	margin-top: 180px;
+}
+#mainProfCont, #leftProfCont{
+	background: #ffffff;
+	padding: 20px 15px;
+}
+#mainProfCont{
+	padding-right: 10px;
+}
+#leftProfCont{
+	padding-left: 10px;
+}
+#avatar, #avatar > img{
+	width: 100%;
+}
+#avatar > img{
+	margin-bottom: 10px;
+}

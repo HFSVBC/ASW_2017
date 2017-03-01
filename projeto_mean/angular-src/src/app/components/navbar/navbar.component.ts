@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
+  user: Object;
+  
   constructor(
   	private flashMessage   : FlashMessagesService,
   	private authService    : AuthService,
@@ -17,6 +18,7 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.user = this.authService.getLoggedInProfile();
   }
 
   onLogoutClick() {
