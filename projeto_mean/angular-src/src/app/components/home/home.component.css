@@ -1,5 +1,5 @@
 .coponentCont{
-	background: url(custom/images/backgroundPic.jpg) no-repeat center center fixed; 
+	background: url(assets/custom/images/backgroundPic.jpg) no-repeat center center fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -20,7 +20,7 @@
 	text-align: center;
 }
 #playBTN{
-	background: url(custom/images/btnBack.png) no-repeat center center; 
+	background: url(assets/custom/images/btnBack.png) no-repeat center center; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
