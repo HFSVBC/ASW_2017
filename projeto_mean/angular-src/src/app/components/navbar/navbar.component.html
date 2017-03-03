@@ -14,7 +14,8 @@
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       		<ul class="nav navbar-nav">
-		        
+		        <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/dashboard']">Gestão de Partidas</a></li>
+		        <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/game']">Jogo</a></li>
       		</ul>
       		<ul class="nav navbar-nav navbar-right">
 	        	<li *ngIf="!authService.loggedIn()" id='log-btn' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/login']">Log In</a></li>
@@ -22,7 +23,6 @@
 				<li *ngIf="loadUser();" class='dropdown' [routerLinkActive]="['active']">
 					<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Bem vindo, {{user.username}} <span class='caret'></span></a>
 					<ul class='dropdown-menu'>
-			            <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/dashboard']">Dashboard</a></li>
 			            <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/profile']">Perfil</a></li>
 			            <li role='separator' class='divider'></li>
 			            <li><a (click)="onLogoutClick()" href="#">Log Out</a></li>
