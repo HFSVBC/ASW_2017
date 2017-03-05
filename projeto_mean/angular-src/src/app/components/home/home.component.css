@@ -1,0 +1,46 @@
+.coponentCont{
+	background: url(assets/custom/images/backgroundPic.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-color: black;
+	margin-top: -20px;
+}
+#slogan{
+	width: 700px;
+	color: #ffffff;
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	margin-top: -110px;
+	margin-left: -350px; 
+	font-family: 'Lobster', cursive;
+	font-size: 100px;
+	text-align: center;
+}
+#playBTN{
+	background: url(assets/custom/images/btnBack.png) no-repeat center center; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-color: grey;
+	position: absolute;
+	top: 60%;
+	left: 50%;
+	padding: 5px 20px;
+	border-radius: 25px;
+	font-size: 100px;
+	margin-left: -169.5px;
+	margin-top: -76px;
+	font-family: 'Lobster', cursive;
+	cursor: pointer;
+	border-right: solid 5px rgba(0, 0, 0, 0.7);
+	border-bottom: solid 5px rgba(0, 0, 0, 0.7);
+	color: #ffffff;
+	text-decoration: none;
+}
+#playBTN:active{
+	border: none;
+}

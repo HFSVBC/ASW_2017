@@ -1,0 +1,110 @@
+<div class="coponentCont">
+	<div  class="container">
+		<form (submit)="onRegisterSubmit()" id="regForm">
+			<h2 class="page-header">Register</h2>
+			<div class="row">
+				<div class="form-group col-xs-12 col-md-6">
+				    <label for="name">Nome *</label>
+				    <div class="input-group">
+					    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+					    <input type="text" class="form-control" id="name" name="fName" [(ngModel)]="fName" required>
+				    </div>
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+				    <label for="surname">Apelido *</label>
+				    <div class="input-group">
+					    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+					    <input type="text" class="form-control" id="surname" name="lName" [(ngModel)]="lName" required>
+				    </div>
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+				    <label for="username">Nome de Utilizador *</label>
+				    <div class="input-group">
+					    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+					    <input type="text" class="form-control" id="username" name="username" [(ngModel)]="username" required>
+				    </div>
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+				    <label for="email">Email *</label>
+				    <div class="input-group">
+					    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div>
+					    <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email" required>
+				    </div>
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+				    <label for="password">Password *</label>
+				    <div class="input-group">
+					    <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
+					    <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password" required>
+				    </div>
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+				    <label for="confPassword">Confirmar Password *</label>
+				    <div class="input-group">
+					    <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
+					    <input type="password" class="form-control" id="confPassword" name="confPassword" required>
+				    </div>
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+				    <label for="birthDate">Data de Nascimento *</label>
+				    <div class="input-group">
+					    <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+					    <input type="text" class="form-control" id="birthDate" name="birthDate" [(ngModel)]="birthDate" required>
+				    </div>
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+				    <label for="sexo">Sexo *</label>
+				    <select class="form-control" id="sexo" name="sex" [(ngModel)]="sex" required>
+				    	<option value="f">Feminino</option>
+				    	<option value="m">Masculino</option>
+				    	<option value="ND" selected="selected">Prefiro Não Dizer</option>
+				    </select>
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+				    <label for="country">País *</label>
+				    <select class="form-control" id="country" name="country" [(ngModel)]="country" required>
+				    	<option value="ND" selected>teste</option>
+					</select>
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+				    <label for="dist">Distrito *</label>
+				    <select class="form-control" id="dist" name="district" [(ngModel)]="district">
+				    	<option value="ND" selected>teste</option>
+				    </select>
+				</div>
+				<div class="form-group col-xs-12 col-md-6">
+				    <label for="con">Concelho *</label>
+				    <select class="form-control" id="con" name="county" [(ngModel)]="county">
+				    	<option value="ND" selected>teste</option>
+				    </select>
+				</div>
+				<div class="form-group col-md-12">
+				    <label for="username">Captcha *</label>
+				    <div class="input-group">
+					    <div class="g-recaptcha" data-sitekey="6LdydxYUAAAAAITNNEGJOOkAjfAlRdyDwSW-xWvp"></div>
+				    </div>
+				</div>
+				<div class="form-group col-md-12">
+					<label for="confPolicys">
+							<input type="checkbox" name="confPolicys" id="confPolicys" required> Concordo com os Termos e Condições
+					</label>
+				</div>    			
+			</div>
+			<button type="submit" id="regInModal" class="btn btn-primary">Registar</button>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	$(window).on('load', function(){
+		$("#regInModal").prop('disabled', true);
+		$.datetimepicker.setLocale('pt');
+		$("#birthDate").datetimepicker({
+			timepicker:false,
+	 		format:'d/m/Y',
+	 		maxDate:'+1970/01/01'//today is maximum date calendar
+		});
+		$("#country").countrySelect({
+			"preferredCountries": ["pt"],
+		});
+	});
+</script>
