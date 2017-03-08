@@ -5,6 +5,7 @@ create table proj_users(
     username VARCHAR(64) NOT NULL,
     email VARCHAR(250) NOT NULL,
     password VARCHAR(260) NOT NULL,
+    balance FLOAT(20) NOT NULL DEFAULT 500.00,
     birthDate DATE NOT NULL,
     sex VARCHAR(2) NOT NULL,
     country VARCHAR(2) NOT NULL,
@@ -17,9 +18,9 @@ create table proj_users(
     activationDate TIMESTAMP NOT NULL,
     level INT(1) UNSIGNED NOT NULL DEFAULT 1,
     PRIMARY KEY (id),
-    UNIQUE (username, email),
-    FOREIGN KEY (district) REFERENCES dist_con(id),
-    FOREIGN KEY (county) REFERENCES dist_con(id)
+    UNIQUE (username, email)
+    -- FOREIGN KEY (district) REFERENCES dist_con(id),
+    -- FOREIGN KEY (county) REFERENCES dist_con(id)
 );
 CREATE TABLE proj_game(
     id INT(8) UNSIGNED,

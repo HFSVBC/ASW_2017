@@ -7,6 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	
 	<title><?php echo $name; ?> | Poker Online</title>
 	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+	<link rel="icon" href="custom/images/favicon.png?v=1.1">
 
 	<!-- jQuery -->
 	<script type="text/javascript" src="assets/jquery/jquery-3.1.1.min.js"></script>
@@ -19,6 +20,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	<!-- Country Select -->
 	<link rel="stylesheet" type="text/css" href="assets/country_select/css/countrySelect.min.css">
 	<script type="text/javascript" src="assets/country_select/js/countrySelect.min.js"></script>
+	<!-- Data Tables Select -->
+	<link rel="stylesheet" type="text/css" href="assets/DataTables/datatables.min.css">
+	<script type="text/javascript" src="assets/DataTables/datatables.min.js"></script>
 	<!-- recaptcha -->
   	<script src='https://www.google.com/recaptcha/api.js'></script>
   	<!-- Google Fonts -->
@@ -113,7 +117,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	<!-- formulario do registo -->
 	<div class="modal fade" tabindex="-1" role="dialog" id="regModal">
   		<div class="modal-dialog modal-lg" role="document">
-	      	<form method="post" action="app/login.php" id="regForm">
+	      	<form method="post" action="<?php base_url(); ?>index.php/user/register" id="regForm">
     		<div class="modal-content">
       			<div class="modal-header">
         			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -124,49 +128,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					    <label for="name">Nome *</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-						    <input type="text" class="form-control" id="name" name="name" required>
+						    <input type="text" class="form-control" id="name" name="name" required autocomplete="off">
 					    </div>
 					</div>
 					<div class="form-group col-xs-12 col-md-6">
 					    <label for="surname">Apelido *</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-						    <input type="text" class="form-control" id="surname" name="surname" required>
+						    <input type="text" class="form-control" id="surname" name="surname" required autocomplete="off">
 					    </div>
 					</div>
 					<div class="form-group col-xs-12 col-md-6">
-					    <label for="username">Nome de Utilizador *</label>
+					    <label for="usernameReg">Nome de Utilizador *</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-						    <input type="text" class="form-control" id="username" name="username" required>
+						    <input type="text" class="form-control" id="usernameReg" name="username" maxlength="64" required autocomplete="off">
 					    </div>
 					</div>
 					<div class="form-group col-xs-12 col-md-6">
 					    <label for="email">Email *</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div>
-						    <input type="email" class="form-control" id="email" name="email" required>
+						    <input type="email" class="form-control" id="email" name="email" required autocomplete="off" autocomplete="off">
 					    </div>
 					</div>
-					<div class="form-group col-xs-12 col-md-6">
-					    <label for="password">Password *</label>
+					<div class="form-group passwordFG col-xs-12 col-md-6">
+					    <label for="passwordReg">Password *</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
-						    <input type="password" class="form-control" id="password" name="password" required>
+						    <input type="password" class="form-control" id="passwordReg" name="password" required autocomplete="off">
 					    </div>
 					</div>
-					<div class="form-group col-xs-12 col-md-6">
+					<div class="form-group passwordFG col-xs-12 col-md-6">
 					    <label for="confPassword">Confirmar Password *</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
-						    <input type="password" class="form-control" id="confPassword" name="confPassword" required>
+						    <input type="password" class="form-control" id="confPassword" name="confPassword" required autocomplete="off">
 					    </div>
 					</div>
 					<div class="form-group col-xs-12 col-md-6">
 					    <label for="birthDate">Data de Nascimento *</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
-						    <input type="text" class="form-control" id="birthDate" name="birthDate" required onkeydown="return false">
+						    <input type="text" class="form-control" id="birthDate" name="birthDate" required onkeydown="return false" autocomplete="off">
 					    </div>
 					</div>
 					<div class="form-group col-xs-12 col-md-6">
@@ -177,30 +181,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					    	<option value="ND" selected>Prefiro Não Dizer</option>
 					    </select>
 					</div>
-					<div class="form-group col-xs-12 col-md-6">
+					<!-- <div class="form-group col-xs-12 col-md-6">
 					    <label for="avatar">Avatar *</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></div>
 						    <input type="file" class="form-control" id="avatar" name="avatar" required>
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
 					    </div>
-					</div>
+					</div> -->
 					<div class="form-group col-xs-12 col-md-6">
 					    <label for="country">País *</label>
 					    <div class="input-group" id="country_input-group">
-						    <input type="text" id="country" name="country" required>
+						    <input type="text" id="country" name="country" required autocomplete="off">
 					    </div>
 					</div>
-					<div class="form-group col-xs-12 col-md-6">
+					<div class="form-group col-xs-12 col-md-6 countyDistrit-FormGroup">
 					    <label for="dist">Distrito *</label>
-					    <select type="checkbox" class="form-control" id="dist" name="dist" required>
-					    	
+					    <select type="checkbox" class="form-control" id="dist" name="dist" required autocomplete="off">
+					    	<?php echo $districts; ?>
 					    </select>
 					</div>
-					<div class="form-group col-xs-12 col-md-6">
+					<div class="form-group col-xs-12 col-md-6 countyDistrit-FormGroup">
 					    <label for="con">Concelho *</label>
-					    <select type="checkbox" class="form-control" id="con" name="con" required>
-					    	
+					    <select type="checkbox" class="form-control" id="con" name="con" required autocomplete="off">
+					    	<?php echo $counties; ?>
 					    </select>
 					</div>
 					<div class="form-group col-md-12">
