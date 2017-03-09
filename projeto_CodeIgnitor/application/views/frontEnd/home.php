@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <div id="maincontainer">
 	<div id="contBanner">
 		<h1 id="slogan">May the flop be with you</h1>
-		<span id="playBTN">Play <span class="glyphicon glyphicon-play" aria-hidden="true"></span></span>
+		<a href="game" id="playBTN">Play <span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
 	</div>
 	<div id="contGamesBeingPlayed">
 		<div class="page-header">

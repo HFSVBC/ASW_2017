@@ -58,11 +58,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	      				if($loggedIn){
 	      					echo "
 	      						<li class='dropdown'>
-          							<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Bem vindo, "." <span class='caret'></span></a>
+          							<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Bem vindo, ".$loggedIn_user." <span class='caret'></span></a>
           							<ul class='dropdown-menu'>
-							            <li><a href='".base_url()."Profile'>Perfil</a></li>
+							            <li><a href='".base_url()."profile'>Perfil</a></li>
 							            <li role='separator' class='divider'></li>
-							            <li><a href='".base_url()."app/logout.php'>Log Out</a></li>
+							            <li><a href='".base_url()."index.php/user/logout'>Log Out</a></li>
 							        </ul>
           						</li>
 								";
@@ -78,7 +78,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	</nav>
 	<div class="modal fade" tabindex="-1" role="dialog" id="loginModal">
   		<div class="modal-dialog" role="document">
-	      	<form method="post" action="app/login.php" id="loginForm">
+	      	<form method="post" action="<?php base_url(); ?>index.php/user/login" id="loginForm">
     		<div class="modal-content">
       			<div class="modal-header">
         			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -86,7 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
       			</div>
 	      		<div class="modal-body">
 	      			<div class="form-group">
-					    <label for="username">Nome de Utilizador</label>
+					    <label for="username">Nome de Utilizador / Email</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
 						    <input type="text" class="form-control" id="username" name="username">
@@ -170,7 +170,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					    <label for="birthDate">Data de Nascimento *</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
-						    <input type="text" class="form-control" id="birthDate" name="birthDate" required onkeydown="return false" autocomplete="off">
+						    <input type="text" class="form-control birthDate" name="birthDate" required onkeydown="return false" autocomplete="off">
 					    </div>
 					</div>
 					<div class="form-group col-xs-12 col-md-6">
@@ -192,18 +192,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					<div class="form-group col-xs-12 col-md-6">
 					    <label for="country">País *</label>
 					    <div class="input-group" id="country_input-group">
-						    <input type="text" id="country" name="country" required autocomplete="off">
+						    <input type="text" class="country" name="country" required autocomplete="off">
 					    </div>
 					</div>
 					<div class="form-group col-xs-12 col-md-6 countyDistrit-FormGroup">
 					    <label for="dist">Distrito *</label>
-					    <select type="checkbox" class="form-control" id="dist" name="dist" required autocomplete="off">
+					    <select type="checkbox" class="form-control dist" name="dist" required autocomplete="off">
 					    	<?php echo $districts; ?>
 					    </select>
 					</div>
 					<div class="form-group col-xs-12 col-md-6 countyDistrit-FormGroup">
 					    <label for="con">Concelho *</label>
-					    <select type="checkbox" class="form-control" id="con" name="con" required autocomplete="off">
+					    <select type="checkbox" class="form-control con" name="con" required autocomplete="off">
 					    	<?php echo $counties; ?>
 					    </select>
 					</div>

@@ -35,12 +35,12 @@ $(window).on('load', function(){
 	});
 
 	$.datetimepicker.setLocale('pt');
-	$("#birthDate").datetimepicker({
+	$(".birthDate").datetimepicker({
 		timepicker:false,
  		format:'Y-m-d',
  		maxDate:'+1970/01/01'//today is maximum date calendar
 	});
-	$("#country").countrySelect({
+	$(".country").countrySelect({
 		"preferredCountries": ["pt"],
 	}).on('change', function(){
 		if($(this).val() == 'Portugal'){
@@ -51,9 +51,10 @@ $(window).on('load', function(){
 	});
 
 
-	showCon($("#dist"));
+	showCon($(".dist"));
 
-	$("#dist").on("change", function(){
+	$(".dist").on("change", function(){
+		console.log("ola")
 		showCon($(this));
 	});
 });
@@ -70,11 +71,11 @@ var submitActivator = function(){
 var showCon = function(obg){
 	var distVal = $(obg).val();
 	var i=0;
-	$("#con > option").each(function(){
+	$(".con > option").each(function(){
 		if($(this).attr("data-parentDist")==distVal){
 			$(this).show();
 			if (i==0){
-				$("#con").val($(this).val());
+				$(".con").val($(this).val());
 			}
 			i++;
 		}else{

@@ -15,7 +15,7 @@
 			$country   = $this->db->escape($this->input->post('country'));
 			$district  = $this->db->escape($this->input->post('dist'));
 			$county    = $this->db->escape($this->input->post('con'));
-			$hash      = md5($username+$birthDate);
+			$hash      = password_hash($username+time(), PASSWORD_BCRYPT, $options);
 
 			$sql = "INSERT INTO proj_users (fName, lName, username, email, password, birthDate, sex, country, district, county, hash)
 					VALUES($fName, $lName, $username, $email, '$password', $birthDate, $sex, $country, $district, $county, '$hash')";
@@ -25,6 +25,53 @@
 			}else{
         		return false;
 			}
+		}
+
+		public function loginUser(){
+			$validator = array('success' => false, 'messages' => array());
+
+			$username  = $this->db->escape($this->input->post('username'));
+			$password  = $this->input->post('password');
+
+			$sql   = "SELECT username, email, password, level
+					  FROM proj_users
+					  WHERE (username = $username OR email = $username) AND level > 0 AND active = 0
+					  LIMIT 1";
+			$query = $this->db->query($sql);
+			$row = $query->row();
+			if(!empty($row)){
+        		if(password_verify($password, $row->password)){
+        			$data = array(
+        				'username' => $row->username,
+        				'email'    => $row->email,
+        				'level'    => $row->level
+        			);
+        			$validator['success']  = true;
+        			$validator['messages'] = $data;
+        		}else{
+        			$validator['success']  = false;
+        			$validator['messages'] = 'Nome de utilizador / email e ou password errado(s)';
+        		}
+			}else{
+				$validator['success']  = false;
+        		$validator['messages'] = "Utilizador não encontrado";
+			}
+			return $validator;
+		}
+
+
+
+		public function getUser($id)
+		{
+			$validator = array('success' => false, 'messages' => array());
+
+			$sql   = "SELECT fName, lName, balance, birthDate, sex, country, district, county, avatar
+					  FROM proj_users
+					  WHERE username = '$id'
+					  LIMIT 1";
+			$query = $this->db->query($sql);
+			
+			return $query->row();
 		}
 
 		public function getDistricts()

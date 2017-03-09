@@ -7,7 +7,10 @@ class User extends CI_Controller {
 	{
 		parent::__construct();
 
+		date_default_timezone_set("Europe/Lisbon");
 		$this->load->model('user_model');
+		$this->load->library('email');
+
 	}
 
 	public function register()
@@ -74,7 +77,19 @@ class User extends CI_Controller {
 			$createPage = $this->user_model->registerUser();
 			if($createPage === true){
 				$validator['success']  = true;
-				$validator['messages'] = 'Adicionado com sucesso';
+				$validator['messages'] = 'Adicionado com sucesso '.$this->input->post('email');
+
+				$this->email->from('support@pokeronline.com', 'Poker Online');
+				$this->email->to($this->input->post('email'));
+
+				$this->email->subject('Confirmação de email');
+				$this->email->message("<p>Para terminar o seu registo por favor clique no link abaixo para confirmar o seu e-mail</p>
+										<a href='http://appserver-01.alunos.di.fc.ul.pt/~asw004/projeto/index.php/user/confemail'>http://appserver-01.alunos.di.fc.ul.pt/~asw004/projeto/index.php/user/confemail</a>");
+
+				if ( ! $this->email->send()){
+        			$validator['messages'].="<br>Email não enviado";
+				}
+
 			}else{
 				$validator['success']  = false;
 				$validator['messages'] = 'Erro ao atualizar a base de dados';
@@ -85,5 +100,56 @@ class User extends CI_Controller {
 		}
 
 		echo json_encode($validator);
+	}
+	public function login()
+	{
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'username',
+	                'label' => 'User username',
+	                'rules' => 'trim|required',
+	        ),
+	        array(
+	                'field' => 'password',
+	                'label' => 'User password',
+	                'rules' => 'trim|required',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			$loginResult = $this->user_model->loginUser();
+			if($loginResult['success'] === true){
+				$validator['success']  = true;
+				$validator['messages'] = 'Utilizador autentificado com sucesso';
+
+				$session_data = array(
+				        'username'  => $loginResult['messages']['username'],
+				        'email'     => $loginResult['messages']['email'],
+				        'level'     => $loginResult['messages']['level'],
+				        'logged_in' => TRUE
+				);
+				$this->session->set_userdata('loggedIn_asw004', $session_data);
+			}else{
+				$validator['success']  = false;
+				$validator['messages'] = $loginResult['messages'];
+			}
+		} else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informação';
+		}
+
+		echo json_encode($validator);
+	}
+
+	public function logout()
+	{
+		$this->session->unset_userdata('logged_in');
+		session_destroy();
+		redirect('/', 'refresh');
 	}
 }

@@ -4,9 +4,7 @@
 	background: #bfbfbf;
 	padding: 20px;
     width: 100%;
-    position: absolute;
-    top: 50px;
-    left: 0;
+    margin-top: 50px;
     height: 150px;
 }
 #name-Cont{
@@ -19,18 +17,34 @@
 }
 #SButton{
 	position: absolute;
-    top: 50%;
+    top: 30%;
     padding: 5px 10px;
     background: #536dfe;
     color: #ffffff;
     border-radius: 5px;
     cursor: pointer;
 }
+#SButton-balance{
+	position: absolute;
+    top: 70%;
+    width: 145px;
+    text-align: right;
+    padding: 5px 10px;
+    background: #536dfe;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#SButton-balance > span{
+	left: 0;
+    margin-left: 0;
+    position: absolute;
+    padding: 7px 5px 7px 5px;
+}
 #PP-body{
-	margin-top: 180px;
+	padding: 20px 50px 0 50px;
 }
 #mainProfCont, #leftProfCont{
-	background: #ffffff;
 	padding: 20px 15px;
 }
 #mainProfCont{
@@ -38,4 +52,10 @@
 }
 #leftProfCont{
 	padding-left: 10px;
+}
+#avatar, #avatar > img{
+	width: 100%;
+}
+#avatar > img{
+	margin-bottom: 10px;
 }
