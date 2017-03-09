@@ -21,52 +21,52 @@ class User extends CI_Controller {
 	        array(
 	                'field' => 'name',
 	                'label' => 'User First Name',
-	                'rules' => 'trim|required'
+	                'rules' => 'trim|required|xss_clean|strip_tags'
 	        ),
 	        array(
 	                'field' => 'surname',
 	                'label' => 'User Last Name',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|xss_clean|strip_tags',
 	        ),
 	        array(
 	                'field' => 'username',
 	                'label' => 'User username',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|xss_clean|strip_tags',
 	        ),
 	        array(
 	                'field' => 'email',
 	                'label' => 'User email',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|xss_clean|strip_tags',
 	        ),
 	        array(
 	                'field' => 'password',
 	                'label' => 'User password',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|xss_clean|strip_tags',
 	        ),
 	        array(
 	                'field' => 'birthDate',
 	                'label' => 'User birth date',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|xss_clean|strip_tags',
 	        ),
 	        array(
 	                'field' => 'sexo',
 	                'label' => 'User sex',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|xss_clean|strip_tags',
 	        ),
 	        array(
 	                'field' => 'country',
 	                'label' => 'User country',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|xss_clean|strip_tags',
 	        ),
 	        array(
 	                'field' => 'dist',
 	                'label' => 'User district if in Portugal',
-	                'rules' => 'trim|integer',
+	                'rules' => 'trim|integer|xss_clean|strip_tags',
 	        ),
 	        array(
 	                'field' => 'con',
 	                'label' => 'User county if in Portugal',
-	                'rules' => 'trim|integer',
+	                'rules' => 'trim|integer|xss_clean|strip_tags',
 	        ),
 		);
 
@@ -109,12 +109,12 @@ class User extends CI_Controller {
 	        array(
 	                'field' => 'username',
 	                'label' => 'User username',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|xss_clean|strip_tags',
 	        ),
 	        array(
 	                'field' => 'password',
 	                'label' => 'User password',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|xss_clean|strip_tags',
 	        ),
 		);
 

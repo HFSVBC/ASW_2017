@@ -28,7 +28,7 @@ class Userpages extends CI_Controller {
 			$data['loggedIn_user'] = $this->session->userdata['loggedIn_asw004']['username'];
 			$data['loggedIn_email'] = $this->session->userdata['loggedIn_asw004']['email'];
 			$data['loggedIn_level'] = $this->session->userdata['loggedIn_asw004']['level'];
-			if($data['loggedIn_level'] > $protectedPages[$page]){
+			if (array_key_exists($page, $protectedPages) && $data['loggedIn_level'] > $protectedPages[$page]){
 				show_404();
 			}
 			if($page == 'profile'){

@@ -35,7 +35,7 @@
 
 			$sql   = "SELECT username, email, password, level
 					  FROM proj_users
-					  WHERE (username = $username OR email = $username) AND level > 0 AND active = 0
+					  WHERE (username = $username OR email = $username) AND level >= 0 AND active = 0
 					  LIMIT 1";
 			$query = $this->db->query($sql);
 			$row = $query->row();
