@@ -21,52 +21,52 @@ class User extends CI_Controller {
 	        array(
 	                'field' => 'name',
 	                'label' => 'User First Name',
-	                'rules' => 'trim|required|xss_clean|strip_tags'
+	                'rules' => 'trim|required'
 	        ),
 	        array(
 	                'field' => 'surname',
 	                'label' => 'User Last Name',
-	                'rules' => 'trim|required|xss_clean|strip_tags',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
 	                'field' => 'username',
 	                'label' => 'User username',
-	                'rules' => 'trim|required|xss_clean|strip_tags',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
 	                'field' => 'email',
 	                'label' => 'User email',
-	                'rules' => 'trim|required|xss_clean|strip_tags',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
 	                'field' => 'password',
 	                'label' => 'User password',
-	                'rules' => 'trim|required|xss_clean|strip_tags',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
 	                'field' => 'birthDate',
 	                'label' => 'User birth date',
-	                'rules' => 'trim|required|xss_clean|strip_tags',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
 	                'field' => 'sexo',
 	                'label' => 'User sex',
-	                'rules' => 'trim|required|xss_clean|strip_tags',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
 	                'field' => 'country',
 	                'label' => 'User country',
-	                'rules' => 'trim|required|xss_clean|strip_tags',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
 	                'field' => 'dist',
 	                'label' => 'User district if in Portugal',
-	                'rules' => 'trim|integer|xss_clean|strip_tags',
+	                'rules' => 'trim|integer',
 	        ),
 	        array(
 	                'field' => 'con',
 	                'label' => 'User county if in Portugal',
-	                'rules' => 'trim|integer|xss_clean|strip_tags',
+	                'rules' => 'trim|integer',
 	        ),
 		);
 
@@ -77,7 +77,7 @@ class User extends CI_Controller {
 			$createPage = $this->user_model->registerUser();
 			if($createPage === true){
 				$validator['success']  = true;
-				$validator['messages'] = 'Adicionado com sucesso '.$this->input->post('email');
+				$validator['messages'] = 'Adicionado com sucesso';
 
 				$this->email->from('support@pokeronline.com', 'Poker Online');
 				$this->email->to($this->input->post('email'));
@@ -86,9 +86,9 @@ class User extends CI_Controller {
 				$this->email->message("<p>Para terminar o seu registo por favor clique no link abaixo para confirmar o seu e-mail</p>
 										<a href='http://appserver-01.alunos.di.fc.ul.pt/~asw004/projeto/index.php/user/confemail'>http://appserver-01.alunos.di.fc.ul.pt/~asw004/projeto/index.php/user/confemail</a>");
 
-				if ( ! $this->email->send()){
-        			$validator['messages'].="<br>Email não enviado";
-				}
+				// if ( ! $this->email->send()){
+    //     			$validator['messages'].="<br>Email n&atilde;o enviado";
+				// }
 
 			}else{
 				$validator['success']  = false;
@@ -96,7 +96,7 @@ class User extends CI_Controller {
 			}
 		} else{
 			$validator['success']  = false;
-			$validator['messages'] = 'Erro a validar a informação';
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o';
 		}
 
 		echo json_encode($validator);
@@ -109,12 +109,12 @@ class User extends CI_Controller {
 	        array(
 	                'field' => 'username',
 	                'label' => 'User username',
-	                'rules' => 'trim|required|xss_clean|strip_tags',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
 	                'field' => 'password',
 	                'label' => 'User password',
-	                'rules' => 'trim|required|xss_clean|strip_tags',
+	                'rules' => 'trim|required',
 	        ),
 		);
 

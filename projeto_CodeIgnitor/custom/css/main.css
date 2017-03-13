@@ -17,6 +17,9 @@ body{
 	margin-bottom: 0;
 	background-color: rgba(34, 34, 34, 0.8);
 }
+.alert{
+	display: none;
+}
 /* tables
 -----------------------------------------------*/
 .nav-tabs > li > a{

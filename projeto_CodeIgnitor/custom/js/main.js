@@ -59,10 +59,15 @@ $(window).on('load', function(){
 	});
 });
 
-var passCheck = false, inputCheck = false;
+var passCheck = false, inputCheck = false, recaptchaCheck = false;
+
+var recaptchaCallback = function(){
+	recaptchaCheck = true;
+	submitActivator();
+}
 
 var submitActivator = function(){
-	if (inputCheck && passCheck){
+	if (inputCheck && passCheck && recaptchaCheck){
 		$("#regInModal").prop('disabled', false);
 	}else{
 		$("#regInModal").prop('disabled', true);
@@ -82,4 +87,63 @@ var showCon = function(obg){
 			$(this).hide();
 		}
 	});
+}
+
+var userLogIn = function(){
+	var form = $('#loginForm');
+	var options = { 
+		success: showResponse_LogiInUser
+	};
+	form.ajaxSubmit(options);
+
+    return false;
+}
+
+var showResponse_LogiInUser = function(responseText, statusText, xhr, $form){
+	$('.alert').hide();
+	var response = JSON.parse(responseText);
+	if(response.success === true) {
+		location.reload();
+    }else{
+    	$('#regInModal').prop('disabled', false).val="Registar";
+        $(".alert-danger > .message").html(response.messages);
+        $(".alert-danger").show();
+        setTimeout(function(){
+        	$(".alert-danger").hide();
+        }, 3000);
+    }
+}
+
+var userReg = function(){
+	$('#regInModal').prop('disabled', true).val="A carregar...";
+	var form = $('#regForm');
+	var options = { 
+		success: showResponse_RegUser
+	};
+	form.ajaxSubmit(options);
+
+    return false;
+}
+
+var showResponse_RegUser = function(responseText, statusText, xhr, $form){
+	$('.alert').hide();
+	console.log(responseText);
+	var response = JSON.parse(responseText);
+	if(response.success === true) {
+		$("#regFormBody, #regFormButtons").hide();
+        $("#alertSuccess > .message").html(response.messages);
+        if (response.messages.indexOf("Email n&atilde;o enviado") > -1) {
+        	$("#alertSuccess").addClass(" alert-warning").removeClass("alert-success");
+        }else{
+        	$("#alertSuccess").addClass(" alert-success").removeClass("alert-warning");
+        };
+        $(".alert-success").show();
+    }else{
+    	$('#regInModal').prop('disabled', false).val="Registar";
+        $(".alert-danger > .message").html(response.messages);
+        $(".alert-danger").show();
+        setTimeout(function(){
+        	$(".alert-danger").hide();
+        }, 3000);
+    }
 }
