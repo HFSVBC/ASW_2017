@@ -1,5 +1,6 @@
 "use strict"
 $(window).on('load', function(){
+	// shows forms on request
 	$('#log-btn').on('click', function(){
 		$('#loginModal').modal('show');
 	});
@@ -7,9 +8,8 @@ $(window).on('load', function(){
 		$('#regModal').modal('show');
 		
 	});
-
-	submitActivator();	
 	
+	// cheks if passwords match
 	$("#confPassword, #passwordReg").on("change focus input", function() {
 		var confPass = $("#confPassword");
 		var pass     = $("#passwordReg");
@@ -23,6 +23,8 @@ $(window).on('load', function(){
 		}
 	});
 
+	// checks if form is complete and activates submition
+	submitActivator();	
 	$('#regForm .form-control').on('input change', function(){
 		$('.form-control').each(function(){
 			if($(this).val() != ""){
@@ -34,12 +36,16 @@ $(window).on('load', function(){
 		submitActivator();
 	});
 
+	// initializes datepicker and blocks dates greather than today
 	$.datetimepicker.setLocale('pt');
 	$(".birthDate").datetimepicker({
 		timepicker:false,
  		format:'Y-m-d',
  		maxDate:'+1970/01/01'//today is maximum date calendar
 	});
+
+	// Checks if Portugal is selected and activates, or not, 
+	// districts and counties options
 	$(".country").countrySelect({
 		"preferredCountries": ["pt"],
 	}).on('change', function(){
@@ -50,11 +56,9 @@ $(window).on('load', function(){
 		}
 	});
 
-
+	// Manages districts and counties on registration form
 	showCon($(".dist"));
-
 	$(".dist").on("change", function(){
-		console.log("ola")
 		showCon($(this));
 	});
 });
@@ -89,6 +93,7 @@ var showCon = function(obg){
 	});
 }
 
+// AJAX for forms submitions
 var userLogIn = function(){
 	var form = $('#loginForm');
 	var options = { 
