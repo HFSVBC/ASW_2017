@@ -1,0 +1,9 @@
+.username-table{
+	cursor: pointer;
+}
+.username-table:hover{
+	text-decoration: underline;
+}
+.table{
+	width: 100%!important;
+}

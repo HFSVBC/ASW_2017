@@ -61,17 +61,33 @@
 
 
 
-		public function getUser($id)
+		public function getUser($username)
 		{
 			$validator = array('success' => false, 'messages' => array());
 
-			$sql   = "SELECT fName, lName, balance, birthDate, sex, country, district, county, avatar
+			$sql   = "SELECT fName, lName, username, email, balance, birthDate, sex, country, district, county, creationDate, activationDate, level, avatar
 					  FROM proj_users
-					  WHERE username = '$id'
+					  WHERE username = '$username'
 					  LIMIT 1";
 			$query = $this->db->query($sql);
 			
 			return $query->row();
+		}
+
+		public function getUserDataAdmin()
+		{
+			$sql   = "SELECT fName, lName, username, email, balance, birthDate, sex, country, district, county, creationDate, activationDate, level
+					  FROM proj_users";
+			$query = $this->db->query($sql);
+			return $query->result_array();
+		}
+
+		public function getGamesDataAdmin()
+		{
+			$sql   = "SELECT name, createdBy, active, creationDate, endedDate, totalUsers, winner
+					  FROM proj_game";
+			$query = $this->db->query($sql);
+			return $query->result_array();
 		}
 
 		public function getDistricts()

@@ -29,9 +29,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	*/  
 
 	$config['protocol']     = 'smtp';
-	$config['smtp_crypto']  = 'tls';
-    $config['smtp_host']    = 'tls://smtp.gmail.com';
-    $config['smtp_port']    = '587';
+	$config['smtp_crypto']  = 'ssl';
+    $config['smtp_host']    = 'smtp.gmail.com';
+    $config['smtp_port']    = '465';
     $config['smtp_timeout'] = '7';
     $config['smtp_user']    = 'asw004.fcul@gmail.com';
     $config['smtp_pass']    = '0%m*lASc!nCOl3eH53MRbe7hby';

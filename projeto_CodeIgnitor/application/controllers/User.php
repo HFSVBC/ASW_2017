@@ -152,4 +152,48 @@ class User extends CI_Controller {
 		session_destroy();
 		redirect('/', 'refresh');
 	}
+
+	public function getUserDataAdmin()
+	{
+		$outputData = array('data' => array());
+
+		$result = $this->user_model->getUserDataAdmin();
+		foreach ($result as $row) {
+			$data = [
+				$row['fName'],
+				$row['lName'],
+				"<span class='username-table text-primary' data-toggle='modal' data-userId='".$row['username']."'data-target='#myModal'>".$row['username']."</span>",
+				$row['email'],
+				$row['balance'],
+				$row['birthDate'],
+				$row['country'],
+				'<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                 <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>'
+			];
+			array_push($outputData['data'], $data);
+		}
+		echo json_encode($outputData);
+	}
+
+	public function getGamesDataAdmin()
+	{	
+		$outputData = array('data' => array());
+
+		$result = $this->user_model->getGamesDataAdmin();
+		foreach ($result as $row) {
+			$data = [
+				$row['name'],
+				$row['createdBy'],
+				$row['active'],
+				$row['creationDate'],
+				$row['endedDate'],
+				$row['totalUsers'],
+				$row['winner'],
+				'<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                 <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>'
+			];
+			array_push($outputData['data'], $data);
+		}
+		echo json_encode($outputData);
+	}
 }

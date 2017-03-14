@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');?>
+<!-- custom css -->
+<link rel="stylesheet" type="text/css" href="custom/css/admin.css">
 <div class="coponentCont container">
 	<h2 class="page-header">Admin</h2>
 	<ul class="nav nav-tabs" role="tablist">
@@ -8,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	</ul>
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane active" id="users">
-			<table id='admin-users' class="table table-striped table-condensed table-responsive">
+			<table id='admin-users' class="table table-striped table-responsive">
 				<thead>
 					<tr>
 						<th>Nome</th>
@@ -17,13 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<th>Email</th>
 						<th>Balance</th>
 						<th>D. Nascimento</th>
-						<th>Sexo</th>
 						<th>Pais</th>
-						<th>Distrito</th>
-						<th>Concelho</th>
-						<th>D. criaçao</th>
-						<th>D. activaçao</th>
-						<th>Nivel</th>
 						<th>Opçoes</th>
 					</tr>
 				</thead>
@@ -33,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			</table>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="game">
-			<table id='admin-plays' class="table table-striped">
+			<table id='admin-plays' class="table table-striped table-responsive">
 				<thead>
 					<tr>
 						<th>Nome</th>
