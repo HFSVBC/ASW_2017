@@ -39,11 +39,11 @@
 			$county    = $this->db->escape($this->input->post('con'));
 
 			if ($avatarName != 'NULL'){
-				$sql = "UPDATE proj_users 
+				$sql = "UPDATE proj_users
 						SET fName=$fName, lName=$lName, email=$email, birthDate=$birthDate, sex=$sex, country=$country, district=$district, county=$county, avatar=$avatarName
 						WHERE username = $username";
 			}else{
-				$sql = "UPDATE proj_users 
+				$sql = "UPDATE proj_users
 						SET fName=$fName, lName=$lName, email=$email, birthDate=$birthDate, sex=$sex, country=$country, district=$district, county=$county
 						WHERE username = $username";
 			}
@@ -60,7 +60,13 @@
 
 			$username  = $this->db->escape($this->input->post('username'));
 			$password  = $this->input->post('password');
-
+			$remember_me = $this->input->post('rememberMe');
+			$my_cookie = $this->load->helper('cookie');
+			$cookie = array(
+			        'name'   => 'remember',
+			        'expire' => time()+86400,
+			        );
+							
 			$sql   = "SELECT username, email, password, level
 					  FROM proj_users
 					  WHERE (username = $username OR email = $username) AND level >= 0 AND active = 0
@@ -84,6 +90,9 @@
 				$validator['success']  = false;
         		$validator['messages'] = "Utilizador não encontrado";
 			}
+			if($validator['success'] == true && isset($remember_me)){
+						set_cookie($cookie);
+			}
 			return $validator;
 		}
 
@@ -98,7 +107,7 @@
 					  WHERE username = '$username'
 					  LIMIT 1";
 			$query = $this->db->query($sql);
-			
+
 			return $query->row();
 		}
 
