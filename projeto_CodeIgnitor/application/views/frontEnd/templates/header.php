@@ -31,6 +31,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
   	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 
 	<!-- custom js -->
+	<script type="text/javascript">
+		var baseURL = "<?php echo base_url(); ?>";
+	</script>
 	<script type="text/javascript" src="custom/js/main.js"></script>
 	<!-- custom css -->
 	<link rel="stylesheet" type="text/css" href="custom/css/main.css">
@@ -152,16 +155,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						</div>
 						<div class="form-group col-xs-12 col-md-6">
 						    <label for="usernameReg">Nome de Utilizador *</label>
-						    <div class="input-group">
+						    <div class="input-group usernameReg-group">
 							    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
 							    <input type="text" class="form-control" id="usernameReg" name="username" maxlength="64" required autocomplete="off">
 						    </div>
 						</div>
 						<div class="form-group col-xs-12 col-md-6">
 						    <label for="email">Email *</label>
-						    <div class="input-group">
+						    <div class="input-group emailReg-group">
 							    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div>
-							    <input type="email" class="form-control" id="email" name="email" required autocomplete="off" autocomplete="off">
+							    <input type="email" class="form-control" id="emailReg" name="email" required autocomplete="off" autocomplete="off">
 						    </div>
 						</div>
 						<div class="form-group passwordFG col-xs-12 col-md-6">

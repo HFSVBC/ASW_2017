@@ -101,5 +101,45 @@
 			$query = $this->db->query("SELECT nome, id, parent_id FROM dist_con WHERE tipo = 1");
 			return $query->result_array();
 		}
+
+		public function checkEmail(){
+
+			$email     = $this->db->escape($this->input->post('email'));
+
+			$sql   = "SELECT email
+					  FROM proj_users
+					  WHERE email = $email
+					  LIMIT 1";
+
+
+			$query = $this->db->query($sql);
+			$row = $query->row();
+
+			if(empty($row)){
+        		return false;
+			}else{
+				return true;
+			}
+		}
+
+		public function checkUsername(){
+
+			$username = $this->db->escape($this->input->post('username'));
+
+			$sql   = "SELECT username
+					  FROM proj_users
+					  WHERE username = $username
+					  LIMIT 1";
+
+
+			$query = $this->db->query($sql);
+			$row = $query->row();
+
+			if(empty($row)){
+        		return false;
+			}else{
+				return true;
+			}
+		}
 	}
 ?>

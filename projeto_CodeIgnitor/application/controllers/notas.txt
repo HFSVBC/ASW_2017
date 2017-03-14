@@ -1,5 +1,5 @@
 registo:
-controladores de usrname e email -> TRUE or FALSE, on change
+controladores de usrname e email -> TRUE or FALSE, on change [DONE]
 perfil:
 controlador e modelo
 admin:

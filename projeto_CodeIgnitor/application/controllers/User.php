@@ -196,4 +196,70 @@ class User extends CI_Controller {
 		}
 		echo json_encode($outputData);
 	}
+
+	public function checkEmail()
+	{
+
+		$validator = array('success' => false, 'exists' => false);
+
+		$config = array(
+	        array(
+	                'field' => 'email',
+	                'label' => 'User email',
+	                'rules' => 'trim|required',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			$result = $this->user_model->checkEmail();
+			if($result === true){
+				$validator['success']  = true;
+				$validator['exists']   = true;
+			}else{
+				$validator['success']  = true;
+				$validator['exists']   = false;
+			}
+		} else{
+			$validator['success']  = false;
+			$validator['exists']   = 'Erro a validar a info recebida!';
+		}
+
+		echo json_encode($validator);
+	}
+
+	public function checkUsername()
+	{
+
+		$validator = array('success' => false, 'exists' => false);
+
+		$config = array(
+	        array(
+	                'field' => 'username',
+	                'label' => 'User username',
+	                'rules' => 'trim|required',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+		
+		if($this->form_validation->run() === true){
+			$result = $this->user_model->checkUsername();
+			if($result === true){
+				$validator['success']  = true;
+				$validator['exists']   = true;
+			}else{
+				$validator['success']  = true;
+				$validator['exists']   = false;
+			}
+		} else{
+			$validator['success']  = false;
+			$validator['exists']   = 'Erro a validar a info recebida!';
+		}
+
+		echo json_encode($validator);
+	}
 }

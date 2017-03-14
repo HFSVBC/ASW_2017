@@ -23,6 +23,20 @@ $(window).on('load', function(){
 		}
 	});
 
+	// checks if username is already registered
+	$('#usernameReg').on('change', function() {
+		if ($(this).val() != ""){
+			checkUsername($(this));
+		}
+	});
+
+	// checks if email is already registered
+	$('#emailReg').on('change', function() {
+		if ($(this).val() != ""){
+			cheksEmail($(this));
+		}
+	});
+
 	// checks if form is complete and activates submition
 	submitActivator();	
 	$('#regForm .form-control').on('input change', function(){
@@ -63,7 +77,7 @@ $(window).on('load', function(){
 	});
 });
 
-var passCheck = false, inputCheck = false, recaptchaCheck = false;
+var passCheck = false, inputCheck = false, recaptchaCheck = false, emailExistsCheck = false, usernameExistsCheck = false;
 
 var recaptchaCallback = function(){
 	recaptchaCheck = true;
@@ -71,7 +85,7 @@ var recaptchaCallback = function(){
 }
 
 var submitActivator = function(){
-	if (inputCheck && passCheck && recaptchaCheck){
+	if (inputCheck && passCheck && recaptchaCheck && emailExistsCheck && usernameExistsCheck){
 		$("#regInModal").prop('disabled', false);
 	}else{
 		$("#regInModal").prop('disabled', true);
@@ -91,6 +105,64 @@ var showCon = function(obg){
 			$(this).hide();
 		}
 	});
+}
+
+var cheksEmail = function(id){
+	var data = {email: id.val()};
+
+    $.ajax({
+        url:  baseURL+"index.php/user/checkEmail",
+        type: "post",
+        data: data, 
+        dataType: 'json',
+        success:function(response) {
+            var emailGroup = $(".emailReg-group");
+            if(response.success === true) {
+            	if(response.exists == true){
+            		emailGroup.parent().addClass(" has-error");
+            		emailGroup.parent().append("<span class='help-block' id='emailErrorMessage'>Email já registado</span>");
+            		emailExistsCheck = false;
+            	}else{
+            		emailGroup.parent().removeClass(" has-error");
+            		$('#emailErrorMessage').remove();
+            		emailExistsCheck = true;
+            	}               
+            }else{
+                console.log(response.exists);
+                emailExistsCheck = false;
+            }
+            submitActivator();
+        }
+    });
+}
+
+var checkUsername = function(id){
+	var data = {username: id.val()};
+
+    $.ajax({
+        url:  baseURL+"index.php/user/checkUsername",
+        type: "post",
+        data: data, 
+        dataType: 'json',
+        success:function(response) {
+            var usernameGroup = $(".usernameReg-group");
+            if(response.success === true) {
+            	if(response.exists == true){
+            		usernameGroup.parent().addClass(" has-error");
+            		usernameGroup.parent().append("<span class='help-block' id='usernameErrorMessage'>Username já registado</span>");
+            		usernameExistsCheck = false;
+            	}else{
+            		usernameGroup.parent().removeClass(" has-error");
+            		$('#usernameErrorMessage').remove();
+            		usernameExistsCheck = true;
+            	}               
+            }else{
+                console.log(response.exists);
+                usernameExistsCheck = false;
+            }
+            submitActivator();
+        }
+    });
 }
 
 // AJAX for forms submitions
