@@ -1,5 +1,7 @@
 registo:
 controladores de usrname e email -> TRUE or FALSE, on change [DONE]
+login:
+falta o lembrar-me, cookie com o nome de utilizador
 perfil:
 controlador e modelo
 admin:
