@@ -1,0 +1,10 @@
+registo:
+controladores de usrname e email -> TRUE or FALSE, on change
+perfil:
+controlador e modelo
+admin:
+popup por utilizador
+filtro avançado
+
+-----------
+email
