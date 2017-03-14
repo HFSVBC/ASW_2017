@@ -10,6 +10,7 @@ class User extends CI_Controller {
 		date_default_timezone_set("Europe/Lisbon");
 		$this->load->model('user_model');
 		$this->load->library('email');
+		$this->load->library('upload');
 
 	}
 
@@ -74,8 +75,8 @@ class User extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 		if($this->form_validation->run() === true){
-			$createPage = $this->user_model->registerUser();
-			if($createPage === true){
+			$createUser = $this->user_model->registerUser();
+			if($createUser === true){
 				$validator['success']  = true;
 				$validator['messages'] = 'Adicionado com sucesso';
 
@@ -101,6 +102,106 @@ class User extends CI_Controller {
 
 		echo json_encode($validator);
 	}
+
+	public function update()
+	{
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'name',
+	                'label' => 'User First Name',
+	                'rules' => 'trim'
+	        ),
+	        array(
+	                'field' => 'surname',
+	                'label' => 'User Last Name',
+	                'rules' => 'trim',
+	        ),
+	        array(
+	                'field' => 'username',
+	                'label' => 'User username',
+	                'rules' => 'trim|required',
+	        ),
+	        array(
+	                'field' => 'email',
+	                'label' => 'User email',
+	                'rules' => 'trim',
+	        ),
+	        array(
+	                'field' => 'birthDate',
+	                'label' => 'User birth date',
+	                'rules' => 'trim',
+	        ),
+	        array(
+	                'field' => 'sexo',
+	                'label' => 'User sex',
+	                'rules' => 'trim',
+	        ),
+	        array(
+	                'field' => 'country',
+	                'label' => 'User country',
+	                'rules' => 'trim',
+	        ),
+	        array(
+	                'field' => 'dist',
+	                'label' => 'User district if in Portugal',
+	                'rules' => 'trim|integer',
+	        ),
+	        array(
+	                'field' => 'con',
+	                'label' => 'User county if in Portugal',
+	                'rules' => 'trim|integer',
+	        ),
+	        array(
+	                'field' => 'avatar',
+	                'label' => 'user profile image',
+	                'rules' => 'trim',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			if(isset($_FILES['avatar'])){
+				// $validator['success']  = true;
+				// $validator['messages'] = 'Atualizado com sucesso';
+				$target_file   = basename($_FILES["avatar"]["name"]);
+				$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+				$imageName     = MD5($this->input->post('username')).$imageFileType;
+				$image         = $this->updateUserAvatar($imageName);
+				if($image['success']){
+					$user = $this->user_model->updateUser($imageName);
+					if($user === true){
+						$validator['success']  = true;
+						$validator['messages'] = 'Atualizado com sucesso';
+					}else{
+						$validator['success']  = false;
+						$validator['messages'] = 'Erro ao atualizar a base de dados';
+					}
+				}else{
+					$validator['success']  = false;
+					$validator['messages'] = $image['messages'];
+				}	
+			}else{
+				$user = $this->user_model->updateUser();
+				if($user === true){
+					$validator['success']  = true;
+					$validator['messages'] = 'Atualizado com sucesso';
+				}else{
+					$validator['success']  = false;
+					$validator['messages'] = 'Erro ao atualizar a base de dados';
+				}
+			}
+					
+		} else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informação';
+		}
+		echo json_encode($validator);
+	}
+
 	public function login()
 	{
 		$validator = array('success' => false, 'messages' => array());
@@ -261,5 +362,28 @@ class User extends CI_Controller {
 		}
 
 		echo json_encode($validator);
+	}
+
+	public function updateUserAvatar($filename)
+	{
+		$validator = array('success' => false, 'messages' => array());
+
+		$config['upload_path']   = '/home/asw004/public_html/projeto/custom/images/users/profilePics/';
+		$config['allowed_types'] = 'jpg|png|jpeg';
+		$config['file_name']     = $filename;
+		$config['overwrite']     = TRUE;
+		$config['max_size']      = '100';
+
+		$this->upload->initialize($config);
+
+		if ( ! $this->upload->do_upload('avatar')){
+			$validator['success']  = false;
+			$validator['messages'] = $this->upload->display_errors('', '');
+			return $validator;
+		}else{
+			$validator['success']  = true;
+			$validator['messages'] = $this->upload->data();
+			return $validator;
+		}
 	}
 }

@@ -60,7 +60,7 @@ $(window).on('load', function(){
 
 	// Checks if Portugal is selected and activates, or not, 
 	// districts and counties options
-	$(".country").countrySelect({
+	$(".countryInput").countrySelect({
 		"preferredCountries": ["pt"],
 	}).on('change', function(){
 		if($(this).val() == 'Portugal'){

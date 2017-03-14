@@ -50,6 +50,9 @@
 #mainProfCont{
 	padding-right: 10px;
 }
+#btns-update-prof, #alert-container{
+    padding: 0 30px;
+}
 #leftProfCont{
 	padding-left: 10px;
 }

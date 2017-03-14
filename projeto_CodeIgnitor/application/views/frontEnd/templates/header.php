@@ -207,7 +207,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<div class="form-group col-xs-12 col-md-6">
 						    <label for="country">País *</label>
 						    <div class="input-group" id="country_input-group">
-							    <input type="text" class="country" name="country" required autocomplete="off">
+							    <input type="text" class="countryInput" name="country" required autocomplete="off">
 						    </div>
 						</div>
 						<div class="form-group col-xs-12 col-md-6 countyDistrit-FormGroup">

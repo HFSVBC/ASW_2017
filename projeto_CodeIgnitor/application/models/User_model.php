@@ -27,6 +27,34 @@
 			}
 		}
 
+		public function updateUser($avatarName = 'NULL'){
+			$fName     = $this->db->escape($this->input->post('name'));
+			$lName     = $this->db->escape($this->input->post('surname'));
+			$username  = $this->db->escape($this->input->post('username'));
+			$email     = $this->db->escape($this->input->post('email'));
+			$birthDate = $this->db->escape($this->input->post('birthDate'));
+			$sex       = $this->db->escape($this->input->post('sexo'));
+			$country   = $this->db->escape($this->input->post('country'));
+			$district  = $this->db->escape($this->input->post('dist'));
+			$county    = $this->db->escape($this->input->post('con'));
+
+			if ($avatarName != 'NULL'){
+				$sql = "UPDATE proj_users 
+						SET fName=$fName, lName=$lName, email=$email, birthDate=$birthDate, sex=$sex, country=$country, district=$district, county=$county, avatar=$avatarName
+						WHERE username = $username";
+			}else{
+				$sql = "UPDATE proj_users 
+						SET fName=$fName, lName=$lName, email=$email, birthDate=$birthDate, sex=$sex, country=$country, district=$district, county=$county
+						WHERE username = $username";
+			}
+
+			if($this->db->simple_query($sql)){
+        		return true;
+			}else{
+        		return false;
+			}
+		}
+
 		public function loginUser(){
 			$validator = array('success' => false, 'messages' => array());
 
