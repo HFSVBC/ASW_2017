@@ -94,10 +94,9 @@
 			$username  = $this->db->escape($this->input->post('username'));
 			$password  = $this->input->post('password');
 			$remember_me = $this->input->post('rememberMe');
-			$my_cookie = $this->load->helper('cookie');
 			$cookie = array(
 			        'name'   => 'remember',
-							'value' => $password.';'.$username,
+							'value' => $this->input->post('username'),
 			        'expire' => time()+86400,
 			        );
 

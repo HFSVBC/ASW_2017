@@ -90,11 +90,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
         			<h4 class="modal-title">Log In</h4>
       			</div>
 	      		<div class="modal-body">
-							<!-- Cookie -->
-							<?php
-								$my_cookie=isset($_COOKIE['remember']) ? get_cookie('remember') : "";
-								$my_cookie = explode(';',$my_cookie)
-							?>
 	      			<div class="alert alert-danger" id="alertSuccess" role="alert">
 	      				<strong>Erro! </strong><span class="message"></span>
 	      			</div>
@@ -102,19 +97,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					    <label for="username">Nome de Utilizador / Email</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-						    <input type="text" class="form-control" id="username" name="username" value="<?php echo $my_cookie[0]?>">
+						    <input type="text" class="form-control" id="username" name="username" value="<?php echo $usernameStored; ?>">
 					    </div>
 					</div>
 					<div class="form-group">
 					    <label for="password">Password</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
-						    <input type="password" class="form-control" id="password" name="password" value="<?php echo $my_cookie[1]?>">
+						    <input type="password" class="form-control" id="password" name="password">
 					    </div>
 					</div>
 					<div class="checkbox">
     					<label>
-      						<input type="checkbox" name="rememberMe"> Lembrar-me
+      						<input type="checkbox" name="rememberMe" checked> Lembrar-me
     					</label>
   					</div>
 	      		</div>

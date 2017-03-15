@@ -28,6 +28,7 @@ class Userpages extends CI_Controller {
 			$data['loggedIn_user'] = $this->session->userdata['loggedIn_asw004']['username'];
 			$data['loggedIn_email'] = $this->session->userdata['loggedIn_asw004']['email'];
 			$data['loggedIn_level'] = $this->session->userdata['loggedIn_asw004']['level'];
+
 			if (array_key_exists($page, $protectedPages) && $data['loggedIn_level'] > $protectedPages[$page]){
 				show_404();
 			}
@@ -49,9 +50,15 @@ class Userpages extends CI_Controller {
 			$data['loggedIn']  = False;
 		}
 
-		$data['name']      = ucfirst($page);
-		$data['districts'] = $this->getDistricts();
-		$data['counties']  = $this->getCounties();
+		if(isset($_COOKIE['asw004remember'])){
+			$usernameStored = get_cookie('asw004remember');
+		}else{
+			$usernameStored = "";
+		}
+		$data['usernameStored'] = $usernameStored;
+		$data['name']           = ucfirst($page);
+		$data['districts']      = $this->getDistricts();
+		$data['counties']       = $this->getCounties();
 
 		$this->load->view("frontEnd/templates/header", $data);
 		$this->load->view("frontEnd/".$page, $data);
