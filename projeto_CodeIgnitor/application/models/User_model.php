@@ -33,14 +33,14 @@
 			$username  = $this->db->escape($this->input->post('username'));
 			$email     = $this->db->escape($this->input->post('email'));
 			$birthDate = $this->db->escape($this->input->post('birthDate'));
-			$sex       = $this->db->escape($this->input->post('sexo'));
+			$sex       = $this->db->escape($this->input->post('sex'));
 			$country   = $this->db->escape($this->input->post('country'));
-			$district  = $this->db->escape($this->input->post('dist'));
-			$county    = $this->db->escape($this->input->post('con'));
+			$district  = $this->db->escape($this->input->post('district'));
+			$county    = $this->db->escape($this->input->post('county'));
 
 			if ($avatarName != 'NULL'){
 				$sql = "UPDATE proj_users
-						SET fName=$fName, lName=$lName, email=$email, birthDate=$birthDate, sex=$sex, country=$country, district=$district, county=$county, avatar=$avatarName
+						SET fName=$fName, lName=$lName, email=$email, birthDate=$birthDate, sex=$sex, country=$country, district=$district, county=$county, avatar='$avatarName'
 						WHERE username = $username";
 			}else{
 				$sql = "UPDATE proj_users
@@ -51,8 +51,25 @@
 			if($this->db->simple_query($sql)){
         		return true;
 			}else{
-        		return false;
+        		return $this->db->_error_message();
 			}
+		}
+
+		public function chageUserPassword($user)
+		{
+			$options   = ['cost' => 9];
+			$password  = password_hash($this->input->post('passNew'), PASSWORD_BCRYPT, $options);
+
+			$sql = "UPDATE proj_users
+					SET password = '$password'
+					WHERE username = '$user'";
+
+			if($this->db->simple_query($sql)){
+        		return true;
+			}else{
+        		return $this->db->_error_message();
+			}
+
 		}
 
 		public function loginUser(){
@@ -177,6 +194,30 @@
 			}else{
 				return true;
 			}
+		}
+
+		public function checkUserPassword($user){
+
+			$password = $this->input->post('password');
+
+			$sql   = "SELECT username, password
+					  FROM proj_users
+					  WHERE username = '$user'
+					  LIMIT 1";
+
+
+			$query = $this->db->query($sql);
+			$row = $query->row();
+
+			if(!empty($row)){
+        		if(password_verify($password, $row->password)){
+        			return true;
+        		}else{
+        			return false;
+        		}
+        	}else{
+        		return "Erro ao validar a password";
+        	}
 		}
 	}
 ?>

@@ -111,12 +111,12 @@ class User extends CI_Controller {
 	        array(
 	                'field' => 'name',
 	                'label' => 'User First Name',
-	                'rules' => 'trim'
+	                'rules' => 'trim|required'
 	        ),
 	        array(
 	                'field' => 'surname',
 	                'label' => 'User Last Name',
-	                'rules' => 'trim',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
 	                'field' => 'username',
@@ -126,30 +126,30 @@ class User extends CI_Controller {
 	        array(
 	                'field' => 'email',
 	                'label' => 'User email',
-	                'rules' => 'trim',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
 	                'field' => 'birthDate',
 	                'label' => 'User birth date',
-	                'rules' => 'trim',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
-	                'field' => 'sexo',
+	                'field' => 'sex',
 	                'label' => 'User sex',
-	                'rules' => 'trim',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
 	                'field' => 'country',
 	                'label' => 'User country',
-	                'rules' => 'trim',
+	                'rules' => 'trim|required',
 	        ),
 	        array(
-	                'field' => 'dist',
+	                'field' => 'district',
 	                'label' => 'User district if in Portugal',
 	                'rules' => 'trim|integer',
 	        ),
 	        array(
-	                'field' => 'con',
+	                'field' => 'county',
 	                'label' => 'User county if in Portugal',
 	                'rules' => 'trim|integer',
 	        ),
@@ -169,7 +169,7 @@ class User extends CI_Controller {
 				// $validator['messages'] = 'Atualizado com sucesso';
 				$target_file   = basename($_FILES["avatar"]["name"]);
 				$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-				$imageName     = MD5($this->input->post('username')).$imageFileType;
+				$imageName     = MD5($this->input->post('username')).'.'.$imageFileType;
 				$image         = $this->updateUserAvatar($imageName);
 				if($image['success']){
 					$user = $this->user_model->updateUser($imageName);
@@ -178,11 +178,11 @@ class User extends CI_Controller {
 						$validator['messages'] = 'Atualizado com sucesso';
 					}else{
 						$validator['success']  = false;
-						$validator['messages'] = 'Erro ao atualizar a base de dados';
+						$validator['messages'] = 'Erro ao atualizar a base de dados<br>'.$user;
 					}
 				}else{
 					$validator['success']  = false;
-					$validator['messages'] = $image['messages'];
+					$validator['messages'] = $image['messages']."<br>".$imageName;
 				}	
 			}else{
 				$user = $this->user_model->updateUser();
@@ -199,6 +199,39 @@ class User extends CI_Controller {
 			$validator['success']  = false;
 			$validator['messages'] = 'Erro a validar a informação';
 		}
+		echo json_encode($validator);
+	}
+
+	public function changePassword()
+	{
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'passNew',
+	                'label' => 'User password',
+	                'rules' => 'trim|required',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			$chageUserPassword = $this->user_model->chageUserPassword($this->session->userdata['loggedIn_asw004']['username']);
+			if($chageUserPassword === true){
+				$validator['success']  = true;
+				$validator['messages'] = 'Atualizado com sucesso';
+
+			}else{
+				$validator['success']  = false;
+				$validator['messages'] = 'Erro ao atualizar a base de dados<br>'.$chageUserPassword;
+			}
+		} else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o';
+		}
+
 		echo json_encode($validator);
 	}
 
@@ -364,11 +397,39 @@ class User extends CI_Controller {
 		echo json_encode($validator);
 	}
 
+	public function checkOldPassword()
+	{
+
+		$validator = array('success' => false, 'exists' => false);
+
+		$config = array(
+	        array(
+	                'field' => 'password',
+	                'label' => 'User password',
+	                'rules' => 'trim|required',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+		
+		if($this->form_validation->run() === true){
+			$result = $this->user_model->checkUserPassword($this->session->userdata['loggedIn_asw004']['username']);
+			$validator['success']  = true;
+			$validator['exists']   = $result;
+		} else{
+			$validator['success']  = false;
+			$validator['exists']   = 'Erro a validar a info recebida!';
+		}
+
+		echo json_encode($validator);
+	}
+
 	public function updateUserAvatar($filename)
 	{
 		$validator = array('success' => false, 'messages' => array());
 
-		$config['upload_path']   = '/home/asw004/public_html/projeto/custom/images/users/profilePics/';
+		$config['upload_path']   = 'custom/images/users/profilePics/';
 		$config['allowed_types'] = 'jpg|png|jpeg';
 		$config['file_name']     = $filename;
 		$config['overwrite']     = TRUE;
