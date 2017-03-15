@@ -35,7 +35,7 @@
     border-radius: 5px;
     cursor: pointer;
 }
-#SButton-balance > span{
+#SButton-balance > #userBalance-logo{
 	left: 0;
     margin-left: 0;
     position: absolute;

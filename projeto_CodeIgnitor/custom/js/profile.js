@@ -150,3 +150,41 @@ var showResponseUpdatePass = function(responseText, statusText, xhr, $form){
         }, 8000);
     }
 }
+
+var changeUserBalance = function(){
+    $(".alert").hide();
+    var form = $('#changeUserBalance-Form');
+    $('#submitNewBalance').val("A Guardar...").prop('disabled', true);
+    var options = { 
+        success: showResponseUpdateBalance
+    };
+    form.ajaxSubmit(options);
+
+    return false;
+}
+
+var showResponseUpdateBalance = function(responseText, statusText, xhr, $form){
+    $(".alert").hide();
+    var response = JSON.parse(responseText);
+    if(response.success === true) {
+        $("#alertSuccess-profBal > .message").html(response.messages);
+        $("#alertSuccess-profBal").show();
+        $('#submitNewBalance').val("Guardar").prop('disabled', false);
+        var balanceInputOld     = $("#balanceOld");
+        var balanceInputCharged = $("#balanceCharge");
+        var balanceUpdated      = parseFloat(balanceInputOld.val()) + parseFloat(balanceInputCharged.val());
+        $("#userBalance").html(balanceUpdated);
+        balanceInputOld.val(balanceUpdated);
+        balanceInputCharged.val("0.00");
+        setTimeout(function(){
+            $(".alert-success").hide();
+        }, 8000);
+    }else{
+        $("#alertError-profBal > .message").html(response.messages);
+        $("#alertError-profBal").show();
+        $('#submitNewBalance').val("Guardar").prop('disabled', false);
+        setTimeout(function(){
+            $(".alert-danger").hide();
+        }, 8000);
+    }
+}

@@ -9,7 +9,7 @@
 			</div>
 			<div class="col-xs-12 col-md-2" id="SButton-cont">
 				<span id="SButton" data-toggle="modal" data-target="#changePass"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Mudar Password</span>
-				<span id="SButton-balance" data-toggle="modal" data-target="#chargeAccount"><span class="glyphicon glyphicon-eur" aria-hidden="true"></span> <?php echo number_format($balance, 2, ',', ' '); ?></span>
+				<span id="SButton-balance" data-toggle="modal" data-target="#chargeAccount"><span class="glyphicon glyphicon-eur" id="userBalance-logo" aria-hidden="true"></span> <span id="userBalance"><?php echo number_format($balance, 2, ',', ' '); ?></span></span>
 			</div>
 		</div>
 	</header>
@@ -161,30 +161,38 @@
 <div class="modal fade" id="chargeAccount" tabindex="-1" role="dialog" aria-labelledby="chargeAccount-modal">
   	<div class="modal-dialog" role="document">
     	<div class="modal-content">
-	      	<div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="chargeAccount-modal">Carregar a Conta</h4>
-	      	</div>
-	      	<div class="modal-body">
-	      		<div class="form-group">
-		        	<label for="balanceOld">Saldo Atual</label>
-				    <div class="input-group">
-					    <div class="input-group-addon"><span class="glyphicon glyphicon-eur" aria-hidden="true"></span></div>
-					    <input type="number" class="form-control" id="balanceOld" name="balanceOld" value="<?php echo $balance; ?>" readonly>
-				    </div>
+    		<form id="changeUserBalance-Form" onsubmit="event.preventDefault(); return changeUserBalance();" method="post" action="<?php base_url(); ?>index.php/user/updateBalance">
+		      	<div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="chargeAccount-modal">Carregar a Conta</h4>
+		      	</div>
+		      	<div class="modal-body">
+		      		<div class="alert alert-success" id="alertSuccess-profBal" role="alert">
+	      				<strong>Sucesso! </strong><span class="message"></span>
+	      			</div>
+	      			<div class="alert alert-danger" id="alertError-profBal" role="alert">
+	      				<strong>Erro! </strong><span class="message"></span>
+	      			</div>
+		      		<div class="form-group">
+			        	<label for="balanceOld">Saldo Atual</label>
+					    <div class="input-group">
+						    <div class="input-group-addon"><span class="glyphicon glyphicon-eur" aria-hidden="true"></span></div>
+						    <input type="number" class="form-control" id="balanceOld" name="balanceOld" value="<?php echo $balance; ?>" readonly>
+					    </div>
+					</div>
+					<div class="form-group">
+			        	<label for="balanceCharge">Valor a Carregar</label>
+					    <div class="input-group">
+						    <div class="input-group-addon"><span class="glyphicon glyphicon-eur" aria-hidden="true"></span></div>
+						    <input type="number" step="0.01" class="form-control" id="balanceCharge" name="balanceCharge" value="0.00" required>
+					    </div>
+					</div>
 				</div>
-				<div class="form-group">
-		        	<label for="balanceCharge">Valor a Carregar</label>
-				    <div class="input-group">
-					    <div class="input-group-addon"><span class="glyphicon glyphicon-eur" aria-hidden="true"></span></div>
-					    <input type="number" class="form-control" id="balanceCharge" name="balanceCharge" value="0.00" required>
-				    </div>
-				</div>
-			</div>
-	      	<div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-		        <button type="button" class="btn btn-success">Guardar</button>
-	      	</div>
+		      	<div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			        <button type="submit" class="btn btn-success" id="submitNewBalance">Guardar</button>
+		      	</div>
+		    </form>
    		</div>
   	</div>
 </div>

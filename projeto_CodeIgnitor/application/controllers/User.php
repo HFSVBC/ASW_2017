@@ -235,6 +235,39 @@ class User extends CI_Controller {
 		echo json_encode($validator);
 	}
 
+	public function updateBalance()
+	{
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'balanceCharge',
+	                'label' => 'User balance to charge',
+	                'rules' => 'trim|required|numeric',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			$chageUserPassword = $this->user_model->updateUserBalance($this->session->userdata['loggedIn_asw004']['username']);
+			if($chageUserPassword === true){
+				$validator['success']  = true;
+				$validator['messages'] = 'Atualizado com sucesso';
+
+			}else{
+				$validator['success']  = false;
+				$validator['messages'] = 'Erro ao atualizar a base de dados<br>'.$chageUserPassword;
+			}
+		} else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o';
+		}
+
+		echo json_encode($validator);
+	}
+
 	public function login()
 	{
 		$validator = array('success' => false, 'messages' => array());

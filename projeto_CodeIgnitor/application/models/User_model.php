@@ -72,6 +72,22 @@
 
 		}
 
+		public function updateUserBalance($user)
+		{
+			$balance  = $this->db->escape($this->input->post('balanceCharge'));
+
+			$sql = "UPDATE proj_users
+					SET balance = balance + $balance
+					WHERE username = '$user'";
+
+			if($this->db->simple_query($sql)){
+        		return true;
+			}else{
+        		return $this->db->_error_message();
+			}
+
+		}
+
 		public function loginUser(){
 			$validator = array('success' => false, 'messages' => array());
 
