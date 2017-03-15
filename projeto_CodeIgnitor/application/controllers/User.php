@@ -22,52 +22,52 @@ class User extends CI_Controller {
 	        array(
 	                'field' => 'name',
 	                'label' => 'User First Name',
-	                'rules' => 'trim|required'
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'surname',
 	                'label' => 'User Last Name',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'username',
 	                'label' => 'User username',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'email',
 	                'label' => 'User email',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'password',
 	                'label' => 'User password',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'birthDate',
 	                'label' => 'User birth date',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'sexo',
 	                'label' => 'User sex',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'country',
 	                'label' => 'User country',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'dist',
 	                'label' => 'User district if in Portugal',
-	                'rules' => 'trim|integer',
+	                'rules' => 'trim|integer|strip_tags',
 	        ),
 	        array(
 	                'field' => 'con',
 	                'label' => 'User county if in Portugal',
-	                'rules' => 'trim|integer',
+	                'rules' => 'trim|integer|strip_tags',
 	        ),
 		);
 
@@ -111,47 +111,47 @@ class User extends CI_Controller {
 	        array(
 	                'field' => 'name',
 	                'label' => 'User First Name',
-	                'rules' => 'trim|required'
+	                'rules' => 'trim|required|strip_tags'
 	        ),
 	        array(
 	                'field' => 'surname',
 	                'label' => 'User Last Name',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'username',
 	                'label' => 'User username',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'email',
 	                'label' => 'User email',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'birthDate',
 	                'label' => 'User birth date',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'sex',
 	                'label' => 'User sex',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'country',
 	                'label' => 'User country',
-	                'rules' => 'trim|required',
+	                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
 	                'field' => 'district',
 	                'label' => 'User district if in Portugal',
-	                'rules' => 'trim|integer',
+	                'rules' => 'trim|integer|strip_tags',
 	        ),
 	        array(
 	                'field' => 'county',
 	                'label' => 'User county if in Portugal',
-	                'rules' => 'trim|integer',
+	                'rules' => 'trim|integer|strip_tags',
 	        ),
 	        array(
 	                'field' => 'avatar',
@@ -243,7 +243,7 @@ class User extends CI_Controller {
 	        array(
 	                'field' => 'balanceCharge',
 	                'label' => 'User balance to charge',
-	                'rules' => 'trim|required|numeric',
+	                'rules' => 'trim|required|numeric|strip_tags',
 	        ),
 		);
 
