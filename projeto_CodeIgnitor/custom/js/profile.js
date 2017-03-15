@@ -3,7 +3,7 @@ $(window).on('load', function(){
 	$("#prof-sexo").val(userSex);
 	$("#prof-district").val(userDistrict);
 	$("#prof-county").val(userCounty);
-    if(avatar != "NULL"){
+    if(avatar != ""){
         $('#prof-avatar-prev').attr('src', baseURL+"custom/images/users/profilePics/"+avatar);
     }
 
