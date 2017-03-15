@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <html>
 <head>
 	<meta charset="utf-8">
-	
+
 	<title><?php echo $name; ?> | Poker Online</title>
 	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 	<link rel="icon" href="custom/images/favicon.png?v=1.1">
@@ -72,7 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
           						</li>
 								";
 	      				}else{
-							echo "	
+							echo "
 					        	<li id='log-btn'><a href='#'>Log In</a></li>
 					        	<li id='reg-btn'><a href='#'>Registar</a></li>" ;
 	      				}
@@ -90,6 +90,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
         			<h4 class="modal-title">Log In</h4>
       			</div>
 	      		<div class="modal-body">
+							<!-- Cookie -->
+							<?php
+								$my_cookie=isset($_COOKIE['remember']) ? get_cookie('remember') : "";
+								$my_cookie = explode(';',$my_cookie)
+							?>
 	      			<div class="alert alert-danger" id="alertSuccess" role="alert">
 	      				<strong>Erro! </strong><span class="message"></span>
 	      			</div>
@@ -97,21 +102,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					    <label for="username">Nome de Utilizador / Email</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-						    <input type="text" class="form-control" id="username" name="username">
+						    <input type="text" class="form-control" id="username" name="username" value="<?php echo $my_cookie[0]?>">
 					    </div>
 					</div>
 					<div class="form-group">
 					    <label for="password">Password</label>
 					    <div class="input-group">
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
-						    <input type="password" class="form-control" id="password" name="password">
+						    <input type="password" class="form-control" id="password" name="password" value="<?php echo $my_cookie[1]?>">
 					    </div>
 					</div>
 					<div class="checkbox">
     					<label>
       						<input type="checkbox" name="rememberMe"> Lembrar-me
     					</label>
-  					</div>    			
+  					</div>
 	      		</div>
 	      		<div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -232,8 +237,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	    					<label for="confPolicys">
 	      						<input type="checkbox" name="confPolicys" id="confPolicys" required> Concordo com os Termos e Condições
 	    					</label>
-	  					</div>    	
-	  				</div>		
+	  					</div>
+	  				</div>
 	      		</div>
 	      		<div class="modal-footer" id="regFormButtons">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>

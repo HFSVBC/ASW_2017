@@ -97,9 +97,10 @@
 			$my_cookie = $this->load->helper('cookie');
 			$cookie = array(
 			        'name'   => 'remember',
+							'value' => $password.';'.$username,
 			        'expire' => time()+86400,
 			        );
-							
+
 			$sql   = "SELECT username, email, password, level
 					  FROM proj_users
 					  WHERE (username = $username OR email = $username) AND level >= 0 AND active = 0
