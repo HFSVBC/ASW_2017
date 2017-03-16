@@ -320,6 +320,39 @@ class User extends CI_Controller {
 		redirect('/', 'refresh');
 	}
 
+	public function getUserDetails()
+	{
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'id',
+	                'label' => 'User usernme',
+	                'rules' => 'trim|required',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			$result = $this->user_model->getUserDetails();
+			if($result['success'] === true){
+				$validator['success']  = true;
+				$validator['messages'] = $result['data'];
+
+			}else{
+				$validator['success']  = false;
+				$validator['messages'] = 'Utilizador não encontrado<br>'.$result['data'];
+			}
+		} else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o';
+		}
+
+		echo json_encode($validator);
+	}
+
 	public function getUserDataAdmin()
 	{
 		$outputData = array('data' => array());
@@ -329,13 +362,13 @@ class User extends CI_Controller {
 			$data = [
 				$row['fName'],
 				$row['lName'],
-				"<span class='username-table text-primary' data-toggle='modal' data-userId='".$row['username']."'data-target='#myModal'>".$row['username']."</span>",
+				"<span class='username-table text-primary details-user' data-toggle='modal' data-userId='".$row['username']."' data-target='#userDetails'>".$row['username']."</span>",
 				$row['email'],
-				$row['balance'],
+				number_format($row['balance'], 2, ',', ' ')." €",
 				$row['birthDate'],
 				$row['country'],
-				'<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                 <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>'
+				"<button type='button' class='btn btn-info details-user' data-toggle='modal' data-userId='".$row['username']."' data-target='#userDetails'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button>
+                 <button type='button' class='btn btn-danger' data-userId='".$row['username']."'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>"
 			];
 			array_push($outputData['data'], $data);
 		}

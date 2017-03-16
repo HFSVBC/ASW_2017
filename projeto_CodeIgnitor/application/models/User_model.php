@@ -129,15 +129,44 @@
 			return $validator;
 		}
 
+		public function getUserDetails(){
+			$validator = array('success' => false, 'data' => array());
 
+			$user     = $this->input->post('id');
+			$userdata = $this->getUser($user);
+
+			if(!empty($userdata)){
+				$data = array(
+					'fName'        => $userdata->fName,
+					'lName'        => $userdata->lName,
+					'username'     => $userdata->username,
+					'email'        => $userdata->email,
+					'balance'      => number_format($userdata->balance, 2, ',', ' '),
+					'birthDate'    => $userdata->birthDate,
+					'sex'          => $userdata->sex,
+					'country'      => $userdata->country,
+					'district'     => $this->getDistrictOrCounty($userdata->district),
+					'county'       => $this->getDistrictOrCounty($userdata->county),
+					'creationDate' => $userdata->creationDate,
+					'level'        => $userdata->level
+	        	);
+
+	        	$validator['success'] = true; 
+	        	$validator['data']    = $data;
+	        }else{
+	        	$validator['success'] = false; 
+	        	$validator['data']    = false;
+	        }
+	        return $validator;
+		}
 
 		public function getUser($username)
 		{
-			$validator = array('success' => false, 'messages' => array());
+			$username = $this->db->escape($username);
 
 			$sql   = "SELECT fName, lName, username, email, balance, birthDate, sex, country, district, county, creationDate, activationDate, level, avatar
 					  FROM proj_users
-					  WHERE username = '$username'
+					  WHERE username = $username
 					  LIMIT 1";
 			$query = $this->db->query($sql);
 
@@ -170,6 +199,21 @@
 		{
 			$query = $this->db->query("SELECT nome, id, parent_id FROM dist_con WHERE tipo = 1");
 			return $query->result_array();
+		}
+
+		private function getDistrictOrCounty($id)
+		{
+			$id    = $this->db->escape($id);
+
+			$query = $this->db->query("SELECT nome FROM dist_con WHERE id = $id");
+
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row->nome;
+			}else{
+				return "Distrito não encontrado";
+			}
 		}
 
 		public function checkEmail(){
