@@ -1,11 +1,17 @@
 "use strict"
 $(window).on('load', function(){
+	// Setup - add a text input to each footer cell
+	$('#admin-users, #admin-plays').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+
 	var userAdminTable = $('#admin-users').DataTable({
     	"columnDefs": [{
               "orderable": false,
               "targets"  : -1
          }],
-         "ajax": "http://appserver-01.alunos.di.fc.ul.pt/~asw004/projeto/index.php/user/getUserDataAdmin",
+         "ajax": baseURL + "index.php/user/getUserDataAdmin",
 	});
 	setInterval( function () {
     	userAdminTable.ajax.reload();
@@ -16,11 +22,25 @@ $(window).on('load', function(){
               "orderable": false,
               "targets"  : -1
          }],
-         "ajax": "http://appserver-01.alunos.di.fc.ul.pt/~asw004/projeto/index.php/user/getGamesDataAdmin",
+         "ajax": baseURL + "index.php/user/getGamesDataAdmin",
 	});
+
+	 // Apply the search
+	 table.columns().every( function () {
+			 var that = this;
+
+			 $( 'input', this.footer() ).on( 'keyup change', function () {
+					 if ( that.search() !== this.value ) {
+							 that
+									 .search( this.value )
+									 .draw();
+					 }
+			 } );
+	 } );
+
 	setInterval( function () {
     	gamesAdminTable.ajax.reload();
-	}, 50000 ); 
+	}, 50000 );
 
     $('body').on('click', '.details-user', function(){
         var id = $(this).attr('data-userId');
@@ -31,9 +51,9 @@ $(window).on('load', function(){
 var loadUserData_admin = function(id){
     var data = {id: id};
     $.ajax({
-        url:  baseURL+"index.php/user/getUserDetails",
+        url:  baseURL + "index.php/user/getUserDetails",
         type: "post",
-        data: data, 
+        data: data,
         dataType: 'json',
         success:function(response) {
             if(response.success === true) {
@@ -51,7 +71,7 @@ var loadUserData_admin = function(id){
                     $('#sex-usr-adm').val("Masculino");
                 }else{
                     $('#sex-usr-adm').val("Feminino");
-                }             
+                }
                 $('#country-usr-adm').val(data.country);
                 $('#district-usr-adm').val(data.district);
                 $('#county-usr-adm').val(data.county);

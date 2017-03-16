@@ -45,6 +45,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<th>Opçoes</th>
 					</tr>
 				</thead>
+				<tfoot>
+            <tr>
+							<th>Nome</th>
+							<th>Apelido</th>
+							<th>Username</th>
+							<th>Email</th>
+							<th>Balance</th>
+							<th>D. Nascimento</th>
+							<th>Pais</th>
+							<th>Opçoes</th>
+            </tr>
+        </tfoot>
 				<tbody>
 
 				</tbody>
