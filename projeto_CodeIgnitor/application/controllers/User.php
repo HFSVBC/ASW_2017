@@ -2,8 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Controller {
-	
-	public function __construct() 
+
+	public function __construct()
 	{
 		parent::__construct();
 
@@ -183,7 +183,7 @@ class User extends CI_Controller {
 				}else{
 					$validator['success']  = false;
 					$validator['messages'] = $image['messages']."<br>".$imageName;
-				}	
+				}
 			}else{
 				$user = $this->user_model->updateUser();
 				if($user === true){
@@ -194,7 +194,7 @@ class User extends CI_Controller {
 					$validator['messages'] = 'Erro ao atualizar a base de dados';
 				}
 			}
-					
+
 		} else{
 			$validator['success']  = false;
 			$validator['messages'] = 'Erro a validar a informação';
@@ -353,30 +353,42 @@ class User extends CI_Controller {
 		echo json_encode($validator);
 	}
 
-	public function getUserDataAdmin()
+	public function getUserDataAdmin($dateB, $dateE)
 	{
 		$outputData = array('data' => array());
 
 		$result = $this->user_model->getUserDataAdmin();
 		foreach ($result as $row) {
-			$data = [
-				$row['fName'],
-				$row['lName'],
-				"<span class='username-table text-primary details-user' data-toggle='modal' data-userId='".$row['username']."' data-target='#userDetails'>".$row['username']."</span>",
-				$row['email'],
-				number_format($row['balance'], 2, ',', ' ')." €",
-				$row['birthDate'],
-				$row['country'],
-				"<button type='button' class='btn btn-info details-user' data-toggle='modal' data-userId='".$row['username']."' data-target='#userDetails'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button>
-                 <button type='button' class='btn btn-danger' data-userId='".$row['username']."'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>"
-			];
-			array_push($outputData['data'], $data);
+			if (getUsersByBirthday($dateB, $dateE, $row['username'])){
+				$data = [
+					$row['fName'],
+					$row['lName'],
+					"<span class='username-table text-primary details-user' data-toggle='modal' data-userId='".$row['username']."' data-target='#userDetails'>".$row['username']."</span>",
+					$row['email'],
+					number_format($row['balance'], 2, ',', ' ')." €",
+					$row['birthDate'],
+					$row['country'],
+					"<button type='button' class='btn btn-info details-user' data-toggle='modal' data-userId='".$row['username']."' data-target='#userDetails'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button>
+									 <button type='button' class='btn btn-danger' data-userId='".$row['username']."'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>"
+				];
+				array_push($outputData['data'], $data);
+			}
 		}
 		echo json_encode($outputData);
 	}
 
+	public function getUsersByBirthday($dateB, $dateE, $user)
+	{
+		if ($dateB == 'NULL' && $dateE == 'NULL'){
+			return true;
+		}
+
+		return $this->user_model->getDate($dateB, $dateE, $user);
+
+
+	}
 	public function getGamesDataAdmin()
-	{	
+	{
 		$outputData = array('data' => array());
 
 		$result = $this->user_model->getGamesDataAdmin();
@@ -445,7 +457,7 @@ class User extends CI_Controller {
 
 		$this->form_validation->set_rules($config);
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
-		
+
 		if($this->form_validation->run() === true){
 			$result = $this->user_model->checkUsername();
 			if($result === true){
@@ -478,7 +490,7 @@ class User extends CI_Controller {
 
 		$this->form_validation->set_rules($config);
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
-		
+
 		if($this->form_validation->run() === true){
 			$result = $this->user_model->checkUserPassword($this->session->userdata['loggedIn_asw004']['username']);
 			$validator['success']  = true;

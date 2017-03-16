@@ -3,6 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <!-- custom css -->
 <link rel="stylesheet" type="text/css" href="custom/css/admin.css">
 <div class="coponentCont container">
+
+
+
 	<h2 class="page-header">Admin</h2>
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href='#users' class="tabTriger" aria-controls="users" role="tab" data-toggle="tab">Utilizadores</a></li>
@@ -10,6 +13,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	</ul>
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane active" id="users">
+			<!-- advanced search -->
+			<!--passar para select -->
+			<input type="text" id="Paises" class="countryInput" name="country">
+			<select id="Distritos" class="form-control">
+				<?php echo $districts; ?>
+			</select>
+
+			<form class="form-inline">
+			  <div class="form-group">
+			    <label for="InputAge">Faixa etária de:</label>
+			    <input type="text" class="form-control" id="InputAge" placeholder="faixa etária">
+			  </div>
+			  <div class="form-group">
+			    <label for="InputAgeTill">Até:</label>
+			    <input type="text" class="form-control" id="InputAgeTill" placeholder="faixa etária">
+			  </div>
+			  <button type="submit" class="btn btn-default">Busca</button>
+			</form>
+
 			<table id='admin-users' class="table table-striped table-responsive">
 				<thead>
 					<tr>
@@ -29,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			</table>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="game">
+
 			<table id='admin-plays' class="table table-striped table-responsive">
 				<thead>
 					<tr>

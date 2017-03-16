@@ -151,10 +151,10 @@
 					'level'        => $userdata->level
 	        	);
 
-	        	$validator['success'] = true; 
+	        	$validator['success'] = true;
 	        	$validator['data']    = $data;
 	        }else{
-	        	$validator['success'] = false; 
+	        	$validator['success'] = false;
 	        	$validator['data']    = false;
 	        }
 	        return $validator;
@@ -213,6 +213,19 @@
 				return $row->nome;
 			}else{
 				return "Distrito não encontrado";
+			}
+		}
+
+		public function getDate($dateB, $dateE, $user){
+
+			$query  = $this->db->query("SELECT username FROM proj_users WHERE date_diff($dateB,birthDate)>0 AND date_diff(birthDate, $dateE)<0 AND username = $user LIMIT 1");
+
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return true;
+			}else{
+				return false;
 			}
 		}
 
