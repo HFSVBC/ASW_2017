@@ -359,7 +359,7 @@ class User extends CI_Controller {
 
 		$result = $this->user_model->getUserDataAdmin();
 		foreach ($result as $row) {
-			if (getUsersByBirthday($dateB, $dateE, $row['username'])){
+			if ($this->getUsersByBirthday($dateB, $dateE, $row['username'])){
 				$data = [
 					$row['fName'],
 					$row['lName'],

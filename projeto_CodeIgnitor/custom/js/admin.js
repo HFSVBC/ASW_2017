@@ -1,9 +1,13 @@
 "use strict"
 $(window).on('load', function(){
 	// Setup - add a text input to each footer cell
-	$('#admin-users, #admin-plays').each( function () {
+	$('#admin-users tfoot th').each( function () {
         var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        if (title == "Saldo" || title == "D. Nascimento"){
+            $(this).html( '<input type="text" readonly placeholder="'+title+'"/>' );
+        }else{
+            $(this).html( '<input type="text" placeholder="'+title+'" />' );
+        }
     } );
 
 	var userAdminTable = $('#admin-users').DataTable({
@@ -11,7 +15,7 @@ $(window).on('load', function(){
               "orderable": false,
               "targets"  : -1
          }],
-         "ajax": baseURL + "index.php/user/getUserDataAdmin",
+        "ajax": baseURL + "index.php/user/getUserDataAdmin/NULL/NULL",
 	});
 	setInterval( function () {
     	userAdminTable.ajax.reload();
@@ -26,7 +30,7 @@ $(window).on('load', function(){
 	});
 
 	 // Apply the search
-	 table.columns().every( function () {
+	 userAdminTable.columns().every( function () {
 			 var that = this;
 
 			 $( 'input', this.footer() ).on( 'keyup change', function () {

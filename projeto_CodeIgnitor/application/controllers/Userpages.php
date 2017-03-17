@@ -30,7 +30,7 @@ class Userpages extends CI_Controller {
 			$data['loggedIn_level'] = $this->session->userdata['loggedIn_asw004']['level'];
 
 			if (array_key_exists($page, $protectedPages) && $data['loggedIn_level'] > $protectedPages[$page]){
-				show_404();
+				$page = 'acessdenied';
 			}
 			if($page == 'profile'){
 				$result            = $this->getLoggedInUserData($data['loggedIn_user']);
@@ -45,7 +45,8 @@ class Userpages extends CI_Controller {
 				$data['avatar']    = $result ->avatar;
 			}
 		}else if(array_key_exists($page, $protectedPages)){
-			show_404();
+			$page = 'acessdenied';
+			$data['loggedIn']  = False;
 		}else{
 			$data['loggedIn']  = False;
 		}

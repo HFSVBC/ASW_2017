@@ -39,24 +39,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<th>Apelido</th>
 						<th>Username</th>
 						<th>Email</th>
-						<th>Balance</th>
+						<th>Saldo</th>
 						<th>D. Nascimento</th>
-						<th>Pais</th>
-						<th>Opçoes</th>
+						<th>País</th>
+						<th id="opsAdminUser">Opções</th>
 					</tr>
 				</thead>
 				<tfoot>
-            <tr>
-							<th>Nome</th>
-							<th>Apelido</th>
-							<th>Username</th>
-							<th>Email</th>
-							<th>Balance</th>
-							<th>D. Nascimento</th>
-							<th>Pais</th>
-							<th>Opçoes</th>
-            </tr>
-        </tfoot>
+            		<tr>
+						<th>Nome</th>
+						<th>Apelido</th>
+						<th>Username</th>
+						<th>Email</th>
+						<th class="hideTableSerach">Saldo</th>
+						<th class="hideTableSerach">D. Nascimento</th>
+						<th>País</th>
+						<th id="opsAdminUser-Bottom">Opções</th>
+            		</tr>
+        		</tfoot>
 				<tbody>
 
 				</tbody>
@@ -74,7 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<th>Data de Fim</th>
 						<th>Total de utilizadores</th>
 						<th>Vencedor</th>
-						<th>Opçoes</th>
+						<th>Opções</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -10,3 +10,12 @@
 .table{
 	width: 100%!important;
 }
+tfoot > tr > th > input{
+	width: 100%!important;
+}
+#opsAdminUser{
+	width: 100px;
+}
+#opsAdminUser-Bottom, #admin-users_filter, .hideTableSerach{
+	opacity: 0;
+}
