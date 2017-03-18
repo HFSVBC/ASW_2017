@@ -1,5 +1,6 @@
 "use strict"
 $(window).on('load', function(){
+	var pesquisa = "NULL/NULL";
 	// Setup - add a text input to each footer cell
 	$('#admin-users tfoot th').each( function () {
         var title = $(this).text();
@@ -15,7 +16,7 @@ $(window).on('load', function(){
               "orderable": false,
               "targets"  : -1
          }],
-        "ajax": baseURL + "index.php/user/getUserDataAdmin/NULL/NULL",
+        "ajax": baseURL + "index.php/user/getUserDataAdmin/" + pesquisa,
 	});
 	setInterval( function () {
     	userAdminTable.ajax.reload();
@@ -51,6 +52,9 @@ $(window).on('load', function(){
         console.log(id);
         loadUserData_admin(id);
     });
+		$('#searchAdv_btn').on('click', function(){
+				pesquisa = "NULL/NULL" //resultado da funçao, ir buscar campos
+		});
 });
 var loadUserData_admin = function(id){
     var data = {id: id};
