@@ -353,13 +353,13 @@ class User extends CI_Controller {
 		echo json_encode($validator);
 	}
 
-	public function getUserDataAdmin($dateB, $dateE)
+	public function getUserDataAdmin($dateB, $dateE, $district)
 	{
 		$outputData = array('data' => array());
 
 		$result = $this->user_model->getUserDataAdmin();
 		foreach ($result as $row) {
-			if ($this->getUsersByBirthday($dateB, $dateE, $row['username'])){
+			if ($this->getUsersByBirthday($dateB, $dateE, $district, $row['username'])){
 				$data = [
 					$row['fName'],
 					$row['lName'],
@@ -377,13 +377,13 @@ class User extends CI_Controller {
 		echo json_encode($outputData);
 	}
 
-	public function getUsersByBirthday($dateB, $dateE, $user)
+	public function getUsersByBirthday($dateB, $dateE, $district, $user)
 	{
-		if ($dateB == 'NULL' && $dateE == 'NULL'){
+		if ($dateB == 'NULL' && $dateE == 'NULL' && $district == 'NULL'){
 			return true;
 		}
 
-		return $this->user_model->getDate($dateB, $dateE, $user);
+		return $this->user_model->getDateAndDistrict($dateB, $dateE, $district, $user);
 
 
 	}

@@ -216,9 +216,9 @@
 			}
 		}
 
-		public function getDate($dateB, $dateE, $user){
+		public function getDateAndDistrict($dateB, $dateE, $district, $user){
 
-			$query  = $this->db->query("SELECT username FROM proj_users WHERE date_diff($dateB,birthDate)>0 AND date_diff(birthDate, $dateE)<0 AND username = $user LIMIT 1");
+			$query  = $this->db->query("SELECT username FROM proj_users WHERE date_diff($dateB,birthDate)>0 AND date_diff(birthDate, $dateE)<0 AND $district = district AND username = $user LIMIT 1");
 
 			$row   = $query->row();
 

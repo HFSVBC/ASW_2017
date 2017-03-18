@@ -1,6 +1,6 @@
 "use strict"
 $(window).on('load', function(){
-	var pesquisa = "NULL/NULL";
+	var pesquisa = "NULL/NULL/NULL";
 	// Setup - add a text input to each footer cell
 	$('#admin-users tfoot th').each( function () {
         var title = $(this).text();
@@ -53,7 +53,9 @@ $(window).on('load', function(){
         loadUserData_admin(id);
     });
 		$('#searchAdv_btn').on('click', function(){
-				pesquisa = "NULL/NULL" //resultado da funçao, ir buscar campos
+				var age_op = $('#InputAge').val();
+				var age2_op = $('#InputAgeTill').val();
+				pesquisa = age_op + "/" + age2_op + "/NULL" //resultado da funçao, ir buscar campos
 		});
 });
 var loadUserData_admin = function(id){
