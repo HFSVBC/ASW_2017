@@ -9,7 +9,7 @@ $(window).on('load', function(){
         },
         timepicker:false
     }).keydown(function(e) {
-        if(e.keyCode !== 8) {
+        if(e.keyCode !== 8 && e.keyCode !== 46) {
             e.preventDefault();
         }
     });
@@ -23,7 +23,7 @@ $(window).on('load', function(){
         timepicker:false,
         maxDate:'+1970/01/01'//today is maximum date calendar
     }).keydown(function(e) {
-        if(e.keyCode !== 8) {
+        if(e.keyCode !== 8 && e.keyCode !== 46) {
             e.preventDefault();
         }
     });
