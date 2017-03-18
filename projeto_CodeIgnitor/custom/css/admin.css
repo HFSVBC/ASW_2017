@@ -19,3 +19,15 @@ tfoot > tr > th > input{
 #opsAdminUser-Bottom, #admin-users_filter, .hideTableSerach{
 	opacity: 0;
 }
+#advancedSearch{
+	margin-bottom: 20px;
+}
+#ageGroup{
+	margin-left: 20px;
+}
+#searchAdv_btn{
+	margin-left: 30px;
+}
+#agetill{
+	margin-left: 15px;
+}

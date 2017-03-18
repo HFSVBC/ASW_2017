@@ -14,22 +14,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane active" id="users">
 			<!-- advanced search -->
-			<!--passar para select -->
-			<input type="text" id="Paises" class="countryInput" name="country">
-			<select id="Distritos" class="form-control">
-				<?php echo $districts; ?>
-			</select>
-
-			<form class="form-inline">
-			  <div class="form-group">
-			    <label for="InputAge">Faixa etária de:</label>
-			    <input type="text" class="form-control" id="InputAge" placeholder="faixa etária">
-			  </div>
-			  <div class="form-group">
-			    <label for="InputAgeTill">Até:</label>
-			    <input type="text" class="form-control" id="InputAgeTill" placeholder="faixa etária">
-			  </div>
-			  <button type="submit" class="btn btn-default">Busca</button>
+			<form class="form-inline" id="advancedSearch">
+				<div class="form-group">
+					<label for="Distritos">Distrito:</label>
+					<select id="Distritos" class="form-control">
+						<?php echo $districts; ?>
+					</select>
+				</div>
+				<div id="ageGroup" class="form-group">
+				  	<div class="form-group">
+					    <label for="InputAge">Faixa etária de:</label>
+					    <input type="text" class="form-control" id="InputAge" placeholder="faixa etária">
+				  	</div>
+				  	<div class="form-group" id="agetill">
+					    <label for="InputAgeTill">Até:</label>
+					    <input type="text" class="form-control" id="InputAgeTill" placeholder="faixa etária">
+				  	</div>
+				</div>
+			  	<button type="submit" class="btn btn-default" id="searchAdv_btn">Busca</button>
 			</form>
 
 			<table id='admin-users' class="table table-striped table-responsive">
