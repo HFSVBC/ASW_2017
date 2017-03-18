@@ -14,21 +14,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane active" id="users">
 			<!-- advanced search -->
-			<form class="form-inline" id="advancedSearch">
+			<form class="form-inline" id="advancedSearch" onsubmit="event.preventDefault(); return adv_Search();">
 				<div class="form-group">
 					<label for="Distritos">Distrito:</label>
-					<select id="Distritos" class="form-control">
+					<select id="Distritos" class="form-control adv_search_fields">
+						<option value="NULL">Não Selecionado</option>
 						<?php echo $districts; ?>
 					</select>
 				</div>
 				<div id="ageGroup" class="form-group">
 				  	<div class="form-group">
 					    <label for="InputAge">Faixa etária de:</label>
-					    <input type="text" class="form-control" id="InputAge" placeholder="faixa etária">
+					    <input type="text" class="form-control adv_search_fields" id="InputAge" placeholder="faixa etária" autocomplete="off">
 				  	</div>
 				  	<div class="form-group" id="agetill">
 					    <label for="InputAgeTill">Até:</label>
-					    <input type="text" class="form-control" id="InputAgeTill" placeholder="faixa etária">
+					    <input type="text" class="form-control adv_search_fields" id="InputAgeTill" placeholder="faixa etária" autocomplete="off">
 				  	</div>
 				</div>
 			  	<button type="submit" class="btn btn-default" id="searchAdv_btn">Busca</button>

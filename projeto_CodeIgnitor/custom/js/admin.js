@@ -1,17 +1,36 @@
 "use strict"
 $(window).on('load', function(){
-	var pesquisa = "NULL/NULL/NULL";
-	// Setup - add a text input to each footer cell
-	$('#admin-users tfoot th').each( function () {
-        var title = $(this).text();
-        if (title == "Saldo" || title == "D. Nascimento"){
-            $(this).html( '<input type="text" readonly placeholder="'+title+'"/>' );
-        }else{
-            $(this).html( '<input type="text" placeholder="'+title+'" />' );
+    $('#InputAge').datetimepicker({
+        format:'Y-m-d',
+        onShow:function( ct ){
+            this.setOptions({
+                maxDate:$('#InputAgeTill').val()?$('#InputAgeTill').val():'+1970/01/01'
+            })
+        },
+        timepicker:false
+    }).keydown(function(e) {
+        if(e.keyCode !== 8) {
+            e.preventDefault();
         }
-    } );
+    });
+    $('#InputAgeTill').datetimepicker({
+        format:'Y-m-d',
+        onShow:function( ct ){
+            this.setOptions({
+                minDate:$('#InputAge').val()?$('#InputAge').val():false
+            })
+        },
+        timepicker:false,
+        maxDate:'+1970/01/01'//today is maximum date calendar
+    }).keydown(function(e) {
+        if(e.keyCode !== 8) {
+            e.preventDefault();
+        }
+    });
 
-	var userAdminTable = $('#admin-users').DataTable({
+    // Users Table
+    pesquisa = "NULL/NULL/NULL";
+	userAdminTable = $('#admin-users').DataTable({
     	"columnDefs": [{
               "orderable": false,
               "targets"  : -1
@@ -20,46 +39,74 @@ $(window).on('load', function(){
 	});
 	setInterval( function () {
     	userAdminTable.ajax.reload();
-	}, 50000 );
+	}, 5000 );
 
-	var gamesAdminTable = $('#admin-plays').DataTable({
-    	"columnDefs": [{
-              "orderable": false,
-              "targets"  : -1
-         }],
-         "ajax": baseURL + "index.php/user/getGamesDataAdmin",
+    // Setup - add a text input to each footer cell
+    $('#admin-users tfoot th').each( function () {
+        var title = $(this).text();
+        if (title == "Saldo" || title == "D. Nascimento"){
+            $(this).html( '<input type="text" readonly placeholder="'+title+'"/>' );
+        }else{
+            $(this).html( '<input type="text" placeholder="'+title+'" />' );
+        }
+    } );
+	// Apply the search
+	userAdminTable.columns().every( function () {
+		var that = this;
+
+		$( 'input', this.footer() ).on( 'keyup change', function (){
+			if ( that.search() !== this.value ) {
+				that
+					.search( this.value )
+					.draw();
+			}
+		});
 	});
 
-	 // Apply the search
-	 userAdminTable.columns().every( function () {
-			 var that = this;
+    $('.adv_search_fields').on('click, change', function(){
+        adv_Search();
+    });
 
-			 $( 'input', this.footer() ).on( 'keyup change', function () {
-					 if ( that.search() !== this.value ) {
-							 that
-									 .search( this.value )
-									 .draw();
-					 }
-			 } );
-	 } );
+    // Games Table
+    var gamesAdminTable = $('#admin-plays').DataTable({
+        "columnDefs": [{
+              "orderable": false,
+              "targets"  : -1
+        }],
+        "ajax": baseURL + "index.php/user/getGamesDataAdmin",
+    });
 
 	setInterval( function () {
     	gamesAdminTable.ajax.reload();
-	}, 50000 );
+	}, 5000 );
 
-  $('body').on('click', '.details-user', function(){
-      var id = $(this).attr('data-userId');
-      console.log(id);
-      loadUserData_admin(id);
-  });
-	$('#searchAdv_btn').on('click', function(){
-			var age_op = $('#InputAge').val();
-			var age2_op = $('#InputAgeTill').val();
-			var district_op = $('#Distritos').val();
-			pesquisa = age_op + "/" + age2_op + "/" + district_op;
-			userAdminTable.ajax.reload();
-	});
+    // Load user details modal
+    $('body').on('click', '.details-user', function(){
+        var id = $(this).attr('data-userId');
+        console.log(id);
+        loadUserData_admin(id);
+    });
 });
+
+var pesquisa, userAdminTable;
+
+var adv_Search = function(table, pesquisa){
+    var age_op = $('#InputAge').val();
+    if (age_op == ""){
+        age_op = "NULL";
+    }
+    var age2_op = $('#InputAgeTill').val();
+    if (age2_op == ""){
+        age2_op = "NULL";
+    }
+    var district_op = $('#Distritos').val();
+    pesquisa = age_op + "/" + age2_op + "/" + district_op;
+    console.log(pesquisa)
+    userAdminTable.ajax.url(baseURL + "index.php/user/getUserDataAdmin/" + pesquisa).load();
+
+    return false;
+}
+
 var loadUserData_admin = function(id){
     var data = {id: id};
     $.ajax({
