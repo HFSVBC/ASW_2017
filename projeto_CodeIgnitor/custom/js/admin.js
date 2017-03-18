@@ -47,16 +47,18 @@ $(window).on('load', function(){
     	gamesAdminTable.ajax.reload();
 	}, 50000 );
 
-    $('body').on('click', '.details-user', function(){
-        var id = $(this).attr('data-userId');
-        console.log(id);
-        loadUserData_admin(id);
-    });
-		$('#searchAdv_btn').on('click', function(){
-				var age_op = $('#InputAge').val();
-				var age2_op = $('#InputAgeTill').val();
-				pesquisa = age_op + "/" + age2_op + "/NULL" //resultado da funçao, ir buscar campos
-		});
+  $('body').on('click', '.details-user', function(){
+      var id = $(this).attr('data-userId');
+      console.log(id);
+      loadUserData_admin(id);
+  });
+	$('#searchAdv_btn').on('click', function(){
+			var age_op = $('#InputAge').val();
+			var age2_op = $('#InputAgeTill').val();
+			var district_op = $('#Distritos').val();
+			pesquisa = age_op + "/" + age2_op + "/" + district_op;
+			userAdminTable.ajax.reload();
+	});
 });
 var loadUserData_admin = function(id){
     var data = {id: id};
