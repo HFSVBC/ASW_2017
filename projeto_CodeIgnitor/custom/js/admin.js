@@ -101,7 +101,6 @@ var adv_Search = function(table, pesquisa){
     }
     var district_op = $('#Distritos').val();
     pesquisa = age_op + "/" + age2_op + "/" + district_op;
-    console.log(pesquisa)
     userAdminTable.ajax.url(baseURL + "index.php/user/getUserDataAdmin/" + pesquisa).load();
 
     return false;
