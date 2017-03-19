@@ -251,14 +251,47 @@ class User extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 		if($this->form_validation->run() === true){
-			$chageUserPassword = $this->user_model->updateUserBalance($this->session->userdata['loggedIn_asw004']['username']);
-			if($chageUserPassword === true){
+			$result = $this->user_model->updateUserBalance($this->session->userdata['loggedIn_asw004']['username']);
+			if($result === true){
 				$validator['success']  = true;
 				$validator['messages'] = 'Atualizado com sucesso';
 
 			}else{
 				$validator['success']  = false;
-				$validator['messages'] = 'Erro ao atualizar a base de dados<br>'.$chageUserPassword;
+				$validator['messages'] = 'Erro ao atualizar a base de dados<br>'.$result;
+			}
+		} else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o';
+		}
+
+		echo json_encode($validator);
+	}
+
+	public function deleteUser()
+	{
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'username',
+	                'label' => 'User username',
+	                'rules' => 'trim|required|strip_tags',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			$result = $this->user_model->deleteUser();
+			if($result === true){
+				$validator['success']  = true;
+				$validator['messages'] = 'Utilizador apagado com sucesso';
+
+			}else{
+				$validator['success']  = false;
+				$validator['messages'] = 'Erro ao atualizar a base de dados<br>';
 			}
 		} else{
 			$validator['success']  = false;
@@ -353,13 +386,13 @@ class User extends CI_Controller {
 		echo json_encode($validator);
 	}
 
-	public function getUserDataAdmin($dateB, $dateE, $district)
+	public function getUserDataAdmin($dateB, $dateE, $district, $county)
 	{
 		$outputData = array('data' => array());
 
 		$result = $this->user_model->getUserDataAdmin();
 		foreach ($result as $row) {
-			if ($this->getUsersByBirthday($dateB, $dateE, $district, $row['username'])){
+			if ($this->getUsersByAdv($dateB, $dateE, $district, $county, $row['username'])){
 				$data = [
 					$row['fName'],
 					$row['lName'],
@@ -369,7 +402,7 @@ class User extends CI_Controller {
 					$row['birthDate'],
 					$row['country'],
 					"<button type='button' class='btn btn-info details-user' data-toggle='modal' data-userId='".$row['username']."' data-target='#userDetails'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button>
-									 <button type='button' class='btn btn-danger' data-userId='".$row['username']."'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>"
+					 <button type='button' class='btn btn-danger delete-user' data-userId='".$row['username']."'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>"
 				];
 				array_push($outputData['data'], $data);
 			}
@@ -377,13 +410,13 @@ class User extends CI_Controller {
 		echo json_encode($outputData);
 	}
 
-	public function getUsersByBirthday($dateB, $dateE, $district, $user)
+	public function getUsersByAdv($dateB, $dateE, $district, $county, $user)
 	{
-		if ($dateB == 'NULL' && $dateE == 'NULL' && $district == 'NULL'){
+		if ($dateB == 'NULL' && $dateE == 'NULL' && $district == 'NULL' && $county == 'NULL'){
 			return true;
 		}
 
-		return $this->user_model->getDateAndDistrict($dateB, $dateE, $district, $user);
+		return $this->user_model->getDateAndDistrict($dateB, $dateE, $district, $county, $user);
 
 
 	}

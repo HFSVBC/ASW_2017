@@ -88,6 +88,22 @@
 
 		}
 
+		public function deleteUser()
+		{
+			$username  = $this->db->escape($this->input->post('username'));
+
+			$sql = "DELETE
+					FROM proj_users
+					WHERE username = $username";
+
+			if($this->db->simple_query($sql)){
+        		return true;
+			}else{
+        		return $this->db->_error_message();
+			}
+
+		}
+
 		public function loginUser(){
 			$validator = array('success' => false, 'messages' => array());
 
@@ -216,13 +232,16 @@
 			}
 		}
 
-		public function getDateAndDistrict($dateB, $dateE, $district, $user){
+		public function getDateAndDistrict($dateB, $dateE, $district, $county, $user){
 
 			$sql = "SELECT username 
 					FROM proj_users
 					WHERE username = '$user'";
 			if ($district != "NULL"){
 				$sql .= " AND district = $district";
+			}
+			if($county != "NULL"){
+				$sql .= " AND county = $county";
 			}
 			if($dateB != "NULL"){
 				$sql .= " AND DATEDIFF(birthDate, '$dateB') >= 0";

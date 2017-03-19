@@ -3,10 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <!-- custom css -->
 <link rel="stylesheet" type="text/css" href="custom/css/admin.css">
 <div class="coponentCont container">
-
-
-
 	<h2 class="page-header">Admin</h2>
+	<div class="alert alert-success" id="alertSuccess-user-admin" role="alert">
+		<strong>Sucesso! </strong><span class="message"></span>
+	</div>
+	<div class="alert alert-danger" id="alertError-user-admin" role="alert">
+		<strong>Erro! </strong><span class="message"></span>
+	</div>
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href='#users' class="tabTriger" aria-controls="users" role="tab" data-toggle="tab">Utilizadores</a></li>
 		<li role="presentation"><a href='#game' class="tabTriger" aria-controls="game" role="tab" data-toggle="tab">Jogos</a></li>
@@ -17,9 +20,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			<form class="form-inline" id="advancedSearch" onsubmit="event.preventDefault(); return adv_Search();">
 				<div class="form-group">
 					<label for="Distritos">Distrito:</label>
-					<select id="Distritos" class="form-control adv_search_fields">
-						<option value="NULL">Não Selecionado</option>
+					<select id="Distritos" class="form-control adv_search_fields distAdm">
+						<option value="NULL" clss="ND_DistCon">Não Selecionado</option>
 						<?php echo $districts; ?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="concelho">Concelho:</label>
+					<select id="concelho" class="form-control adv_search_fields conAdm">
+						<option value="NULL" clss="ND_DistCon">Não Selecionado</option>
+						<?php echo $counties; ?>
 					</select>
 				</div>
 				<div id="ageGroup" class="form-group">
@@ -96,12 +106,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		        <h4 class="modal-title" id="userDetails-modal">Detalhes do Utilizador</h4>
 	      	</div>
 	      	<div class="modal-body">
-	      		<div class="alert alert-success" id="alertSuccess-user-admin" role="alert">
-      				<strong>Sucesso! </strong><span class="message"></span>
-      			</div>
-      			<div class="alert alert-danger" id="alertError-user-admin" role="alert">
-      				<strong>Erro! </strong><span class="message"></span>
-      			</div>
       			<div class="row">
 		      		<div class="form-group col-xs-12 col-md-6">
 			        	<label for="name-usr-adm">Nome</label>

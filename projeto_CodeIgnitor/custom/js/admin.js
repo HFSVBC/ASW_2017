@@ -28,8 +28,14 @@ $(window).on('load', function(){
         }
     });
 
+    // Manages districts and counties on registration form
+    showConAdm($(".distAdm"));
+    $(".distAdm").on("change", function(){
+        showConAdm($(this));
+    });
+
     // Users Table
-    pesquisa = "NULL/NULL/NULL";
+    pesquisa = "NULL/NULL/NULL/NULL";
 	userAdminTable = $('#admin-users').DataTable({
     	"columnDefs": [{
               "orderable": false,
@@ -86,9 +92,33 @@ $(window).on('load', function(){
         console.log(id);
         loadUserData_admin(id);
     });
+
+    // Delete user modal
+    $('body').on('click', '.delete-user', function(){
+        var id = $(this).attr('data-userId');
+        console.log(id);
+        deleteUser_admin(id);
+    });
 });
 
 var pesquisa, userAdminTable;
+
+var showConAdm = function(obg){
+    var distVal = $(obg).val();
+    if (distVal == "NULL"){
+        $(".conAdm").val("NULL");
+        $("[data-parentDist]").hide();
+    }else{
+        $(".conAdm > option").each(function(){
+            if($(this).attr("data-parentDist")==distVal || $(this).val() == "NULL"){
+                $(this).show();
+                $(".conAdm").val("NULL");
+            }else{
+                $(this).hide();
+            }
+        });
+    }
+}
 
 var adv_Search = function(table, pesquisa){
     var age_op = $('#InputAge').val();
@@ -100,7 +130,8 @@ var adv_Search = function(table, pesquisa){
         age2_op = "NULL";
     }
     var district_op = $('#Distritos').val();
-    pesquisa = age_op + "/" + age2_op + "/" + district_op;
+    var concelho_op = $('#concelho').val();
+    pesquisa = age_op + "/" + age2_op + "/" + district_op + "/" + concelho_op;
     userAdminTable.ajax.url(baseURL + "index.php/user/getUserDataAdmin/" + pesquisa).load();
 
     return false;
@@ -142,6 +173,32 @@ var loadUserData_admin = function(id){
             }else{
                 $("#alertError-user-admin > .message").html(response.messages);
                 $("#alertError-user-admin").show();
+            }
+        }
+    });
+}
+
+var deleteUser_admin = function(id){
+    var data = {username: id};
+    $.ajax({
+        url:  baseURL + "index.php/user/deleteUser",
+        type: "post",
+        data: data,
+        dataType: 'json',
+        success:function(response) {
+            if(response.success === true) {
+                $("#alertSuccess-user-admin > .message").html(response.messages);
+                $("#alertSuccess-user-admin").show();
+                userAdminTable.ajax.reload();
+                setTimeout(function(){
+                    $(".alert-success").hide();
+                }, 3000);
+            }else{
+                $("#alertError-user-admin > .message").html(response.messages);
+                $("#alertError-user-admin").show();
+                setTimeout(function(){
+                    $(".alert-danger").hide();
+                }, 3000);
             }
         }
     });
