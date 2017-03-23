@@ -17,30 +17,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
         <table id="jogos" class="table table-striped">
             <thead>
                 <tr>
-                    <th># jogo</th>
-                    <th>Nome</th>
-                    <th>User</th>
-                    <th>Resultado</th>
+                    <th>Nome da mesa</th>
+                    <th>Criador</th>
+                    <th>Nº pessoas</th>
                     <th>Pontos</th>
-                    <th>Mesa</th>
                     <th>Estado</th>
                     <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Game 1</td>
-                    <td>John</td>
-                    <td>Venceu</td>
-                    <td>500 gold</td>
-                    <td>6</td>
-                    <td>Termindado</td>
-                    <td>
-                        <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>
@@ -82,27 +67,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-    <!-- modal para visualizaçao -->
-    <div class="modal fade" id="VisualPart" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Histórico</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- a fazer -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-</div>
+  
 <!-- custom js -->
 <script type="text/javascript" src="custom/js/dashboard.js"></script>
