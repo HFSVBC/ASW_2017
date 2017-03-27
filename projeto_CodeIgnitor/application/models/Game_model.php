@@ -8,15 +8,33 @@
       $name      = $this->db->escape($this->input->post('name'));
 			$username  = $this->db->escape($username);
 			$numPeople = $this->db->escape($this->input->post('numberPeople'));
-      if (isset($this->input->post('startDate'))){
-			   $startDate = $this->db->escape($this->input->post('startDate'));
-         $sql       = "INSERT INTO proj_users (name, username, numPeople, startDate)
-   					           VALUES($name, $username, $numPeople, $startDate)";
-      }else{
-        $sql = "INSERT INTO proj_users (name, username, numPeople)
-  					    VALUES($name, $username, $numPeople)";
-      }
 
+      $sql =  "INSERT INTO proj_users (name, username, numPeople";
+      if (isset($this->input->post('startDate'))){
+			     $startDate = $this->db->escape($this->input->post('startDate'));
+           $sql .= " startDate";
+      }
+      if (isset($this->input->post('minVal'))){
+			     $minVal = $this->db->escape($this->input->post('minVal'));
+           $sql .= " minVal";
+      }
+      if (isset($this->input->post('startDate'))){
+			     $startDate = $this->db->escape($this->input->post('startDate'));
+           $sql .= " maxVal";
+      }
+      $sql .= ")";
+
+      $sql .= "VALUES($name, $username, $numPeople";
+      if (isset($this->input->post('startDate'))){
+           $sql .= " $startDate";
+      }
+      if (isset($this->input->post('minVal'))){
+           $sql .= " $minVal";
+      }
+      if (isset($this->input->post('startDate'))){
+           $sql .= " $maxVal";
+      }
+      $sql .= ")";
 
 			if($this->db->simple_query($sql)){
         		return true;
