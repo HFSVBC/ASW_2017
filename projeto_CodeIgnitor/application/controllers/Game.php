@@ -67,35 +67,20 @@ class Game extends CI_Controller {
 
 		$config = array(
 	        array(
-	                'field' => 'name',
-	                'label' => 'Game Name',
-	                'rules' => 'trim|required|strip_tags',
-	        ),
-	        array(
-	                'field' => 'description',
-	                'label' => 'Game Description',
-	                'rules' => 'trim|strip_tags',
-	        ),
-	        array(
-	                'field' => 'numberPeople',
-	                'label' => 'Number of people for this game',
+	                'field' => 'id_jogo',
+	                'label' => 'Game id',
 	                'rules' => 'trim|integer|required|strip_tags',
 	        ),
-					array(
-	                'field' => 'firstBet',
-	                'label' => 'First bet in the game',
-	                'rules' => 'trim|numeric|required|strip_tags',
-	        )
 		);
 
 		$this->form_validation->set_rules($config);
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 		if($this->form_validation->run() === true){
-			$result = $this->game_model->create($this->session->userdata['loggedIn_asw004']['username']);
+			$result = $this->game_model->createGameP($this->input->post('id_jogo'), $this->game_model->getIdByUsername($this->session->userdata['loggedIn_asw004']['username']));
 			if($result === true){
 				$validator['success']  = true;
-				$validator['messages'] = 'Jogo creado com sucesso';
+				$validator['messages'] = 'Utilizador adicionado ao jogo com sucesso';
 
 			}else{
 				$validator['success']  = false;

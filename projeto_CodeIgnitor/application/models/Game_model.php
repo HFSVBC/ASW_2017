@@ -16,9 +16,9 @@
 
 		if($this->db->simple_query($sql)){
 					$owner_id = $this->getIdByUsername($username);
-					$result = $this->createGameP($owner_id);
+					$last_id = $this->db->insert_id;
+					$result = $this->createGameP($last_id, $owner_id);
 					if(!($result)){
-						$last_id = $this->db->insert_id;
 						$sql_del = "DELETE FROM proj_game_resquest WHERE id = $last_id";
 						$this->db->simple_query($sql_del);
 					}
