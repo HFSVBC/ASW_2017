@@ -536,6 +536,17 @@ class User extends CI_Controller {
 		echo json_encode($validator);
 	}
 
+	public function checksessionintegraty()
+	{
+		$sessionCheckResult = false;
+		if ( isset($this->session->userdata['loggedIn_asw004']) ){
+			if($this->session->userdata['loggedIn_asw004']['logged_in']){
+				$sessionCheckResult = true;
+			}
+		}
+		echo json_encode($sessionCheckResult);
+	}
+
 	public function updateUserAvatar($filename)
 	{
 		$validator = array('success' => false, 'messages' => array());

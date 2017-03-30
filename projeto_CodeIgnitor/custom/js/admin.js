@@ -74,29 +74,27 @@ $(window).on('load', function(){
     });
 
     // Games Table
-    var gamesAdminTable = $('#admin-plays').DataTable({
-        "columnDefs": [{
-              "orderable": false,
-              "targets"  : -1
-        }],
-        "ajax": baseURL + "index.php/user/getGamesDataAdmin",
-    });
+ //    var gamesAdminTable = $('#admin-plays').DataTable({
+ //        "columnDefs": [{
+ //              "orderable": false,
+ //              "targets"  : -1
+ //        }],
+ //        "ajax": baseURL + "index.php/user/getGamesDataAdmin",
+ //    });
 
-	setInterval( function () {
-    	gamesAdminTable.ajax.reload();
-	}, 5000 );
+	// setInterval( function () {
+ //    	gamesAdminTable.ajax.reload();
+	// }, 5000 );
 
     // Load user details modal
     $('body').on('click', '.details-user', function(){
         var id = $(this).attr('data-userId');
-        console.log(id);
         loadUserData_admin(id);
     });
 
     // Delete user modal
     $('body').on('click', '.delete-user', function(){
         var id = $(this).attr('data-userId');
-        console.log(id);
         deleteUser_admin(id);
     });
 });
@@ -147,7 +145,6 @@ var loadUserData_admin = function(id){
         success:function(response) {
             if(response.success === true) {
                 var data = response.messages;
-                console.log(data);
                 $('#name-usr-adm').val(data.fName);
                 $('#surname-usr-adm').val(data.lName);
                 $('#username-usr-adm').val(data.username);

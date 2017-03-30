@@ -197,14 +197,6 @@
 			return $query->result_array();
 		}
 
-		public function getGamesDataAdmin()
-		{
-			$sql   = "SELECT name, createdBy, active, creationDate, endedDate, totalUsers, winner
-					  FROM proj_game";
-			$query = $this->db->query($sql);
-			return $query->result_array();
-		}
-
 		public function getDistricts()
 		{
 			$query = $this->db->query("SELECT nome, id FROM dist_con WHERE tipo = 0");

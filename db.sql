@@ -1,46 +1,81 @@
 create table proj_users(
-    id INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
-    fName VARCHAR(250) NOT NULL,
-    lName VARCHAR(250) NOT NULL,
-    username VARCHAR(64) NOT NULL,
-    email VARCHAR(250) NOT NULL,
-    password VARCHAR(260) NOT NULL,
-    balance FLOAT(20) NOT NULL DEFAULT 500.00,
-    birthDate DATE NOT NULL,
-    sex VARCHAR(2) NOT NULL,
-    country VARCHAR(2) NOT NULL,
-    district INT(10) UNSIGNED,
-    county INT(10) UNSIGNED,
-    avatar VARCHAR(250),
-    active INT(1) UNSIGNED NOT NULL DEFAULT 0,
-    hash VARCHAR(260) NOT NULL,
-    creationDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    activationDate TIMESTAMP NOT NULL,
-    level INT(1) UNSIGNED NOT NULL DEFAULT 1,
-    PRIMARY KEY (id),
-    UNIQUE (username, email)
-    -- FOREIGN KEY (district) REFERENCES dist_con(id),
-    -- FOREIGN KEY (county) REFERENCES dist_con(id)
+    `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
+
+    `fName` varchar(250) NOT NULL,
+    `lName` varchar(250) NOT NULL,
+
+    `username` varchar(64) NOT NULL,
+    `email` varchar(250) NOT NULL,
+    `password` varchar(260) NOT NULL,
+
+    `balance` float NOT NULL DEFAULT '500',
+
+    `birthDate` date NOT NULL,
+    `sex` varchar(2) NOT NULL,
+    `country` varchar(64) NOT NULL,
+    `district` int(10) unsigned DEFAULT NULL,
+    `county` int(10) unsigned DEFAULT NULL,
+    `avatar` varchar(250) DEFAULT NULL,
+    `active` int(1) unsigned NOT NULL DEFAULT '0',
+    `hash` varchar(260) NOT NULL,
+    `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `activationDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `level` int(1) unsigned NOT NULL DEFAULT '1',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `username` (`username`,`email`)
 );
-CREATE TABLE proj_game(
-    id INT(8) UNSIGNED,
-    name VARCHAR(250) NOT NULL,
-    active INT(1) NOT NULL DEFAULT 1,
-    createdBy INT(5) UNSIGNED,
-    creationDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    endedDate TIMESTAMP NOT NULL,
-    winner INT(5) UNSIGNED,
-    totalUsers INT(2) NOT NULL DEFAULT 1,
+CREATE TABLE IF NOT EXISTS proj_game_request (
+    id INT NOT NULL AUTO_INCREMENT,
+    
+    -- description information
+    owner       int(5) unsigned NOT NULL, -- the user that placed this game request
+    name        VARCHAR(191) NOT NULL,
+    description TEXT,
+    
+    -- game details
+    max_players INT NOT NULL,
+    first_bet   INT NOT NULL, -- the amount that the firstplayer will have to bet
+    
+    -- keys and indeces
     PRIMARY KEY (id),
-    UNIQUE (name),
-    FOREIGN KEY (createdBy) REFERENCES proj_users(id),
-    FOREIGN KEY (winner) REFERENCES proj_users(id)
+    FOREIGN KEY (owner) REFERENCES proj_users (id)
 );
-CREATE TABLE proj_participants(
-    user INT(5) UNSIGNED,
-    game INT(8) UNSIGNED,
-    enteredDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (user, game),
-    FOREIGN KEY (user) REFERENCES proj_users(id),
-    FOREIGN KEY (game) REFERENCES proj_game(id)
+
+CREATE TABLE IF NOT EXISTS proj_game_status (
+    id INT NOT NULL, -- the same id as in the game_request table
+    
+    -- details
+    started_at DATETIME NOT NULL,
+    ended_at   DATETIME,
+    
+    -- cards
+    deck        VARCHAR(191) NOT NULL, -- shuffled, in the format 'AS 2H 7C 9S ...'
+    table_cards VARCHAR(191) NOT NULL, -- the same format
+    
+    -- current status
+    current_player int(5) unsigned NOT NULL,
+    current_bet    INT NOT NULL, -- the amount the players must bet to stay in game
+    current_pot    INT NOT NULL, -- the collected bets
+    last_to_raise  int(5) unsigned NOT NULL,          -- the last player that raised the bet, to identify when the betting stage is over
+    
+    -- keys and indeces
+    PRIMARY KEY (id),
+    FOREIGN KEY (id) REFERENCES proj_game_request (id),
+    FOREIGN KEY (current_player) REFERENCES proj_users (id),
+    FOREIGN KEY (last_to_raise) REFERENCES proj_users (id)
+);
+
+-- the players of each game are stored in a dedicated table
+-- the order of the players in this table defines the order in which they play the game
+CREATE TABLE IF NOT EXISTS proj_game_players (
+    id            INT NOT NULL,
+    player_id     int(5) unsigned NOT NULL,
+    player_cards  VARCHAR(5) NOT NULL, -- the format is 'KD 3C'
+    player_bet    INT NOT NULL, -- the total amount the player contributed to the pot
+    player_folded BOOLEAN, -- whether the player has given up
+    
+    -- keys and indeces
+    PRIMARY KEY (id),
+    FOREIGN KEY (id) REFERENCES proj_game_request (id),
+    FOREIGN KEY (player_id) REFERENCES proj_users (id)
 );

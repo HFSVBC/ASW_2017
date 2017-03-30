@@ -75,6 +75,10 @@ $(window).on('load', function(){
 	$(".dist").on("change", function(){
 		showCon($(this));
 	});
+
+	setTimeout(function(){
+       	chceksessionvalidaty();
+    }, 300000);
 });
 
 var passCheck = false, inputCheck = false, recaptchaCheck = false, emailExistsCheck = false, usernameExistsCheck = false;
@@ -165,6 +169,18 @@ var checkUsername = function(id){
     });
 }
 
+var chceksessionvalidaty = function(){
+	$.ajax({
+        url:  baseURL+"index.php/user/checksessionintegraty",
+        type: "get",
+        dataType: 'json',
+        success:function(response) {
+        	if (response != "true"){
+        		location.reload();
+        	}
+        }
+    });
+}
 // AJAX for forms submitions
 var userLogIn = function(){
 	var form = $('#loginForm');
