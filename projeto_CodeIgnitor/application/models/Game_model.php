@@ -11,7 +11,7 @@
 		$max_players     = $this->db->escape($this->input->post('max_players'));
 		$first_bet 			= $this->db->escape($this->input->post('first_bet'));
 
-		$sql = "INSERT INTO proj_game_resquest (owner, name, description, max_players, first_bet)
+		$sql = "INSERT INTO proj_game_request (owner, name, description, max_players, first_bet)
 				VALUES('$owner', $game_name, $description, $max_players, $first_bet)";
 
 		if($this->db->simple_query($sql)){
@@ -19,7 +19,7 @@
 					$last_id = $this->db->insert_id;
 					$result = $this->createGameP($last_id, $owner_id);
 					if(!($result)){
-						$sql_del = "DELETE FROM proj_game_resquest WHERE id = $last_id";
+						$sql_del = "DELETE FROM proj_game_request WHERE id = $last_id";
 						$this->db->simple_query($sql_del);
 					}
 		}else{
@@ -29,6 +29,7 @@
 	}
 	public function createGameP($gameid ,$id)
 	{
+			$gameid = $this->db->escape($gameid);
 			$sql = "INSERT INTO proj_game_players (id, player_id, player_folded)
 			VALUES($gameid, $id, false)";
 
@@ -62,5 +63,14 @@
 		}
 
 	}
+	public function checksConditionstoStart()
+	{
+		$sql = "SELECT max_players FROM proj_game_request";
+
+	}
+	// private function checksToBeAdded()
+	// {
+	//
+//	}
   }
 ?>
