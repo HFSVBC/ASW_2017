@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS proj_game_players (
     player_folded BOOLEAN, -- whether the player has given up
 
     -- keys and indeces
-    PRIMARY KEY (id),
+    PRIMARY KEY (id, player_id),
     FOREIGN KEY (id) REFERENCES proj_game_request (id),
     FOREIGN KEY (player_id) REFERENCES proj_users (id)
 );
