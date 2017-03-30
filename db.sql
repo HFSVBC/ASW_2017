@@ -26,16 +26,17 @@ create table proj_users(
 );
 CREATE TABLE IF NOT EXISTS proj_game_request (
     id INT NOT NULL AUTO_INCREMENT,
-    
+
     -- description information
     owner       int(5) unsigned NOT NULL, -- the user that placed this game request
     name        VARCHAR(191) NOT NULL,
     description TEXT,
-    
+
     -- game details
     max_players INT NOT NULL,
+    -- mudar de first_bet para small blind e big blind
     first_bet   INT NOT NULL, -- the amount that the firstplayer will have to bet
-    
+
     -- keys and indeces
     PRIMARY KEY (id),
     FOREIGN KEY (owner) REFERENCES proj_users (id)
@@ -43,21 +44,21 @@ CREATE TABLE IF NOT EXISTS proj_game_request (
 
 CREATE TABLE IF NOT EXISTS proj_game_status (
     id INT NOT NULL, -- the same id as in the game_request table
-    
+
     -- details
     started_at DATETIME NOT NULL,
     ended_at   DATETIME,
-    
+
     -- cards
     deck        VARCHAR(191) NOT NULL, -- shuffled, in the format 'AS 2H 7C 9S ...'
     table_cards VARCHAR(191) NOT NULL, -- the same format
-    
+
     -- current status
     current_player int(5) unsigned NOT NULL,
     current_bet    INT NOT NULL, -- the amount the players must bet to stay in game
     current_pot    INT NOT NULL, -- the collected bets
     last_to_raise  int(5) unsigned NOT NULL,          -- the last player that raised the bet, to identify when the betting stage is over
-    
+
     -- keys and indeces
     PRIMARY KEY (id),
     FOREIGN KEY (id) REFERENCES proj_game_request (id),
@@ -73,7 +74,7 @@ CREATE TABLE IF NOT EXISTS proj_game_players (
     player_cards  VARCHAR(5) NOT NULL, -- the format is 'KD 3C'
     player_bet    INT NOT NULL, -- the total amount the player contributed to the pot
     player_folded BOOLEAN, -- whether the player has given up
-    
+
     -- keys and indeces
     PRIMARY KEY (id),
     FOREIGN KEY (id) REFERENCES proj_game_request (id),
