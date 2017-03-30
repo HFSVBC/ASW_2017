@@ -71,8 +71,8 @@ CREATE TABLE IF NOT EXISTS proj_game_status (
 CREATE TABLE IF NOT EXISTS proj_game_players (
     id            INT NOT NULL,
     player_id     int(5) unsigned NOT NULL,
-    player_cards  VARCHAR(5) NOT NULL, -- the format is 'KD 3C'
-    player_bet    INT NOT NULL, -- the total amount the player contributed to the pot
+    player_cards  VARCHAR(5), -- the format is 'KD 3C'
+    player_bet    INT, -- the total amount the player contributed to the pot
     player_folded BOOLEAN, -- whether the player has given up
 
     -- keys and indeces
