@@ -51,18 +51,6 @@
 		}
 
 	}
-	private function getIdByUsername($username)
-	{
-		$sql = "SELECT id FROM proj_users WHERE username=$username LIMIT 1";
-		$row   = $query->row();
-
-		if(!empty($row)){
-			return $row->id;
-		}else{
-			return False;
-		}
-
-	}
 	public function checksConditionstoStart()
 	{
 		$sql = "SELECT max_players FROM proj_game_request";

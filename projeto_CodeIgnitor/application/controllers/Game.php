@@ -19,24 +19,24 @@ class Game extends CI_Controller {
 
 		$config = array(
 	        array(
-	                'field' => 'name',
-	                'label' => 'Game Name',
-	                'rules' => 'trim|required|strip_tags',
+                'field' => 'name',
+                'label' => 'Game Name',
+                'rules' => 'trim|required|strip_tags',
 	        ),
 	        array(
-	                'field' => 'description',
-	                'label' => 'Game Description',
-	                'rules' => 'trim|strip_tags',
+                'field' => 'description',
+                'label' => 'Game Description',
+                'rules' => 'trim|strip_tags',
 	        ),
 	        array(
-	                'field' => 'numberPeople',
-	                'label' => 'Number of people for this game',
-	                'rules' => 'trim|integer|required|strip_tags',
+                'field' => 'numberPeople',
+                'label' => 'Number of people for this game',
+                'rules' => 'trim|integer|required|strip_tags',
 	        ),
-					array(
-	                'field' => 'firstBet',
-	                'label' => 'First bet in the game',
-	                'rules' => 'trim|numeric|required|strip_tags',
+			array(
+                'field' => 'firstBet',
+                'label' => 'First bet in the game',
+                'rules' => 'trim|numeric|required|strip_tags',
 	        )
 		);
 
@@ -55,7 +55,7 @@ class Game extends CI_Controller {
 			}
 		} else{
 			$validator['success']  = false;
-			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o';
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o'.validation_errors();
 		}
 
 		echo json_encode($validator);
