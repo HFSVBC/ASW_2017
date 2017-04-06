@@ -8,8 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
             <h2 id="TipoLetra"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Dashboard</h2>
         </div>
         <div class="OpcoesPartidas col-xs-12 col-md-4">
-            <button type="button" class="btn btn-default">Criar Partida</button>
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#EditPart">Editar partida</button>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#EditPart">Criar partida</button>
         </div>
     </div>
     <!-- tabela historico -->
@@ -40,20 +39,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="usersNum">Nº utilizadores</label>
-                            <input type="text" class="form-control" id="usersNum">
+                            <label for="nomeJogo">Nome do jogo</label>
+                            <input type="text" class="form-control" id="gameName">
                         </div>
                         <div class="form-group">
-                            <label for="jogosVisiv">Visibilidade</label>
+                            <label for="descricaoJogo">Descrição</label>
+                            <input type="text" class="form-control" id="gameDiscription">
+                        </div>
+                        <div class="form-group">
+                            <label for="jogoNum">Nº de jogadores</label>
                             <select class="form-control">
-                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="RemovJogos">Remover</label>
-                            <select class="form-control">
-                                <option>1</option>
-                            </select>
+                            <label for="FirstBet">Primeria aposta</label>
+                            <input type="text" class="form-control" id="aposta" value="20">
                         </div>
                     </form>
                 </div>
@@ -67,6 +76,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-  
+
 <!-- custom js -->
 <script type="text/javascript" src="custom/js/dashboard.js"></script>
