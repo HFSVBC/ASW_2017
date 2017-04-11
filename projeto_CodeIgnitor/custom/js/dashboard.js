@@ -1,12 +1,17 @@
 "use strict"
 $(window).on('load', function(){
-	$('#jogos').DataTable({
+	gamesTable = $('#jogos').DataTable({
     	"columnDefs": [{
               "orderable": false,
               "targets"  : -1
-         }]
+         }],
+        "ajax": baseURL + "index.php/game/getGames",
 	});
+    setInterval( function () {
+        gamesTable.ajax.reload();
+    }, 5000 );
 });
+var gamesTable;
 
 var createGame = function(){
 	var form = $('#createGame-Form');
@@ -16,7 +21,6 @@ var createGame = function(){
 	form.ajaxSubmit(options);
     return false;
 }
-
 var showResponse_createGame = function(responseText, statusText, xhr, $form){
 	$('.alert').hide();
 	console.log(responseText)
@@ -24,6 +28,7 @@ var showResponse_createGame = function(responseText, statusText, xhr, $form){
 	if(response.success === true) {
         $("#alertSuccess > .message").html(response.messages);
         $(".alert-success").show();
+        gamesTable.ajax.reload();
     }else{
         $(".alert-danger > .message").html(response.messages);
         $(".alert-danger").show();

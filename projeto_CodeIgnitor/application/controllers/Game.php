@@ -93,5 +93,26 @@ class Game extends CI_Controller {
 
 		echo json_encode($validator);
 	}
+
+	public function getGames()
+	{
+		$outputData = array('data' => array());
+
+		$result = $this->game_model->getAllGames();
+		foreach ($result as $row) {
+			$data = [
+				$row['name'],
+				$row['description'],
+				$this->game_model->getUsernameById($row['owner']),
+				$this->game_model->playersCount($row['id']),
+				$row['max_players'],
+				$row['first_bet'],
+				$this->game_model->getGameState($row['id']),
+				"<button type='button' class='btn btn-success gameJoin' data-gameId='".$row['id']."'><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>"
+			];
+			array_push($outputData['data'], $data);
+		}
+		echo json_encode($outputData);
+	}
 }
 ?>

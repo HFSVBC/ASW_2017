@@ -17,9 +17,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
             <thead>
                 <tr>
                     <th>Nome da mesa</th>
-                    <th>Criador</th>
+                    <th>Descrição</th>
+                    <th>Dono</th>
                     <th>Nº pessoas</th>
-                    <th>Pontos</th>
+                    <th>Nº pessoas máximo</th>
+                    <th>Primeira Aposta</th>
                     <th>Estado</th>
                     <th>Opções</th>
                 </tr>
