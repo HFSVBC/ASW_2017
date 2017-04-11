@@ -36,40 +36,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Histórico</h4>
                 </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="nomeJogo">Nome do jogo</label>
-                            <input type="text" class="form-control" id="gameName">
+                <form id="createGame-Form" onsubmit="event.preventDefault(); return createGame();" method="post" action="<?php base_url(); ?>index.php/game/create">
+                    <div class="modal-body">
+                        <div class="alert alert-success" id="alertSuccess" role="alert">
+                            <strong>Sucesso! </strong><span class="message"></span>
                         </div>
-                        <div class="form-group">
-                            <label for="descricaoJogo">Descrição</label>
-                            <input type="text" class="form-control" id="gameDiscription">
+                        <div class="alert alert-danger" id="alertSuccess" role="alert">
+                            <strong>Erro! </strong><span class="message"></span>
                         </div>
-                        <div class="form-group">
-                            <label for="jogoNum">Nº de jogadores</label>
-                            <select class="form-control">
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option>10</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="FirstBet">Primeria aposta</label>
-                            <input type="text" class="form-control" id="aposta" value="20">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                            <div class="form-group">
+                                <label for="nomeJogo">Nome do jogo</label>
+                                <input type="text" class="form-control" id="gameName" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="descricaoJogo">Descrição</label>
+                                <textarea type="text" class="form-control" id="gameDiscription" name="description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="jogoNum">Nº de jogadores</label>
+                                <select class="form-control" name="numberPeople">
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="FirstBet">Primeria aposta</label>
+                                <input type="text" class="form-control" id="aposta" value="20" name="firstBet">
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Save changes">
+                    </div>
+                </form>
             </div>
             <!-- /.modal-content -->
         </div>

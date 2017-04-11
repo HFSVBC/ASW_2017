@@ -51,7 +51,7 @@ class Game extends CI_Controller {
 
 			}else{
 				$validator['success']  = false;
-				$validator['messages'] = 'Erro ao atualizar a base de dados';
+				$validator['messages'] = 'Erro ao atualizar a base de dados<br>'.json_encode($result);
 			}
 		} else{
 			$validator['success']  = false;

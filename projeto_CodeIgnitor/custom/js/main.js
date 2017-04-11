@@ -175,7 +175,7 @@ var chceksessionvalidaty = function(){
         type: "get",
         dataType: 'json',
         success:function(response) {
-        	if (response != "true"){
+        	if (response != true){
         		location.reload();
         	}
         }

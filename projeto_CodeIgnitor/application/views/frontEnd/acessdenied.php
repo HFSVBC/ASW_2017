@@ -22,7 +22,7 @@
   .row{
     margin-top: 100px;
   }
-  .alert{
+  #error_al{
     display: block;
     text-align: center;
   }
@@ -35,7 +35,7 @@
     <h1><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Acesso Negado</h1>
     <div class='row'>
       <div class='col-md-offset-3 col-md-6 col-xs-12'>
-        <div class='alert alert-danger'>
+        <div class='alert alert-danger' id="error_al">
           <h4>Utilizador sem permissões ou não autentificado.</h4>
         </div>
       </div>
