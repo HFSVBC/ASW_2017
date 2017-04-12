@@ -6,23 +6,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	<div id="cont-Body">
 		<div id="gameBody">
 
-				<div id="U1"> U1</div>
-				<div id="U2"> U1</div>
-				<div id="U3"> U1</div>
-				<div id="U4"> U1</div>
-				<div id="U5"> U1</div>
-				<div id="U6"> U1</div>
-				<div id="U7"> U1</div>
-				<div id="U8"> U1</div>
+			<table class="table">
+		    <tbody>
+		      <tr>
+		        <td><b>Início</b></td>
+		        <td>Doe</td>
+		      </tr>
+		      <tr>
+		        <td><b>Jogador atual</b></td>
+		        <td>Moe</td>
+		      </tr>
+		      <tr>
+		        <td><b>Cartas da mesa</b></td>
+		        <td>Dooley</td>
+		      </tr>
+					<tr>
+						<td><b>Minhas cartas</b></td>
+						<td>Dooley</td>
+					</tr>
+					<tr>
+						<td><b>Aposta atual</b></td>
+						<td>Dooley</td>
+					</tr>
+					<tr>
+						<td><b>Aposta de cada jogador</b></td>
+						<td>
+							<tr>
+								<td>
+									<b>user_123</b>:12 creditos
+								</td>
+								<td>
+									<b>abacate</b>: 30 créditos
+								</td>
+							</tr>
+						</td>
+					</tr>
+		    </tbody>
+	  	</table>
 
 		</div>
 	</div>
 	<div class="footer">
 		<div class="side-bar">
 			<div class="btn-group-vertical" role="group" aria-label="...">
-				<button type="button" class="btn btn-default">fold</button>
-				<button type="button" class="btn">2</button>
-				<button type="button" class="btn">3</button>
+				<button type="button" class="btn btn-default">Desistir</button>
+				<button type="button" class="btn">Cobrir a aposta(10 créditos)</button>
+				<p>Aumentar para</p><input type="text"><button type="button" class="btn">Enviar</button>
 			</div>
 
 			<button class="btn btn-primary" id="chat" type="button">
