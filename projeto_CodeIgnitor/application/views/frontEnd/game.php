@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	<div id="cont-Body">
 		<div id="gameBody">
 
-			<table class="table">
+			<table id="table_game" class="table">
 		    <tbody>
 		      <tr>
 		        <td><b>Início</b></td>
@@ -48,9 +48,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	</div>
 	<div class="footer">
 		<div class="side-bar">
-			<div class="btn-group-vertical" role="group" aria-label="...">
-				<button type="button" class="btn btn-default">Desistir</button>
-				<button type="button" class="btn">Cobrir a aposta(10 créditos)</button>
+			<div id="botoes_game" class="btn-group-vertical" role="group" aria-label="...">
+				<button type="button" id="desistir" class="btn btn-default">Desistir</button>
+				<button type="button" id="cobrir_aposta" class="btn">Cobrir a aposta(10 créditos)</button>
 				<p>Aumentar para</p><input type="text"><button type="button" class="btn">Enviar</button>
 			</div>
 

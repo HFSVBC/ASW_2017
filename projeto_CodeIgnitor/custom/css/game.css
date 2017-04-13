@@ -1,0 +1,39 @@
+/*_____ tabela jogo ______*/
+
+#table_game{
+	width: 500px;
+	top: 300px;
+	position: relative;
+}
+
+/*________footer_________________*/
+
+.footer{
+	bottom: 20px;
+	position: relative;
+	top: 650px;
+}
+
+/*_______________botoes ___________*/
+
+#botoes_game{
+	bottom: 20px;
+	position: relative;
+	top:650px;
+}
+
+#desistir{
+	width: 200px;
+	height: 100px;
+	background-color: red;
+	left:300px;
+	position: relative;
+}
+
+#cobrir_aposta{
+	width: 200px;
+	height: 100px;
+	background-color: blue;
+	left: 500px;
+	position: relative;
+}
