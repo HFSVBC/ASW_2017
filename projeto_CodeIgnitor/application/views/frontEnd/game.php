@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	<div class="footer">
 		<div class="side-bar">
 			<div id="botoes_game" class="btn-group-vertical" role="group" aria-label="...">
-				<button type="button" id="desistir" class="btn btn-default">Desistir</button>
+				<button type="button" id="desistir" class="btn">Desistir</button>
 				<button type="button" id="cobrir_aposta" class="btn">Cobrir a aposta(10 créditos)</button>
 				<p>Aumentar para</p><input type="text"><button type="button" class="btn">Enviar</button>
 			</div>
