@@ -122,6 +122,7 @@ class Game extends CI_Controller {
 				$this->game_model->playersCount($row['id']),
 				$row['max_players'],
 				$row['first_bet'],
+				$row['max_bet'],
 				$this->game_model->getGameState($row['id']),
 				"<button type='button' class='btn btn-success gameJoin' data-gameId='".$row['id']."'><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>"
 			];

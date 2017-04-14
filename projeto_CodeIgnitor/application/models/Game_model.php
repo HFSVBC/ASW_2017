@@ -70,7 +70,7 @@
 			$row   = $query->row();
 
 			if(!empty($row)){
-				if($row->ended_at == 'NULL'){
+				if($row->ended_at !== 'NULL'){
 					return 'Terminado';
 				}else{
 					return 'A decorrer';

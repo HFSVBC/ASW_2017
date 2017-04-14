@@ -22,6 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                     <th>Nº pessoas</th>
                     <th>Nº pessoas máximo</th>
                     <th>Primeira Aposta</th>
+                    <th>Aposta Maxima</th>
                     <th>Estado</th>
                     <th>Opções</th>
                 </tr>
