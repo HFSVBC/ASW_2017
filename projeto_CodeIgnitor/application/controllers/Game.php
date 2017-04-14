@@ -37,7 +37,22 @@ class Game extends CI_Controller {
                 'field' => 'firstBet',
                 'label' => 'First bet in the game',
                 'rules' => 'trim|numeric|required|strip_tags',
+	        ),
+			array(
+                'field' => 'maxBet',
+                'label' => 'Maximum bet of the round',
+                'rules' => 'trim|numeric|strip_tags',
 	        )
+			// array(
+   //              'field' => 'beginHour',
+   //              'label' => 'Beggining hour of the game',
+   //              'rules' => 'trim|strip_tags',
+	  //       ),
+			// array(
+   //              'field' => 'firstBet',
+   //              'label' => 'First bet in the game',
+   //              'rules' => 'trim|numeric|required|strip_tags',
+	  //       )
 		);
 
 		$this->form_validation->set_rules($config);

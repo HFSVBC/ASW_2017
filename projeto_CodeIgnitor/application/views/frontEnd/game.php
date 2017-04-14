@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');?>
-
-
+<!-- custom css -->
+<link rel="stylesheet" type="text/css" href="custom/css/game.css">
 <div id="main">
 	<div id="cont-Body">
 		<div id="gameBody">
@@ -29,29 +29,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<td>Dooley</td>
 					</tr>
 					<tr>
-						<td><b>Aposta de cada jogador</b></td>
-						<td>
-							<tr>
-								<td>
-									<b>user_123</b>:12 creditos
-								</td>
-								<td>
-									<b>abacate</b>: 30 créditos
-								</td>
-							</tr>
-						</td>
+						<td rowspan="3"><b>Aposta de cada jogador</b></td>
+					</tr>
+					<tr>
+						<td>user123: 30 creditos</td>
+					</tr>
+					<tr>
+						<td>pedro: 40 creditos</td>
 					</tr>
 		    </tbody>
 	  	</table>
-
-		</div>
+	  	</div>
 	</div>
 	<div class="footer">
 		<div class="side-bar">
+
+			<div id="messa-game">
+				<p class="turn-play" >É a sua vez de jogar</p>
+				<p class="mesa-creditos" >créditos disponiveis</p>
+			</div>
 			<div id="botoes_game" class="btn-group-vertical" role="group" aria-label="...">
 				<button type="button" id="desistir" class="btn">Desistir</button>
 				<button type="button" id="cobrir_aposta" class="btn">Cobrir a aposta(10 créditos)</button>
-				<p>Aumentar para</p><input type="text"><button type="button" class="btn">Enviar</button>
+				<p id="aument">Aumentar para</p><input id="aument1" type="text"><button id="aument2" type="button" class="btn">Enviar</button>
 			</div>
 
 			<button class="btn btn-primary" id="chat" type="button">

@@ -72,6 +72,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                                 <label for="FirstBet">Primeria aposta</label>
                                 <input type="text" class="form-control" id="aposta" value="20" name="firstBet">
                             </div>
+                            <!--no limit, pote limit, limit -->
+                            <div class="form-group">
+                                <label for="MaxBet">Maximo valor da aposta</label>
+                                <input type="text" class="form-control" id="maxAposta" value="200" name="maxBet">
+                            </div>
+                            <!--meter a escolher horas -->
+                          <!--   <div class="form-group">
+                                <label for="BeginHour">Hora de inicio do jogo</label>
+                                <input type="text" class="form-control" id="hours" name="beginHour">
+                            </div>
+                            <div class="form-group">
+                                <label for="condEsp">Condicoes para entrar no jogo</label>
+                                <input type="radio" id="ageMin" class="form-control" name="CondEsp">
+                                <input type="text" class="form-control" id="AgeMin" value="18" name="CondEsp">
+
+                                <input type="radio" id="minBalance" class="form-control" name="CondEsp">
+                                <input type="text" class="form-control" id="MinBalance" value="20" name="CondEsp">
+                            </div> -->
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

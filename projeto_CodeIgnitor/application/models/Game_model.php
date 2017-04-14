@@ -11,9 +11,10 @@
 			$description = $this->db->escape($this->input->post('description'));
 			$max_players = $this->db->escape($this->input->post('numberPeople'));
 			$first_bet 	 = $this->db->escape($this->input->post('firstBet'));
+			$max_bet 	 = $this->db->escape($this->input->post('maxBet'));
 
-			$sql = "INSERT INTO proj_game_request (owner, name, description, max_players, first_bet)
-					VALUES($owner, $game_name, $description, $max_players, $first_bet)";
+			$sql = "INSERT INTO proj_game_request (owner, name, description, max_players, first_bet, max_bet)
+					VALUES($owner, $game_name, $description, $max_players, $first_bet, $max_bet)";
 
 			if($this->db->simple_query($sql)){
 			 	$owner_id = $this->getIdByUsername($username);
