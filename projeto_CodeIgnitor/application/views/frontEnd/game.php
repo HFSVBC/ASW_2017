@@ -7,38 +7,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		<div id="gameBody">
 
 			<table id="table_game" class="table">
-		    <tbody>
-		      <tr>
-		        <td><b>Início</b></td>
-		        <td>Doe</td>
-		      </tr>
-		      <tr>
-		        <td><b>Jogador atual</b></td>
-		        <td>Moe</td>
-		      </tr>
-		      <tr>
-		        <td><b>Cartas da mesa</b></td>
-		        <td>Dooley</td>
-		      </tr>
-					<tr>
+			    <tbody>
+			      	<tr id="InitialTime">
+			        	<td><b>Início</b></td>
+			      	</tr>
+			      	<tr id="ActualPlayer">
+			        	<td><b>Jogador atual</b></td>
+			      	</tr>
+			      	<tr id="BoardCards">
+			        	<td><b>Cartas da mesa</b></td>
+			      	</tr>
+					<tr id="MyCards">
 						<td><b>Minhas cartas</b></td>
-						<td>Dooley</td>
 					</tr>
-					<tr>
+					<tr id="ActualBet">
 						<td><b>Aposta atual</b></td>
-						<td>Dooley</td>
 					</tr>
 					<tr>
-						<td rowspan="3"><b>Aposta de cada jogador</b></td>
+						<td id="PlayersBet"><b>Aposta de cada jogador</b></td>
 					</tr>
-					<tr>
-						<td>user123: 30 creditos</td>
-					</tr>
-					<tr>
-						<td>pedro: 40 creditos</td>
-					</tr>
-		    </tbody>
-	  	</table>
+			    </tbody>
+	  		</table>
 	  	</div>
 	</div>
 	<div class="footer">

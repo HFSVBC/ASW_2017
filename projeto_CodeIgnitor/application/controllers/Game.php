@@ -117,9 +117,9 @@ class Game extends CI_Controller {
 		foreach ($result as $row) {
 			$game_state = $this->game_model->getGameState($row['id']);
 			if($game_state=='Em espera'){
-				$button_state = "<button type='button' class='btn btn-success gameJoin' data-gameId='".$row['id']."'><span class='glyphicon 	glyphicon-ok' aria-hidden='true'></span></button>";
+				$button_state = "<input type='button' class='btn btn-success gameJoin' onclick='teste()' data-gameId='".$row['id']."'><span> <i class='glyphicon glyphicon-ok' aria-hidden='true'></i></span>";
 			}else{
-				$button_state = "<button type='button' class='btn btn-danger gameJoin' data-gameId='".$row['id']."'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>";
+				$button_state = "<input type='button' class='btn btn-danger disabled gameJoin' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-remove' aria-hidden='true'></i></span>";
 			}
 			$data = [
 				$row['name'],

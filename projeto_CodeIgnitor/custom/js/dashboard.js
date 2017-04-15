@@ -12,15 +12,15 @@ $(window).on('load', function(){
         gamesTable.ajax.reload();
     }, 5000 );
 
-  $('.gameJoin').on('click', teste);
 });
-
 
 
 var gamesTable;
 
+
 var teste = function(){
-  console.log('ola')
+  //criar condiçao para entrar
+  window.location.href = baseURL + "index.php/userpages/view/game";
 }
 
 var createGame = function(){
