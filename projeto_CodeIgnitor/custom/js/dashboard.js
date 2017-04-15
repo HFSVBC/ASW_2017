@@ -1,5 +1,6 @@
-"use strict"
+"use strict";
 $(window).on('load', function(){
+
 	gamesTable = $('#jogos').DataTable({
     	"columnDefs": [{
               "orderable": false,
@@ -10,8 +11,17 @@ $(window).on('load', function(){
     setInterval( function () {
         gamesTable.ajax.reload();
     }, 5000 );
+
+  $('.gameJoin').on('click', teste);
 });
+
+
+
 var gamesTable;
+
+var teste = function(){
+  console.log('ola')
+}
 
 var createGame = function(){
 	var form = $('#createGame-Form');

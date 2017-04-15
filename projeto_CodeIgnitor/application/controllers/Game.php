@@ -119,7 +119,7 @@ class Game extends CI_Controller {
 			if($game_state=='Em espera'){
 				$button_state = "<button type='button' class='btn btn-success gameJoin' data-gameId='".$row['id']."'><span class='glyphicon 	glyphicon-ok' aria-hidden='true'></span></button>";
 			}else{
-				$button_state = "<button type='button' class='btn btn-danger gameJoin' data-gameId='".$row['id']."'><span class='glyphicon 	glyphicon-remove' aria-hidden='true'></span></button>";
+				$button_state = "<button type='button' class='btn btn-danger gameJoin' data-gameId='".$row['id']."'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>";
 			}
 			$data = [
 				$row['name'],
