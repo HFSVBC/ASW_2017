@@ -70,10 +70,10 @@
 			$row   = $query->row();
 
 			if(!empty($row)){
-				if($row->ended_at !== 'NULL'){
-					return 'Terminado';
-				}else{
+				if($row->ended_at === NULL){
 					return 'A decorrer';
+				}else{
+					return 'Terminado';
 				}
 			}else{
 				return 'Em espera';
