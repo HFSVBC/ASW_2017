@@ -99,6 +99,7 @@ class Game extends CI_Controller {
 					$validator['messages'] = 'Utilizador adicionado ao jogo com sucesso';
 					if($this->game_model->checksConditionstoStart()){
 						$result = $this->game_model->startGame();
+						$this->game_model->giveCardsToPlayers($result);
 					}
 				}else{
 					$validator['success']  = false;

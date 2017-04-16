@@ -214,9 +214,27 @@
 			 		 VALUES ($gameId, '$timeNow', '$deck', '$table_cards', $current_player, $current_bet, 0)";
 			
 			if($this->db->query($sql)){
-				return true;
+				return $deck;
 			}else{
 				return $this->db->_error_message();
+			}
+		}
+		public function giveCardsToPlayers($deck)
+		{
+			$deck   = json_decode($deck);
+			$i      = 0;
+			$gameId = $this->input->post('id_jogo');
+			$sql    = "SELECT player_id
+					   FROM proj_game_players
+					   WHERE id=$gameId";
+			$query = $this->db->query($sql);
+			foreach ($query->result_array() as $row) {
+				$playerCards = json_encode(array($deck[$i], $deck[$i+1]));
+				$i           = $i+2;
+				$sql         = "UPDATE proj_game_players
+								SET player_cards='$playerCards'
+								WHERE id=$gameId AND player_id=".$row['player_id'];
+				$query = $this->db->query($sql);
 			}
 		}
 		private function getIdByUsername($username)
