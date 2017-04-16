@@ -13,10 +13,9 @@ var gameControl = function(nowUsername, cardsOnTable)
     $('#boardCards-Game').html(cardsOnTable[card]);
 	if(nowUsername == myUsername){
         $('#gameBody button, #gameBody input').prop('disabled', false);
-
+        
 	}else{
         $('#gameBody button, #gameBody input').prop('disabled', true);
-
 	}
 }
 var loadGameInfo = function()
