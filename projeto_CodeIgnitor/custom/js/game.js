@@ -6,9 +6,11 @@ $(window).on('load', function(){
 	// loadGameInfo();
 	
 });
-
-var gameControl = function(nowUsername)
+var card = 0;
+var gameControl = function(nowUsername, cardsOnTable)
 {
+	cardsOnTable = $.parseJSON(cardsOnTable);
+    $('#boardCards-Game').html(cardsOnTable[card]);
 	if(nowUsername == myUsername){
         $('#gameBody button, #gameBody input').prop('disabled', false);
 
@@ -30,10 +32,9 @@ var loadGameInfo = function()
         	if (response.success === true){
         		$('#start-Game').html(response.messages[0][0]);
         		$('#nowPlayer-Game').html(response.messages[0][1]);
-        		$('#boardCards-Game').html(response.messages[0][2]);
         		$('#myCars-Game').html(response.messages[0][3]);
         		$('#actualBet-Game').html(response.messages[0][4]);
-        		gameControl(response.messages[0][1]);
+        		gameControl(response.messages[0][1], response.messages[0][2]);
         		// $('#start-Game').html();
         	}else{
         		if(response.messages = "Em Espera"){
