@@ -12,12 +12,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			<div class="row">
 				<div class="col-xs-12 col-md-4">
 					<div id="messa-game">
-						<p class="turn-play" >É a sua vez de jogar</p>
-						<p class="mesa-creditos" >créditos disponiveis</p>
+						<h3 class="turn-play" >É a sua vez de jogar</h3>
+						<h3 class="mesa-creditos" >créditos disponiveis: </h3>
 					</div>
 					<div id="botoes_game" class="btn-group-vertical" role="group" aria-label="...">
 						<button type="button" id="desistir" class="btn btn-danger">Desistir</button>
-						<button type="button" id="cobrir_aposta" class="btn btn-warning">Cobrir a aposta(10 créditos)</button>
+						<button type="button" id="cobrir_aposta" class="btn btn-warning">Cobrir a aposta( créditos)</button>
 					</div>
 					<div class="input-group">
 						<input id="aumentValue" type="number" class="form-control"  placeholder="Aumentar para">

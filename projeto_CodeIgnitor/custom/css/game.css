@@ -8,11 +8,10 @@
 	position: absolute;
 	width: 86%;
 }
-/*_____ tabela jogo ______*/
-
-/*________footer_________________*/
-
-/*_______________botoes ___________*/
+#messa-game{
+	border-bottom: #616161 solid 1px;
+	margin-bottom: 30px;
+}
 #botoes_game{
 	width: 100%;
 	margin-bottom: 10px;
