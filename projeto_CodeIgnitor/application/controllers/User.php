@@ -328,6 +328,7 @@ class User extends CI_Controller {
 				$validator['messages'] = 'Utilizador autentificado com sucesso';
 
 				$session_data = array(
+						'id'		=> $loginResult['messages']['id'],
 				        'username'  => $loginResult['messages']['username'],
 				        'email'     => $loginResult['messages']['email'],
 				        'level'     => $loginResult['messages']['level'],

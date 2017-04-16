@@ -5,23 +5,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <div id="main">
 	<div id="cont-Body">
 		<div id="gameBody">
-
+			<div class="alert alert-warning" id="warningGame" role="alert"></div>
+			<div class="alert alert-danger" id="erroGame" role="alert"></div>
 			<table id="table_game" class="table">
 			    <tbody>
 			      	<tr id="InitialTime">
-			        	<td><b>Início</b></td>
+			        	<td><b>Início</b><span id="start-Game"></span></td>
 			      	</tr>
 			      	<tr id="ActualPlayer">
-			        	<td><b>Jogador atual</b></td>
+			        	<td><b>Jogador atual</b><span id="nowPlayer-Game"></span></td>
 			      	</tr>
 			      	<tr id="BoardCards">
-			        	<td><b>Cartas da mesa</b></td>
+			        	<td><b>Cartas da mesa</b><span id="boardCards-Game"></span></td>
 			      	</tr>
 					<tr id="MyCards">
-						<td><b>Minhas cartas</b></td>
+						<td><b>Minhas cartas</b><span id="myCars-Game"></span></td>
 					</tr>
 					<tr id="ActualBet">
-						<td><b>Aposta atual</b></td>
+						<td><b>Aposta atual</b><span id="actualBet-Game"></span></td>
 					</tr>
 					<tr>
 						<td id="PlayersBet"><b>Aposta de cada jogador</b></td>
@@ -49,3 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		</div>
 	</div>
 </div>
+<!-- CUSTOM JS -->
+<script type="text/javascript">
+	var gameId = "<?php echo $_GET['id']; ?>";
+</script>
+<script type="text/javascript" src="custom/js/game.js"></script>

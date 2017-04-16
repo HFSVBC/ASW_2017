@@ -1,26 +1,43 @@
 "use strict";
 $(window).on('load', function(){
-
-	gamesTable = $('#jogos').DataTable({
-    	"columnDefs": [{
-              "orderable": false,
-              "targets"  : -1
-         }],
+	  gamesTable = $('#jogos').DataTable({
+    	  "columnDefs": [{
+            "orderable": false,
+            "targets"  : -1
+        }],
         "ajax": baseURL + "index.php/game/getGames",
-	});
+	  });
     setInterval( function () {
         gamesTable.ajax.reload();
     }, 5000 );
 
+    $('body').on('click', '.gameJoin-BTN', function(){
+        var id = $(this).attr('data-gameId');
+        joinGame(id);
+    });
 });
 
 
 var gamesTable;
 
 
-var teste = function(){
-  //criar condiçao para entrar
-  window.location.href = baseURL + "index.php/userpages/view/game";
+var joinGame = function(id){
+    //criar condiçao para entrar
+    var data = {id_jogo: id};
+    $.ajax({
+        url:  baseURL + "index.php/game/createGameP",
+        type: "post",
+        data: data,
+        dataType: 'json',
+        success:function(response) {
+            if(response.success === true) {
+                window.location.href = baseURL + "game?id="+id;
+            }
+            else{
+                // error
+            }
+        }
+    });
 }
 
 var createGame = function(){

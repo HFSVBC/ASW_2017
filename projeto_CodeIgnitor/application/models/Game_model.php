@@ -33,19 +33,69 @@
 		{
 				$gameid = $this->db->escape($gameid);
 				$sql = "INSERT INTO proj_game_players (id, player_id, player_folded)
-				VALUES($gameid, $id, false)";
+						VALUES($gameid, $id, false)";
 
-				if($this->db->simple_query($sql)){
+				if($this->db->query($sql)){
 					return true;
 				}else{
 					return $this->db->_error_message();
 				}
+		}
+		public function checksIfAlreadyAdded($gameid ,$id)
+		{
+			$gameid = $this->db->escape($gameid);
+			$sql = "SELECT id
+					FROM proj_game_players
+					WHERE id=$gameid AND player_id=$id";
+
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return true;
+			}else{
+				return false;
+			}
 		}
 		public function getAllGames()
 		{
 			$sql   = "SELECT * FROM proj_game_request";
 			$query = $this->db->query($sql);
 			return $query->result_array();
+		}
+		public function gameInfo()
+		{
+			$gameId = $this->db->escape($this->input->post('id_jogo'));
+
+			$sql = "SELECT *
+					FROM proj_game_status
+					WHERE id=$gameId";
+
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row;
+			}else{
+				return false;
+			}
+		}
+		public function PlayerOnGame()
+		{
+			$gameId = $this->db->escape($this->input->post('id_jogo'));
+
+			$sql = "SELECT player_cards, player_bet
+					FROM proj_game_players
+					WHERE id=$gameId";
+
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row;
+			}else{
+				return false;
+			}
 		}
 		public function playersCount($id)
 		{
@@ -104,11 +154,11 @@
 				return false;
 			}
 		}
-		public function checksConditionstoStart()
-		{
-			$sql = "SELECT max_players FROM proj_game_request";
+		// public function checksConditionstoStart()
+		// {
+		// 	$sql = "SELECT max_players FROM proj_game_request";
 
-		}
+		// }
 		// private function checksToBeAdded()
 		// {
 		//

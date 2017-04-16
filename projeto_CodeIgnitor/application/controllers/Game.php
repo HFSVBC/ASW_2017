@@ -92,14 +92,19 @@ class Game extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 		if($this->form_validation->run() === true){
-			$result = $this->game_model->createGameP($this->input->post('id_jogo'), $this->game_model->getIdByUsername($this->session->userdata['loggedIn_asw004']['username']));
-			if($result === true){
-				$validator['success']  = true;
-				$validator['messages'] = 'Utilizador adicionado ao jogo com sucesso';
+			if(!$this->game_model->checksIfAlreadyAdded($this->input->post('id_jogo'), $this->session->userdata['loggedIn_asw004']['id'])){
+				$result = $this->game_model->createGameP($this->input->post('id_jogo'), $this->session->userdata['loggedIn_asw004']['id']);
+				if($result === true){
+					$validator['success']  = true;
+					$validator['messages'] = 'Utilizador adicionado ao jogo com sucesso';
 
+				}else{
+					$validator['success']  = false;
+					$validator['messages'] = 'Erro ao atualizar a base de dados';
+				}
 			}else{
-				$validator['success']  = false;
-				$validator['messages'] = 'Erro ao atualizar a base de dados';
+				$validator['success']  = true;
+				$validator['messages'] = 'Utilizador ja adicionado ao jogo';
 			}
 		} else{
 			$validator['success']  = false;
@@ -117,9 +122,9 @@ class Game extends CI_Controller {
 		foreach ($result as $row) {
 			$game_state = $this->game_model->getGameState($row['id']);
 			if($game_state=='Em espera'){
-				$button_state = "<input type='button' class='btn btn-success gameJoin' onclick='teste()' data-gameId='".$row['id']."'><span> <i class='glyphicon glyphicon-ok' aria-hidden='true'></i></span>";
+				$button_state = "<button class='btn btn-success gameJoin gameJoin-BTN' data-gameId='".$row['id']."'><span> <i class='glyphicon glyphicon-ok' aria-hidden='true'></i></span></button>";
 			}else{
-				$button_state = "<input type='button' class='btn btn-danger disabled gameJoin' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-remove' aria-hidden='true'></i></span>";
+				$button_state = "<button class='btn btn-danger disabled gameJoin' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-remove' aria-hidden='true'></i></span></button>";
 			}
 			$data = [
 				$row['name'],
@@ -135,6 +140,47 @@ class Game extends CI_Controller {
 			array_push($outputData['data'], $data);
 		}
 		echo json_encode($outputData);
+	}
+	public function getGameInfo()
+	{
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'id_jogo',
+	                'label' => 'Game id',
+	                'rules' => 'trim|integer|required|strip_tags',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			$resultGame = $this->game_model->gameInfo();
+			if($resultGame === true){
+				$resultPlayer = $this->game_model->PlayerOnGame();
+				$validator['success']  = true;
+				$validator['messages'] = array();
+				$data = [
+					$resultGame['started_at'],
+					$resultGame['current_player'],
+					$resultGame['deck'],
+					$resultPlayer['player_cards'],
+					$resultGame['current_bet'],
+					$resultPlayer['player_bet'],
+				];
+				array_push($validator['messages'], $data);
+			}else{
+				$validator['success']  = false;
+				$validator['messages'] = 'Em Espera';
+			}
+		} else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o'.validation_errors();
+		}
+
+		echo json_encode($validator);
 	}
 }
 ?>

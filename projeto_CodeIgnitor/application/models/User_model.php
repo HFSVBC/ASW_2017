@@ -116,7 +116,7 @@
 			        'expire' => time()+86400,
 			        );
 
-			$sql   = "SELECT username, email, password, level
+			$sql   = "SELECT id, username, email, password, level
 					  FROM proj_users
 					  WHERE (username = $username OR email = $username) AND level >= 0 AND active = 0
 					  LIMIT 1";
@@ -125,6 +125,7 @@
 			if(!empty($row)){
         		if(password_verify($password, $row->password)){
         			$data = array(
+        				'id'       => $row->id,
         				'username' => $row->username,
         				'email'    => $row->email,
         				'level'    => $row->level
