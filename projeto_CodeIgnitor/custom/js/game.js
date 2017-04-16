@@ -1,6 +1,8 @@
 $(window).on('load', function(){
-	console.log(gameId);
-	loadGameInfo();
+	setInterval( function () {
+    	loadGameInfo();
+	}, 1000 );
+	
 });
 
 
@@ -13,7 +15,7 @@ var loadGameInfo = function()
         data: data,
         dataType: 'json',
         success:function(response) {
-        	console.log(response);
+        	$('.alert').hide();
         	if (response.success === true){
         		$('#start-Game').html(esponse.success.started_at);
         		$('#nowPlayer-Game').html(esponse.success.current_player);
