@@ -7,46 +7,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		<div id="gameBody">
 			<div class="alert alert-warning" id="warningGame" role="alert"></div>
 			<div class="alert alert-danger" id="erroGame" role="alert"></div>
-			<table id="table_game" class="table">
-			    <tbody>
-			      	<tr id="InitialTime">
-			        	<td><b>Início</b><span id="start-Game"></span></td>
-			      	</tr>
-			      	<tr id="ActualPlayer">
-			        	<td><b>Jogador atual</b><span id="nowPlayer-Game"></span></td>
-			      	</tr>
-			      	<tr id="BoardCards">
-			        	<td><b>Cartas da mesa</b><span id="boardCards-Game"></span></td>
-			      	</tr>
-					<tr id="MyCards">
-						<td><b>Minhas cartas</b><span id="myCars-Game"></span></td>
-					</tr>
-					<tr id="ActualBet">
-						<td><b>Aposta atual</b><span id="actualBet-Game"></span></td>
-					</tr>
-					<tr>
-						<td id="PlayersBet"><b>Aposta de cada jogador</b></td>
-					</tr>
-			    </tbody>
-	  		</table>
-	  	</div>
-	</div>
-	<div class="footer">
-		<div class="side-bar">
-
-			<div id="messa-game">
-				<p class="turn-play" >É a sua vez de jogar</p>
-				<p class="mesa-creditos" >créditos disponiveis</p>
+			<div class="row">
+				<div class="col-xs-12 col-md-4">
+					<div id="botoes_game" class="btn-group" role="group" aria-label="...">
+						<button type="button" id="desistir" class="btn btn-danger">Desistir</button>
+						<button type="button" id="cobrir_aposta" class="btn btn-warning">Cobrir a aposta(10 créditos)</button>
+						<input id="aument1" type="text" value="Aumentar para">
+						<button id="aument2" type="button" class="btn btn-default">Enviar</button>
+					</div>
+					<div id="messa-game">
+						<p class="turn-play" >É a sua vez de jogar</p>
+						<p class="mesa-creditos" >créditos disponiveis</p>
+					</div>
+					<button class="btn btn-primary" id="chat" type="button">
+						Chat <span class="badge">4</span>
+					</button>
+				</div>
+				<div class="col-xs-12 col-md-8">
+					<table id="table_game" class="table">
+					    <tbody>
+					      	<tr id="InitialTime">
+					        	<td><b>Início</b><span id="start-Game"></span></td>
+					      	</tr>
+					      	<tr id="ActualPlayer">
+					        	<td><b>Jogador atual</b><span id="nowPlayer-Game"></span></td>
+					      	</tr>
+					      	<tr id="BoardCards">
+					        	<td><b>Cartas da mesa</b><span id="boardCards-Game"></span></td>
+					      	</tr>
+							<tr id="MyCards">
+								<td><b>Minhas cartas</b><span id="myCars-Game"></span></td>
+							</tr>
+							<tr id="ActualBet">
+								<td><b>Aposta atual</b><span id="actualBet-Game"></span></td>
+							</tr>
+							<tr>
+								<td id="PlayersBet"><b>Aposta de cada jogador</b></td>
+							</tr>
+					    </tbody>
+			  		</table>
+				</div>
 			</div>
-			<div id="botoes_game" class="btn-group-vertical" role="group" aria-label="...">
-				<button type="button" id="desistir" class="btn">Desistir</button>
-				<button type="button" id="cobrir_aposta" class="btn">Cobrir a aposta(10 créditos)</button>
-				<p id="aument">Aumentar para</p><input id="aument1" type="text"><button id="aument2" type="button" class="btn">Enviar</button>
-			</div>
-
-			<button class="btn btn-primary" id="chat" type="button">
-				Chat <span class="badge">4</span>
-			</button>
 		</div>
 	</div>
 </div>
