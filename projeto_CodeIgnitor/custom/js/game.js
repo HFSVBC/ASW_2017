@@ -25,10 +25,10 @@ var loadGameInfo = function()
         		// $('#start-Game').html();
         	}else{
         		if(response.messages = "Em Espera"){
-        			$('#warningGame').html("Em Espera");
+        			$('#warningGame-msg').html("Em Espera");
         			$('#warningGame').show();
         		}else{
-        			$('#erroGame').html(response.messages);
+        			$('#erroGame-msg').html(response.messages);
         			$('#erroGame').show();
         		}
         	}

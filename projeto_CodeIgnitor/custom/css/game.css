@@ -1,64 +1,25 @@
 #gameBody{
-	padding: 80px 100px 20px 100px;
+	padding: 80px 7% 20px 7%;
+}
+.row{
+	margin-top: 100px;
+}
+.container-alerts{
+	position: absolute;
+	width: 86%;
 }
 /*_____ tabela jogo ______*/
 
-#table_game{
-	width: 600px;
-	left: 35%;
-	position: relative;
-	top: 150px;
-}
-
 /*________footer_________________*/
 
-.footer-game{
-	top: 300px;
-	position: relative;
-}
-
 /*_______________botoes ___________*/
-
 #botoes_game{
-	position: relative;
-	top:350px;
+	width: 100%;
+	margin-bottom: 10px;
 }
-
-#desistir{
-	width: 100px;
-    height: 55px;
-    bottom: 500px;
-}
-
-#cobrir_aposta{
-	width: 200px;
-	height: 55px;
-	bottom: 500px;
-}
-p>#aument{
-	bottom: 600px;
-	position: relative;
-	left: 1000px;
-}
-#aument1{
-	bottom: 500px;
-    position: relative;
-    left: -64.64px;
-    height: 55px;
-    margin: 0;
-}
-#aument2{
-	bottom: 500px;
-    left: 152px;
+#desistir, #cobrir_aposta{
     height: 55px;
 }
-
-
 #chat{
-	position: relative;
-	right: 190px;
-	top: 235px;
-	width: 100px;
-	height: 50px;
+	display: none;
 }
-

@@ -5,19 +5,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <div id="main">
 	<div id="cont-Body">
 		<div id="gameBody">
-			<div class="alert alert-warning" id="warningGame" role="alert"></div>
-			<div class="alert alert-danger" id="erroGame" role="alert"></div>
+			<div class="container-alerts">
+				<div class="alert alert-warning" id="warningGame" role="alert"><strong>Aviso! </strong><span id="warningGame-msg"></span></div>
+				<div class="alert alert-danger" id="erroGame" role="alert"><strong>Erro! </strong><span id="erroGame-msg"></span></div>
+			</div>
 			<div class="row">
 				<div class="col-xs-12 col-md-4">
-					<div id="botoes_game" class="btn-group" role="group" aria-label="...">
-						<button type="button" id="desistir" class="btn btn-danger">Desistir</button>
-						<button type="button" id="cobrir_aposta" class="btn btn-warning">Cobrir a aposta(10 créditos)</button>
-						<input id="aument1" type="text" value="Aumentar para">
-						<button id="aument2" type="button" class="btn btn-default">Enviar</button>
-					</div>
 					<div id="messa-game">
 						<p class="turn-play" >É a sua vez de jogar</p>
 						<p class="mesa-creditos" >créditos disponiveis</p>
+					</div>
+					<div id="botoes_game" class="btn-group-vertical" role="group" aria-label="...">
+						<button type="button" id="desistir" class="btn btn-danger">Desistir</button>
+						<button type="button" id="cobrir_aposta" class="btn btn-warning">Cobrir a aposta(10 créditos)</button>
+					</div>
+					<div class="input-group">
+						<input id="aumentValue" type="number" class="form-control"  placeholder="Aumentar para">
+						<span class="input-group-btn">
+							<button id="aumentSend" type="button" class="btn btn-default">Aumentar</button>
+      					</span>
 					</div>
 					<button class="btn btn-primary" id="chat" type="button">
 						Chat <span class="badge">4</span>
