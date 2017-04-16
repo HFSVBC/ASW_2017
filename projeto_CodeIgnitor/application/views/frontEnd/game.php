@@ -12,7 +12,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			<div class="row">
 				<div class="col-xs-12 col-md-4">
 					<div id="messa-game">
-						<h3 class="turn-play" >É a sua vez de jogar</h3>
 						<h3 class="mesa-creditos" >Créditos disponiveis: </h3>
 					</div>
 					<div id="botoes_game" class="btn-group-vertical" role="group" aria-label="...">
