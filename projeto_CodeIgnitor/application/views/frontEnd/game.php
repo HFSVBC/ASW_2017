@@ -58,6 +58,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 </div>
 <!-- CUSTOM JS -->
 <script type="text/javascript">
-	var gameId = "<?php echo $_GET['id']; ?>";
+	var gameId     = "<?php echo $_GET['id']; ?>";
+	var myUsername = "<?php echo $loggedIn_user; ?>";
 </script>
 <script type="text/javascript" src="custom/js/game.js"></script>

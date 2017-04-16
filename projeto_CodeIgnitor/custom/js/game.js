@@ -7,7 +7,16 @@ $(window).on('load', function(){
 	
 });
 
+var gameControl = function(nowUsername)
+{
+	if(nowUsername == myUsername){
+        $('#gameBody button, #gameBody input').prop('disabled', false);
 
+	}else{
+        $('#gameBody button, #gameBody input').prop('disabled', true);
+
+	}
+}
 var loadGameInfo = function()
 {
 	var data = {id_jogo: gameId};
@@ -19,12 +28,12 @@ var loadGameInfo = function()
         success:function(response) {
         	$('.alert').hide();
         	if (response.success === true){
-        		$('#gameBody button, #gameBody input').prop('disabled', false)
         		$('#start-Game').html(response.messages[0][0]);
         		$('#nowPlayer-Game').html(response.messages[0][1]);
         		$('#boardCards-Game').html(response.messages[0][2]);
         		$('#myCars-Game').html(response.messages[0][3]);
         		$('#actualBet-Game').html(response.messages[0][4]);
+        		gameControl(response.messages[0][1]);
         		// $('#start-Game').html();
         	}else{
         		if(response.messages = "Em Espera"){
