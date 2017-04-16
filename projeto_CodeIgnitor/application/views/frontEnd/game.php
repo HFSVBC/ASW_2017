@@ -13,11 +13,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				<div class="col-xs-12 col-md-4">
 					<div id="messa-game">
 						<h3 class="turn-play" >É a sua vez de jogar</h3>
-						<h3 class="mesa-creditos" >créditos disponiveis: </h3>
+						<h3 class="mesa-creditos" >Créditos disponiveis: </h3>
 					</div>
 					<div id="botoes_game" class="btn-group-vertical" role="group" aria-label="...">
 						<button type="button" id="desistir" class="btn btn-danger">Desistir</button>
-						<button type="button" id="cobrir_aposta" class="btn btn-warning">Cobrir a aposta( créditos)</button>
+						<button type="button" id="cobrir_aposta" class="btn btn-warning">Cobrir a aposta (<?php echo $apostaMin; ?> créditos)</button>
 					</div>
 					<div class="input-group">
 						<input id="aumentValue" type="number" class="form-control"  placeholder="Aumentar para">
@@ -33,19 +33,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					<table id="table_game" class="table">
 					    <tbody>
 					      	<tr id="InitialTime">
-					        	<td><b>Início</b><span id="start-Game"></span></td>
+					        	<td><b>Início</b> <span id="start-Game"></span></td>
 					      	</tr>
 					      	<tr id="ActualPlayer">
-					        	<td><b>Jogador atual</b><span id="nowPlayer-Game"></span></td>
+					        	<td><b>Jogador atual</b> <span id="nowPlayer-Game"></span></td>
 					      	</tr>
 					      	<tr id="BoardCards">
-					        	<td><b>Cartas da mesa</b><span id="boardCards-Game"></span></td>
+					        	<td><b>Cartas da mesa</b> <span id="boardCards-Game"></span></td>
 					      	</tr>
 							<tr id="MyCards">
-								<td><b>Minhas cartas</b><span id="myCars-Game"></span></td>
+								<td><b>Minhas cartas</b> <span id="myCars-Game"></span></td>
 							</tr>
 							<tr id="ActualBet">
-								<td><b>Aposta atual</b><span id="actualBet-Game"></span></td>
+								<td><b>Aposta atual</b> <span id="actualBet-Game"></span></td>
 							</tr>
 							<tr>
 								<td id="PlayersBet"><b>Aposta de cada jogador</b></td>

@@ -8,6 +8,7 @@ class Userpages extends CI_Controller {
 		parent::__construct();
 
 		$this->load->model('user_model');
+		$this->load->model('game_model');
 	}
 
 	public function view($page='home')
@@ -43,6 +44,9 @@ class Userpages extends CI_Controller {
 				$data['county']    = $result ->county;
 				$data['balance']   = $result ->balance;
 				$data['avatar']    = $result ->avatar;
+			}
+			else if($page == 'game'){
+				$data['apostaMin'] = $this->minGameBet($_GET['id']);
 			}
 		}else if(array_key_exists($page, $protectedPages)){
 			$page = 'acessdenied';
@@ -90,4 +94,9 @@ class Userpages extends CI_Controller {
 	{	
 		return $this->user_model->getUser($id);
 	}
+	private function minGameBet($id)
+	{
+		return $this->game_model->getGameMinBet($id);
+	}
+
 }

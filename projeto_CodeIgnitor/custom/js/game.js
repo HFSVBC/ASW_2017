@@ -1,7 +1,9 @@
 $(window).on('load', function(){
+    $('#gameBody button, #gameBody input').prop('disabled', true);
 	setInterval( function () {
     	loadGameInfo();
 	}, 1000 );
+	// loadGameInfo();
 	
 });
 
@@ -17,15 +19,16 @@ var loadGameInfo = function()
         success:function(response) {
         	$('.alert').hide();
         	if (response.success === true){
-        		$('#start-Game').html(esponse.success.started_at);
-        		$('#nowPlayer-Game').html(esponse.success.current_player);
-        		$('#boardCards-Game').html(esponse.success.deck);
-        		$('#myCars-Game').html(esponse.success.player_cards);
-        		$('#actualBet-Game').html(esponse.success.current_bet);
+        		$('#gameBody button, #gameBody input').prop('disabled', false)
+        		$('#start-Game').html(response.messages[0][0]);
+        		$('#nowPlayer-Game').html(response.messages[0][1]);
+        		$('#boardCards-Game').html(response.messages[0][2]);
+        		$('#myCars-Game').html(response.messages[0][3]);
+        		$('#actualBet-Game').html(response.messages[0][4]);
         		// $('#start-Game').html();
         	}else{
         		if(response.messages = "Em Espera"){
-        			$('#warningGame-msg').html("Em Espera");
+        			$('#warningGame-msg').html("Em Espera, sem utilizadores suficientes.");
         			$('#warningGame').show();
         		}else{
         			$('#erroGame-msg').html(response.messages);

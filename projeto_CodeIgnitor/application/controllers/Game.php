@@ -97,7 +97,9 @@ class Game extends CI_Controller {
 				if($result === true){
 					$validator['success']  = true;
 					$validator['messages'] = 'Utilizador adicionado ao jogo com sucesso';
-
+					if($this->game_model->checksConditionstoStart()){
+						$result = $this->game_model->startGame();
+					}
 				}else{
 					$validator['success']  = false;
 					$validator['messages'] = 'Erro ao atualizar a base de dados';
@@ -158,17 +160,17 @@ class Game extends CI_Controller {
 
 		if($this->form_validation->run() === true){
 			$resultGame = $this->game_model->gameInfo();
-			if($resultGame === true){
-				$resultPlayer = $this->game_model->PlayerOnGame();
+			if($resultGame != false){
+				$resultPlayer = $this->game_model->PlayerOnGame($this->session->userdata['loggedIn_asw004']['id']);
 				$validator['success']  = true;
 				$validator['messages'] = array();
 				$data = [
-					$resultGame['started_at'],
-					$resultGame['current_player'],
-					$resultGame['deck'],
-					$resultPlayer['player_cards'],
-					$resultGame['current_bet'],
-					$resultPlayer['player_bet'],
+					$resultGame->started_at,
+					$this->game_model->getUsernameById($resultGame->current_player),
+					$resultGame->table_cards,
+					$resultPlayer->player_cards,
+					$resultGame->current_bet,
+					$resultPlayer->player_bet,
 				];
 				array_push($validator['messages'], $data);
 			}else{

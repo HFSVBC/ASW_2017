@@ -30,11 +30,12 @@ var joinGame = function(id){
         data: data,
         dataType: 'json',
         success:function(response) {
+            console.log(response)
             if(response.success === true) {
                 window.location.href = baseURL + "game?id="+id;
             }
             else{
-                // error
+                console.log(response.messages)
             }
         }
     });
