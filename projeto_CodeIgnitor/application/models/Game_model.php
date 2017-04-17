@@ -239,7 +239,7 @@
 			shuffle($deck);
 			$table_cards    = array();
 			for($i=0; $i<5; $i++){
-				$x = rand(0, 53);
+				$x = rand(0, 52);
 				array_push($table_cards, $deck[$x]);
 			}
 			$deck           = json_encode($deck);
@@ -301,10 +301,10 @@
 		}
 		public function checksPlayerFolded($player_id, $id_jogo)
 		{
-			$sql   = "SELECT player_id 
+			$sql   = "SELECT * 
 					  FROM proj_game_players
-					  WHERE id=$id_jogo AND player_id=$player_id AND player_folded = 1
-					  LIMIT 1";
+					  WHERE id=$id_jogo AND player_id=$player_id AND player_folded=1";
+
 			$query = $this->db->query($sql);
 			$row   = $query->row();
 
@@ -358,13 +358,13 @@
 	  						SET player_bet=player_bet+$raise, betted=1
 	  						WHERE id=$id_jogo AND player_id=$player_id";
 		  			if($this->db->query($sql)){
-		  				$this->setCurrentPlayer($player_id, $id_jogo, $raise);
+		  				$result = $this->setCurrentPlayer($player_id, $id_jogo, $raise);
 		  				$this->updateHist($player_id, $id_jogo, "$currentBet creditos");
 		  				$sql = "UPDATE proj_game_status
 								SET last_to_raise = $player_id, current_bet = $raise
 								WHERE id=$id_jogo";
 						$this->db->query($sql);
-		  				return true;
+		  				return $result;
 		  			}else{
 		  				return false;
 		  			}
@@ -398,7 +398,8 @@
 							SET betted = 0
 							WHERE id=$id_jogo";
 					$this->db->query($sql);
-					if($this->checksPlayerFolded($player_id, $id_jogo)){
+					$result = $this->checksPlayerFolded($next_player, $id_jogo);
+					if($result){
 						$this->setCurrentPlayer($player_id, $id_jogo, 0);
 					}
 				}
@@ -409,7 +410,7 @@
 	  	}
 	  	public function updateHist($player_id, $id_jogo, $op)
 	  	{
-	  		$sql = "INSERT INTO proj_game_hist (id, player_id, operation)
+	  		$sql = "INSERT INTO proj_game_hist (game_id, player_id, operation)
 	  				VALUES ($id_jogo, $player_id, '$op')";
 	  		if($this->db->query($sql)){
 				return true;

@@ -80,3 +80,12 @@ CREATE TABLE IF NOT EXISTS proj_game_players (
     FOREIGN KEY (id) REFERENCES proj_game_request (id),
     FOREIGN KEY (player_id) REFERENCES proj_users (id)
 );
+CREATE TABLE proj_game_hist(
+    id            int(5) unsigned NOT NULL AUTO_INCREMENT,
+    game_id       INT NOT NULL,
+    player_id     int(5) unsigned NOT NULL,
+    operation     VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (game_id) REFERENCES proj_game_request (id),
+    FOREIGN KEY (player_id) REFERENCES proj_users (id)
+);
