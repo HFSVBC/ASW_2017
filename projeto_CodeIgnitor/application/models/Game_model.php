@@ -308,6 +308,7 @@
 					WHERE player_id=$player_id AND id=$id_jogo";
 			if($this->db->query($sql)){
   				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet);
+  				$this->updateHist($player_id, $id_jogo, "desistiu");
   				return true;
   			}else{
   				return false;
@@ -323,6 +324,7 @@
 	  					WHERE id=$id_jogo AND player_id=$player_id";
 	  			if($this->db->query($sql)){
 	  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet);
+	  				$this->updateHist($player_id, $id_jogo, "$currentBet creditos");
 	  				return true;
 	  			}else{
 	  				return false;
@@ -343,6 +345,7 @@
 	  						WHERE id=$id_jogo AND player_id=$player_id";
 		  			if($this->db->query($sql)){
 		  				$this->setCurrentPlayer($player_id, $id_jogo, $raise);
+		  				$this->updateHist($player_id, $id_jogo, "$currentBet creditos");
 		  				$sql = "UPDATE proj_game_status
 								SET last_to_raise = $player_id, current_bet = $raise
 								WHERE id=$id_jogo";
@@ -382,6 +385,16 @@
 							WHERE id=$id_jogo";
 					$this->db->query($sql);
 				}
+				return true;
+			}else{
+				return false;
+			}
+	  	}
+	  	public function updateHist($player_id, $id_jogo, $op)
+	  	{
+	  		$sql = "INSERT INTO proj_game_hist (id, player_id, operation)
+	  				VALUES ($id_jogo, $player_id, '$op')";
+	  		if($this->db->query($sql)){
 				return true;
 			}else{
 				return false;
