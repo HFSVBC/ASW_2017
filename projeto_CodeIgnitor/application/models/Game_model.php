@@ -332,7 +332,7 @@
 	  					SET player_bet=player_bet+$currentBet, betted=1
 	  					WHERE id=$id_jogo AND player_id=$player_id";
 	  			if($this->db->query($sql)){
-	  				$this->setCurrentPlayer($player_id, $id_jogo);
+	  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet);
 	  				return true;
 	  			}else{
 	  				return false;
@@ -343,10 +343,34 @@
 
 	  	}
 	  	public function PlayerRaised($player_id, $id_jogo){
-
+	  		$userBalance = $this->getPlayerBalance($player_id);
+	  		$currentBet  = $this->getGameCurrentBet($id_jogo);
+	  		$raise       = $this->input->post('raiseAmount');
+	  		if ($raise > $currentBet){
+	  			if($userBalance >= $raise){
+	  				$sql = "UPDATE proj_game_players
+	  						SET player_bet=player_bet+$raise, betted=1
+	  						WHERE id=$id_jogo AND player_id=$player_id";
+		  			if($this->db->query($sql)){
+		  				$this->setCurrentPlayer($player_id, $id_jogo, $raise);
+		  				$sql = "UPDATE proj_game_status
+								SET last_to_raise = $player_id, current_bet = $raise
+								WHERE id=$id_jogo";
+						$this->db->query($sql);
+		  				return true;
+		  			}else{
+		  				return false;
+		  			}
+	  			}else{
+	  				return false;
+	  			}
+	  		}else{
+	  			return false;
+	  		}
 	  	}
-	  	public function setCurrentPlayer($player_id, $id_jogo)
+	  	public function setCurrentPlayer($player_id, $id_jogo, $value)
 	  	{
+	  		$next_player = $this->getGameOwner($id_jogo);
 	  		$sql = "SELECT player_id, betted
 					FROM proj_game_players
 					WHERE id=$id_jogo
@@ -359,9 +383,15 @@
 				}
 			}
 			$sql = "UPDATE proj_game_status
-					SET current_player = $next_player
+					SET current_player = $next_player, current_pot=current_pot+$value
 					WHERE id=$id_jogo";
 			if($this->db->query($sql)){
+				if($next_player == $this->getGameOwner($id_jogo)){
+					$sql = "UPDATE proj_game_players
+							SET betted = 0
+							WHERE id=$id_jogo";
+					$this->db->query($sql);
+				}
 				return true;
 			}else{
 				return false;

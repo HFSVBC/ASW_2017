@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					</div>
 					<div id="botoes_game" class="btn-group-vertical" role="group" aria-label="...">
 						<button type="button" id="desistir" class="btn btn-danger">Desistir</button>
-						<button type="button" id="cobrir_aposta" class="btn btn-warning">Cobrir a aposta (<?php echo $apostaMin; ?> créditos)</button>
+						<button type="button" id="cobrir_aposta" class="btn btn-warning">Cobrir a aposta (<span class="actualBet-Game"></span> créditos)</button>
 					</div>
 					<div class="input-group">
 						<input id="aumentValue" type="number" class="form-control"  placeholder="Aumentar para">
@@ -44,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 								<td><b>Minhas cartas</b> <span id="myCars-Game"></span></td>
 							</tr>
 							<tr id="ActualBet">
-								<td><b>Aposta atual</b> <span id="actualBet-Game"></span> créditos</td>
+								<td><b>Aposta atual</b> <span class="actualBet-Game"></span> créditos</td>
 							</tr>
 							<tr>
 								<td id="PlayersBet"><b>Aposta de cada jogador</b></td>

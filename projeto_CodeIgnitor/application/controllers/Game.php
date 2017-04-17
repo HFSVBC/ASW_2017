@@ -211,6 +211,11 @@ class Game extends CI_Controller {
 	                'label' => 'Game id',
 	                'rules' => 'trim|integer|required|strip_tags',
 	        ),
+	        array(
+	                'field' => 'raiseAmount',
+	                'label' => 'raiseAmount',
+	                'rules' => 'trim|numeric|strip_tags',
+	        ),
 		);
 
 		$this->form_validation->set_rules($config);
@@ -226,9 +231,9 @@ class Game extends CI_Controller {
 				$validator['success']=true;
 				$validator['messages'] = "You called the bet";
 			} elseif($action=="Aumenta"){
-				$this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
+				$result = $this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
 				$validator['success']=true;
-				$validator['messages']="You raised the bet";
+				$validator['messages']="You raised the bet ".json_encode($result);
 			}
 		} else{
 			$validator['success']  = false;

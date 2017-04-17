@@ -30,7 +30,7 @@ var gameControl = function(nowUsername, cardsOnTable)
 }
 var loadGameInfo = function()
 {
-	var data = {id_jogo: gameId};
+	var data  = {id_jogo: gameId};
     $.ajax({
         url:  baseURL + "index.php/game/getGameInfo",
         type: "post",
@@ -42,7 +42,7 @@ var loadGameInfo = function()
         		$('#start-Game').html(response.messages[0][0]);
         		$('#nowPlayer-Game').html(response.messages[0][1]);
         		$('#myCars-Game').html(response.messages[0][3]);
-        		$('#actualBet-Game').html(response.messages[0][4]);
+        		$('.actualBet-Game').html(response.messages[0][4]);
         		gameControl(response.messages[0][1], response.messages[0][2]);
         		// $('#start-Game').html();
         	}else{
@@ -61,10 +61,12 @@ var loadGameInfo = function()
 
 var PlayerAction = function(action, msg)
 {
+	var raise = $('#aumentValue').val();
+	console.log(raise);
     //qual o jogador
     //atualizar o proximo jogador
     //mudar o player_folded para true
-    var data = {id_jogo: gameId};
+    var data = {id_jogo: gameId, raiseAmount: raise};
     $.ajax({
         url: baseURL + "index.php/game/playerAction/" + action,
         type: "post",
@@ -72,7 +74,7 @@ var PlayerAction = function(action, msg)
         dataType: 'json',
         success: function(response) {
             if(response.success === true){
-                $('#warningGame-msg').html(msg);
+                $('#warningGame-msg').html(response.messages);
                 $('#warningGame').show();
             }else{
                 $('#erroGame-msg').html(response.messages);
