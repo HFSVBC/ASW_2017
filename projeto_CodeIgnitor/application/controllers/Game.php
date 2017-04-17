@@ -178,6 +178,8 @@ class Game extends CI_Controller {
 						$playerCredits,
 						$cardsRound,
 						$history,
+						$resultGame->current_pot,
+						$this->playersInGame($this->input->post('id_jogo')),
 					];
 				} else{
 					$validator['success']  = true;
@@ -191,6 +193,8 @@ class Game extends CI_Controller {
 						$playerCredits,
 						$cardsRound,
 						$history,
+						$resultGame->current_pot,
+						$this->playersInGame($this->input->post('id_jogo')),
 					];
 				}
 				array_push($validator['messages'], $data);
@@ -212,6 +216,16 @@ class Game extends CI_Controller {
 		foreach ($result as $row) {
 			$username = $this->game_model->getUsernameById($row['player_id']);
 			$output  .="<span>".$username.": ".$row['operation']."</span><br>";
+		}
+		return $output;
+	}
+	public function playersInGame($game_id)
+	{
+		$result = $this->game_model->getPlayersInGame($game_id);
+		$output = "";
+		foreach ($result as $row) {
+			$username = $this->game_model->getUsernameById($row['player_id']);
+			$output  .=$username."&#8192;";
 		}
 		return $output;
 	}

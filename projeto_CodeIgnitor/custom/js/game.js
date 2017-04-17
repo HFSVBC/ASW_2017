@@ -18,7 +18,6 @@ var gameControl = function(nowUsername, cardsOnTable, round)
 {
 	cardsOnTable = $.parseJSON(cardsOnTable);
     //isto e o flop
-    console.log(round);
 	if(nowUsername == myUsername){
         $('#gameBody button, #gameBody input').prop('disabled', false);
         // ativa escuta de botoes
@@ -56,8 +55,9 @@ var loadGameInfo = function()
         		$('.actualBet-Game').html(response.messages[0][4]);
         		$("#userPoints").html(response.messages[0][5]);
         		$("#gameHistory").html(response.messages[0][7]);
+        		$("#pot-Game").html(response.messages[0][8]);
+        		$("#players-Game").html(response.messages[0][9]);
         		gameControl(response.messages[0][1], response.messages[0][2], response.messages[0][6]);
-        		// $('#start-Game').html();
         	}else{
         		if(response.messages = "Em Espera"){
         			$('#warningGame-msg').html("Em Espera, sem utilizadores suficientes.");
@@ -75,7 +75,6 @@ var loadGameInfo = function()
 var PlayerAction = function(action, msg)
 {
 	var raise = $('#aumentValue').val();
-	console.log(raise);
     //qual o jogador
     //atualizar o proximo jogador
     //mudar o player_folded para true

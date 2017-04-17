@@ -37,11 +37,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					      	<tr id="ActualPlayer">
 					        	<td><b>Jogador atual</b> <span id="nowPlayer-Game"></span></td>
 					      	</tr>
+					      	<tr id="Players">
+					        	<td><b>Jogadores</b> <span id="players-Game"></span></td>
+					      	</tr>
 					      	<tr id="BoardCards">
 					        	<td><b>Cartas da mesa</b> <span id="boardCards-Game"></span></td>
 					      	</tr>
 							<tr id="MyCards">
 								<td><b>Minhas cartas</b> <span id="myCars-Game"></span></td>
+							</tr>
+							<tr id="pot">
+								<td><b>Valor do pote</b> <span id="pot-Game"></span> créditos</td>
 							</tr>
 							<tr id="ActualBet">
 								<td><b>Aposta atual</b> <span class="actualBet-Game"></span> créditos</td>

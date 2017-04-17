@@ -87,6 +87,19 @@
 				return false;
 			}
 		}
+		public function getPlayersInGame($game_id)
+		{
+			$sql = "SELECT player_id
+					FROM proj_game_players
+					WHERE id=$game_id";
+
+			$query = $this->db->query($sql);
+			if($query){
+				return $query->result_array();
+			}else{
+				return false;
+			}
+		}
 		public function PlayerOnGame($playerId)
 		{
 			$gameId = $this->db->escape($this->input->post('id_jogo'));
