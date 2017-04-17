@@ -262,6 +262,14 @@
 				return false;
 			}
 		}
+
+		public function PlayerFolded($player_id, $next_player, $id_jogo)
+		{
+			$sql = "UPDATE proj_game_players SET player_folded=true WHERE id=$player_id";
+			$query = $this->db->query($sql);
+			$sql_2 = "UPDATE proj_game_status SET current_player=$next_player WHERE id = $id_jogo";
+
+		}
 		// private function checksToBeAdded()
 		// {
 		//
