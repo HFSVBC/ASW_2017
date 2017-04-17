@@ -265,6 +265,9 @@
 
 		public function PlayerFolded($player_id, $id_jogo)
 		{
+			$sql = "UPDATE proj_game_players SET player_folded='1' WHERE id=$player_id";
+			$query = $this->db->query($sql);
+
 			$next_player = $player_id;
 			$Newplayer = false;
 			$sql = "SELECT * FROM proj_game_players WHERE id=$id_jogo";
@@ -278,8 +281,7 @@
 				}
 
 			}
-			$sql = "UPDATE proj_game_players SET player_folded=true WHERE id=$player_id";
-			$query = $this->db->query($sql);
+
 			$sql = "UPDATE proj_game_status SET current_player=$next_player WHERE id = $id_jogo";
 			$query = $this->db->query($sql);
 

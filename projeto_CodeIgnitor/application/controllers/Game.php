@@ -163,7 +163,7 @@ class Game extends CI_Controller {
 			$resultGame = $this->game_model->gameInfo();
 			if($resultGame != false){
 				$resultPlayer = $this->game_model->PlayerOnGame($this->session->userdata['loggedIn_asw004']['id']);
-				if($resultPlayer->player_folded==='0')
+				if($resultPlayer->player_folded=='1')
 				{
 
 					$validator['success']  = true;
@@ -175,6 +175,7 @@ class Game extends CI_Controller {
 						'Desististe',
 						$resultGame->current_bet,
 						$resultPlayer->player_bet,
+						$resultPlayer->player_folded,
 					];
 				} else{
 
@@ -187,6 +188,7 @@ class Game extends CI_Controller {
 						$resultPlayer->player_cards,
 						$resultGame->current_bet,
 						$resultPlayer->player_bet,
+						$resultPlayer->player_folded,
 					];
 				}
 				array_push($validator['messages'], $data);
