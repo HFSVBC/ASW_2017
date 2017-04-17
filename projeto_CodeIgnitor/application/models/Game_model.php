@@ -120,6 +120,21 @@
 				return false;
 			}
 		}
+		public function getGameRound($id)
+		{
+			$sql = "SELECT round
+					FROM proj_game_status
+					WHERE id=$id";
+
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row->round;
+			}else{
+				return false;
+			}
+		}
 		public function getPlayerBalance($id)
 		{
 			$sql = "SELECT balance
@@ -131,6 +146,21 @@
 
 			if(!empty($row)){
 				return $row->balance;
+			}else{
+				return false;
+			}
+		}
+		public function getPlayerBet($player_id, $game_id)
+		{
+			$sql = "SELECT player_bet
+					FROM proj_game_players
+					WHERE id=$game_id AND player_id=$player_id";
+
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row->player_bet;
 			}else{
 				return false;
 			}
@@ -210,6 +240,18 @@
 				}
 			}else{
 				return 'Em espera';
+			}
+		}
+		public function getGameHistory($game_id)
+		{
+			$sql    = "SELECT player_id, operation
+					   FROM proj_game_hist
+					   WHERE game_id=$game_id";
+			$query = $this->db->query($sql);
+			if($query){
+				return $query->result_array();
+			}else{
+				return false;
 			}
 		}
 		public function checksConditionstoStart()
@@ -299,6 +341,22 @@
 				return false;
 			}
 		}
+		public function checksPlayerBet($id_jogo)
+		{
+			$sql  = "SELECT last_bet
+					 FROM proj_game_players
+					 WHERE id=$id_jogo AND player_folded=0";
+
+			$query = $this->db->query($sql);
+			$bet   = $this->getGameCurrentBet($id_jogo);
+			$check = false;
+			foreach ($query->result_array() as $row){
+				if($row['last_bet'] == $bet){
+					$check = true;
+				}
+			}
+			return $check;
+		}
 		public function checksPlayerFolded($player_id, $id_jogo)
 		{
 			$sql   = "SELECT * 
@@ -334,7 +392,7 @@
 	  		$userBalance = $this->getPlayerBalance($player_id);
 	  		if ($userBalance>=$currentBet){
 	  			$sql = "UPDATE proj_game_players
-	  					SET player_bet=player_bet+$currentBet, betted=1
+	  					SET player_bet=player_bet+$currentBet, last_bet = $currentBet, betted=1
 	  					WHERE id=$id_jogo AND player_id=$player_id";
 	  			if($this->db->query($sql)){
 	  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet);
@@ -355,11 +413,11 @@
 	  		if ($raise > $currentBet){
 	  			if($userBalance >= $raise){
 	  				$sql = "UPDATE proj_game_players
-	  						SET player_bet=player_bet+$raise, betted=1
+	  						SET player_bet=player_bet+$raise, last_bet = $raise, betted=1
 	  						WHERE id=$id_jogo AND player_id=$player_id";
 		  			if($this->db->query($sql)){
 		  				$result = $this->setCurrentPlayer($player_id, $id_jogo, $raise);
-		  				$this->updateHist($player_id, $id_jogo, "$currentBet creditos");
+		  				$this->updateHist($player_id, $id_jogo, "$raise creditos");
 		  				$sql = "UPDATE proj_game_status
 								SET last_to_raise = $player_id, current_bet = $raise
 								WHERE id=$id_jogo";
@@ -401,6 +459,14 @@
 					$result = $this->checksPlayerFolded($next_player, $id_jogo);
 					if($result){
 						$this->setCurrentPlayer($player_id, $id_jogo, 0);
+					}
+					$checkBet = $this->checksPlayerBet($id_jogo);
+					$round    = $this->getGameRound($id_jogo);
+					if($checkBet && $round < 3){
+						$sql = "UPDATE proj_game_status
+								SET round = round+1
+								WHERE id=$id_jogo";
+						$this->db->query($sql);
 					}
 				}
 				return true;

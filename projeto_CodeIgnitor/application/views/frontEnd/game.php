@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			<div class="row">
 				<div class="col-xs-12 col-md-4">
 					<div id="messa-game">
-						<h3 class="mesa-creditos" >Créditos disponiveis: </h3>
+						<h3 class="mesa-creditos" >Créditos disponiveis: <span id="userPoints"></span></h3>
 					</div>
 					<div id="botoes_game" class="btn-group-vertical" role="group" aria-label="...">
 						<button type="button" id="desistir" class="btn btn-danger">Desistir</button>
@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 								<td><b>Aposta atual</b> <span class="actualBet-Game"></span> créditos</td>
 							</tr>
 							<tr>
-								<td id="PlayersBet"><b>Aposta de cada jogador</b></td>
+								<td id="PlayersBet"><b>Aposta de cada jogador</b><br><span id="gameHistory"></span></td>
 							</tr>
 					    </tbody>
 			  		</table>

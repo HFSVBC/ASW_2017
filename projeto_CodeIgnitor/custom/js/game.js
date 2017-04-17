@@ -2,7 +2,7 @@ $(window).on('load', function(){
     $('#gameBody button, #gameBody input').prop('disabled', true);
 	setInterval( function () {
     	loadGameInfo();
-	}, 5000 );
+	}, 500 );
 	// loadGameInfo();
 	$('#desistir').on('click', function(){
     	PlayerAction("Desistir", "Desistiu da sua mao" );
@@ -14,12 +14,11 @@ $(window).on('load', function(){
         PlayerAction("Aumenta", "Aumentou a aposta");
     });
 });
-var card = 0;
-var gameControl = function(nowUsername, cardsOnTable)
+var gameControl = function(nowUsername, cardsOnTable, round)
 {
 	cardsOnTable = $.parseJSON(cardsOnTable);
     //isto e o flop
-    $('#boardCards-Game').html(cardsOnTable[card] +' , ' +cardsOnTable[card+1]+' , ' +cardsOnTable[card+2] );
+    console.log(round);
 	if(nowUsername == myUsername){
         $('#gameBody button, #gameBody input').prop('disabled', false);
         // ativa escuta de botoes
@@ -27,6 +26,18 @@ var gameControl = function(nowUsername, cardsOnTable)
 	}else{
         $('#gameBody button, #gameBody input').prop('disabled', true);
 	}
+	switch(round){
+    	case '1':
+    		$('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2] );
+    		break;
+    	case '2':
+    		$('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2]+' , ' +cardsOnTable[3] );
+    		break;
+    	case '3':
+    		$('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2]+' , ' +cardsOnTable[3]+' , ' +cardsOnTable[4] );
+    		$('#gameBody button, #gameBody input').prop('disabled', true);
+    		break;
+    }
 }
 var loadGameInfo = function()
 {
@@ -43,7 +54,9 @@ var loadGameInfo = function()
         		$('#nowPlayer-Game').html(response.messages[0][1]);
         		$('#myCars-Game').html(response.messages[0][3]);
         		$('.actualBet-Game').html(response.messages[0][4]);
-        		gameControl(response.messages[0][1], response.messages[0][2]);
+        		$("#userPoints").html(response.messages[0][5]);
+        		$("#gameHistory").html(response.messages[0][7]);
+        		gameControl(response.messages[0][1], response.messages[0][2], response.messages[0][6]);
         		// $('#start-Game').html();
         	}else{
         		if(response.messages = "Em Espera"){

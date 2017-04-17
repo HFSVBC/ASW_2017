@@ -162,7 +162,10 @@ class Game extends CI_Controller {
 		if($this->form_validation->run() === true){
 			$resultGame = $this->game_model->gameInfo();
 			if($resultGame != false){
-				$resultPlayer = $this->game_model->PlayerOnGame($this->session->userdata['loggedIn_asw004']['id']);
+				$resultPlayer  = $this->game_model->PlayerOnGame($this->session->userdata['loggedIn_asw004']['id']);
+				$playerCredits = $this->game_model->getPlayerBalance($this->session->userdata['loggedIn_asw004']['id'])-$this->game_model->getPlayerBet($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
+				$cardsRound    = $this->game_model->getGameRound($this->input->post('id_jogo'));
+				$history       = $this->gameHistory($this->input->post('id_jogo'));
 				if($resultPlayer->player_folded=='1'){
 					$validator['success']  = true;
 					$validator['messages'] = array();
@@ -172,8 +175,9 @@ class Game extends CI_Controller {
 						$resultGame->table_cards,
 						'Desististe',
 						$resultGame->current_bet,
-						$resultPlayer->player_bet,
-						$resultPlayer->player_folded,
+						$playerCredits,
+						$cardsRound,
+						$history,
 					];
 				} else{
 					$validator['success']  = true;
@@ -184,8 +188,9 @@ class Game extends CI_Controller {
 						$resultGame->table_cards,
 						$resultPlayer->player_cards,
 						$resultGame->current_bet,
-						$resultPlayer->player_bet,
-						$resultPlayer->player_folded,
+						$playerCredits,
+						$cardsRound,
+						$history,
 					];
 				}
 				array_push($validator['messages'], $data);
@@ -200,7 +205,16 @@ class Game extends CI_Controller {
 
 		echo json_encode($validator);
 	}
-
+	public function gameHistory($game_id)
+	{
+		$result = $this->game_model->getGameHistory($game_id);
+		$output = "";
+		foreach ($result as $row) {
+			$username = $this->game_model->getUsernameById($row['player_id']);
+			$output  .="<span>".$username.": ".$row['operation']."</span><br>";
+		}
+		return $output;
+	}
 	public function playerAction($action){
 
 		$validator = array('success' => false, 'messages' => array());
@@ -233,7 +247,7 @@ class Game extends CI_Controller {
 			} elseif($action=="Aumenta"){
 				$result = $this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
 				$validator['success']=true;
-				$validator['messages']="You raised the bet ".json_encode($result);
+				$validator['messages']="You raised the bet";
 			}
 		} else{
 			$validator['success']  = false;
