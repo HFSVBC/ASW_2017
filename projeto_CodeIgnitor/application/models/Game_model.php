@@ -150,6 +150,21 @@
 				return false;
 			}
 		}
+		public function getGameCurrentBet($id)
+  		{
+  			$sql = "SELECT current_bet
+					FROM proj_game_status
+					WHERE id='$id'";
+
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row->current_bet;
+			}else{
+				return false;
+			}
+  		}
 		private function getGameMaxPlayers($id)
 		{
 			$sql = "SELECT max_players
@@ -287,42 +302,17 @@
 
 		public function PlayerFolded($player_id, $id_jogo)
 		{
-			$sql = "UPDATE proj_game_players SET player_folded='1' WHERE id=$player_id";
-			$query = $this->db->query($sql);
-
-			$next_player = $player_id;
-			$Newplayer = false;
-			$sql = "SELECT * FROM proj_game_players WHERE id=$id_jogo";
-			$query = $this->db->query($sql);
-			foreach ($query->result_array() as $row){
-				if($Newplayer==true){
-					$next_player = $row['player_id'];
-				}
-				if($row['player_id'] == $player_id){
-					$Newplayer = true;
-				}
-
-			}
-
-			$sql = "UPDATE proj_game_status SET current_player=$next_player WHERE id = $id_jogo";
-			$query = $this->db->query($sql);
-
+			$currentBet  = $this->getGameCurrentBet($id_jogo);
+			$sql = "UPDATE proj_game_players 
+					SET player_folded=1 
+					WHERE player_id=$player_id AND id=$id_jogo";
+			if($this->db->query($sql)){
+  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet);
+  				return true;
+  			}else{
+  				return false;
+  			}
 		}
-  		public function getGameCurrentBet($id)
-  		{
-  			$sql = "SELECT current_bet
-					FROM proj_game_status
-					WHERE id='$id'";
-
-			$query = $this->db->query($sql);
-			$row   = $query->row();
-
-			if(!empty($row)){
-				return $row->current_bet;
-			}else{
-				return false;
-			}
-  		}
 	  	public function PlayerCalled($player_id, $id_jogo)
 	  	{
 	  		$currentBet  = $this->getGameCurrentBet($id_jogo);
@@ -338,7 +328,7 @@
 	  				return false;
 	  			}
 	  		}else{
-	  			// desistir
+	  			$this->PlayerFolded($player_id, $id_jogo)
 	  		}
 
 	  	}
@@ -373,7 +363,7 @@
 	  		$next_player = $this->getGameOwner($id_jogo);
 	  		$sql = "SELECT player_id, betted
 					FROM proj_game_players
-					WHERE id=$id_jogo
+					WHERE id=$id_jogo AND player_folded=0
 					ORDER BY player_id ASC";
 			$query = $this->db->query($sql);
 			foreach ($query->result_array() as $row){

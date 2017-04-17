@@ -233,7 +233,7 @@ class Game extends CI_Controller {
 			} elseif($action=="Aumenta"){
 				$result = $this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
 				$validator['success']=true;
-				$validator['messages']="You raised the bet ".json_encode($result);
+				$validator['messages']="You raised the bet ";
 			}
 		} else{
 			$validator['success']  = false;
