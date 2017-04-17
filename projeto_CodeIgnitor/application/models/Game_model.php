@@ -299,7 +299,21 @@
 				return false;
 			}
 		}
+		public function checksPlayerFolded($player_id, $id_jogo)
+		{
+			$sql   = "SELECT player_id 
+					  FROM proj_game_players
+					  WHERE id=$id_jogo AND player_id=$player_id AND player_folded = 1
+					  LIMIT 1";
+			$query = $this->db->query($sql);
+			$row   = $query->row();
 
+			if(!empty($row)){
+				return true;
+			}else{
+				return false;
+			}
+		}
 		public function PlayerFolded($player_id, $id_jogo)
 		{
 			$currentBet  = $this->getGameCurrentBet($id_jogo);
@@ -384,6 +398,9 @@
 							SET betted = 0
 							WHERE id=$id_jogo";
 					$this->db->query($sql);
+					if($this->checksPlayerFolded($player_id, $id_jogo)){
+						$this->setCurrentPlayer($player_id, $id_jogo, 0);
+					}
 				}
 				return true;
 			}else{
