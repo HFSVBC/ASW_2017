@@ -74,13 +74,13 @@ $(window).on('load', function(){
     });
 
     // Games Table
- //    var gamesAdminTable = $('#admin-plays').DataTable({
- //        "columnDefs": [{
- //              "orderable": false,
- //              "targets"  : -1
- //        }],
- //        "ajax": baseURL + "index.php/user/getGamesDataAdmin",
- //    });
+    // var gamesAdminTable = $('#admin-plays').DataTable({
+    //     "columnDefs": [{
+    //           "orderable": false,
+    //           "targets"  : -1
+    //     }],
+    //     "ajax": baseURL + "index.php/user/getGamesDataAdmin",
+    // });
 
 	// setInterval( function () {
  //    	gamesAdminTable.ajax.reload();
