@@ -288,5 +288,13 @@
 		// {
 		//
 		// }
+  	
+	  	public function PlayerCalled($player_id, $id_jogo)
+	  	{
+
+	  	}
+	  	public function PlayerRaised($player_id, $id_jogo){
+
+	  	}
   	}
 ?>

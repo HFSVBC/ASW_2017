@@ -5,7 +5,13 @@ $(window).on('load', function(){
 	}, 5000 );
 	// loadGameInfo();
 	$('body').on('click', '#desistir', function(){
-        giveUp();
+        PlayerAction("Desistir", "Desistiu da sua mao" );
+    });
+    $('body').on('click', '#cobrir_aposta', function(){
+        PlayerAction("Cobrir", "Cobriu a aposta");
+    });
+    $('body').on('click', '#aumentSend', function(){
+        PlayerAction("Aumenta", "Aumentou a aposta");
     });
 });
 var card = 0;
@@ -52,20 +58,20 @@ var loadGameInfo = function()
 }
 
 
-var giveUp = function()
+var PlayerAction = function(action, msg)
 {
     //qual o jogador
     //atualizar o proximo jogador
     //mudar o player_folded para true
     var data = {id_jogo: gameId};
     $.ajax({
-        url: baseURL + "index.php/game/playerAction/Desistir",
+        url: baseURL + "index.php/game/playerAction/" + action,
         type: "post",
         data: data,
         dataType: 'json',
         success: function(response) {
             if(response.success === true){
-                $('#warningGame-msg').html("Desistiu");
+                $('#warningGame-msg').html(msg);
                 $('#warningGame').show();
             }else{
                 $('#erroGame-msg').html(response.messages);

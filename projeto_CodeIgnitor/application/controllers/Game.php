@@ -222,6 +222,14 @@ class Game extends CI_Controller {
 				$this->game_model->PlayerFolded($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
 				$validator['success']  = true;
 				$validator['messages'] = "You folded your hand";
+			} elseif($action=="Cobrir"){
+				$this->game_model->PlayerCalled($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
+				$validator['success']=true;
+				$validator['messages'] = "You called the bet";
+			} elseif($action=="Aumenta"){
+				$this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
+				$validator['success']=true;
+				$validator['messages']="You raised the bet";
 			}
 		} else{
 			$validator['success']  = false;
