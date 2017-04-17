@@ -2,9 +2,11 @@ $(window).on('load', function(){
     $('#gameBody button, #gameBody input').prop('disabled', true);
 	setInterval( function () {
     	loadGameInfo();
-	}, 1000 );
+	}, 5000 );
 	// loadGameInfo();
-	
+	$('body').on('click', '#desistir', function(){
+        giveUp();
+    });
 });
 var card = 0;
 var gameControl = function(nowUsername, cardsOnTable)
@@ -55,7 +57,21 @@ var giveUp = function()
     //qual o jogador
     //atualizar o proximo jogador
     //mudar o player_folded para true
+    var data = {id_jogo: gameId};
     $.ajax({
-        url: baseURL + "index.php/game/"
+        url: baseURL + "index.php/game/playerAction/Desistir",
+        type: "post",
+        data: data,
+        dataType: 'json',
+        success: function(response) {
+            if(response.success === true){
+                $('#warningGame-msg').html("Desistiu");
+                $('#warningGame').show();
+            }else{
+                $('#erroGame-msg').html(response.messages);
+                $('#erroGame').show();
+
+            }
+        }
     })
 }

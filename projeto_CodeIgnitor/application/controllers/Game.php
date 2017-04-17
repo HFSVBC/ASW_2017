@@ -163,20 +163,65 @@ class Game extends CI_Controller {
 			$resultGame = $this->game_model->gameInfo();
 			if($resultGame != false){
 				$resultPlayer = $this->game_model->PlayerOnGame($this->session->userdata['loggedIn_asw004']['id']);
-				$validator['success']  = true;
-				$validator['messages'] = array();
-				$data = [
-					$resultGame->started_at,
-					$this->game_model->getUsernameById($resultGame->current_player),
-					$resultGame->table_cards,
-					$resultPlayer->player_cards,
-					$resultGame->current_bet,
-					$resultPlayer->player_bet,
-				];
+				if($resultPlayer->player_folded==='0')
+				{
+
+					$validator['success']  = true;
+					$validator['messages'] = array();
+					$data = [
+						$resultGame->started_at,
+						$this->game_model->getUsernameById($resultGame->current_player),
+						$resultGame->table_cards,
+						'Desististe',
+						$resultGame->current_bet,
+						$resultPlayer->player_bet,
+					];
+				} else{
+
+					$validator['success']  = true;
+					$validator['messages'] = array();
+					$data = [
+						$resultGame->started_at,
+						$this->game_model->getUsernameById($resultGame->current_player),
+						$resultGame->table_cards,
+						$resultPlayer->player_cards,
+						$resultGame->current_bet,
+						$resultPlayer->player_bet,
+					];
+				}
 				array_push($validator['messages'], $data);
 			}else{
 				$validator['success']  = false;
 				$validator['messages'] = 'Em Espera';
+			}
+		} else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o'.validation_errors();
+		}
+
+		echo json_encode($validator);
+	}
+
+	public function playerAction($action){
+
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'id_jogo',
+	                'label' => 'Game id',
+	                'rules' => 'trim|integer|required|strip_tags',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			if($action=='Desistir'){
+				$this->game_model->PlayerFolded($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
+				$validator['success']  = true;
+				$validator['messages'] = "You folded your hand";
 			}
 		} else{
 			$validator['success']  = false;

@@ -84,7 +84,7 @@
 		{
 			$gameId = $this->db->escape($this->input->post('id_jogo'));
 
-			$sql = "SELECT player_cards, player_bet
+			$sql = "SELECT player_cards, player_bet, player_folded
 					FROM proj_game_players
 					WHERE id=$gameId AND player_id='$playerId'
 					LIMIT 1";
@@ -263,11 +263,25 @@
 			}
 		}
 
-		public function PlayerFolded($player_id, $next_player, $id_jogo)
+		public function PlayerFolded($player_id, $id_jogo)
 		{
+			$next_player = $player_id;
+			$Newplayer = false;
+			$sql = "SELECT * FROM proj_game_players WHERE id=$id_jogo";
+			$query = $this->db->query($sql);
+			foreach ($query->result_array() as $row){
+				if($Newplayer==true){
+					$next_player = $row['player_id'];
+				}
+				if($row['player_id'] == $player_id){
+					$Newplayer = true;
+				}
+
+			}
 			$sql = "UPDATE proj_game_players SET player_folded=true WHERE id=$player_id";
 			$query = $this->db->query($sql);
-			$sql_2 = "UPDATE proj_game_status SET current_player=$next_player WHERE id = $id_jogo";
+			$sql = "UPDATE proj_game_status SET current_player=$next_player WHERE id = $id_jogo";
+			$query = $this->db->query($sql);
 
 		}
 		// private function checksToBeAdded()
