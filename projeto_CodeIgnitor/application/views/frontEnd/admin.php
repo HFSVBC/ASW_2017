@@ -44,7 +44,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				</div>
 			  	<button type="submit" class="btn btn-default" id="searchAdv_btn">Busca</button>
 			</form>
-
 			<table id='admin-users' class="table table-striped table-responsive">
 				<thead>
 					<tr>
@@ -70,29 +69,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<th id="opsAdminUser-Bottom">Opções</th>
             		</tr>
         		</tfoot>
-				<tbody>
-
-				</tbody>
+				<tbody></tbody>
 			</table>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="game">
-
+			<form class="form-inline" id="advancedSearchGame" onsubmit="event.preventDefault(); return adv_SearchGame();">
+				<div class="form-group">
+					<label for="state">Estado:</label>
+					<select id="state" class="form-control adv_search_fieldsGame stateADM">
+						<option value="NULL" clss="ND_State">Não Selecionado</option>
+						<option value="1" clss="ND_State">Em espera</option>
+						<option value="0" clss="ND_State">A decorrer</option>
+						<option value="-1" clss="ND_State">Terminado</option>
+					</select>
+				</div>
+			  	<button type="submit" class="btn btn-default" id="searchAdvGame_btn">Busca</button>
+			</form>
 			<table id='admin-plays' class="table table-striped table-responsive">
 				<thead>
 					<tr>
 						<th>Nome</th>
-						<th>Criador</th>
+						<th>Descrição</th>
+						<th>Dono</th>
 						<th>Estado</th>
-						<th>Data de Criaçao</th>
-						<th>Data de Fim</th>
 						<th>Total de utilizadores</th>
-						<th>Vencedor</th>
 						<th>Opções</th>
 					</tr>
 				</thead>
-				<tbody>
-
-				</tbody>
+				<tfoot>
+            		<tr>
+						<th>Nome</th>
+						<th>Descrição</th>
+						<th>Dono</th>
+						<th class="hideTableSerach">Estado</th>
+						<th class="hideTableSerach">Total de utilizadores</th>
+						<th id="opsAdminUser-Bottom">Opções</th>
+            		</tr>
+        		</tfoot>
+        		<tbody></tbody>
 			</table>
 		</div>
 	</div>
@@ -190,6 +204,96 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						    <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
 						    <input type="text" class="form-control" id="level-usr-adm" name="level-usr-adm" readonly>
 					    </div>
+					</div>
+				</div>
+			</div>
+	      	<div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	      	</div>
+   		</div>
+  	</div>
+</div>
+<!-- Modal Game Details -->
+<div class="modal fade" id="gameDetails" tabindex="-1" role="dialog" aria-labelledby="gameDetails-modal">
+  	<div class="modal-dialog modal-lg" role="document">
+    	<div class="modal-content">
+    		<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="gameDetails-modal">Detalhes do Jogo</h4>
+	      	</div>
+	      	<div class="modal-body">
+      			<div class="row">
+		      		<div class="form-group col-xs-12 col-md-6">
+			        	<label for="name-game-adm">Nome</label>
+					    <div class="input-group">
+						    <input type="text" class="form-control" id="name-game-adm" name="name-game-adm" readonly>
+					    </div>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+			        	<label for="desc-game-adm">Descrição</label>
+					    <div class="input-group">
+						    <input type="text" class="form-control" id="desc-game-adm" name="desc-game-adm" readonly>
+					    </div>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+			        	<label for="owner-game-adm">Dono</label>
+					    <div class="input-group">
+						    <input type="text" class="form-control" id="owner-game-adm" name="owner-game-adm" readonly>
+					    </div>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+			        	<label for="nowPlyer-game-adm">Jogador Atual</label>
+					    <div class="input-group">
+						    <input type="text" class="form-control" id="nowPlyer-game-adm" name="nowPlyer-game-adm" readonly>
+					    </div>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+			        	<label for="begin-game-adm">Inicio</label>
+					    <div class="input-group">
+						    <input type="text" class="form-control" id="begin-game-adm" name="begin-game-adm" readonly>
+					    </div>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+			        	<label for="end-game-adm">Fim</label>
+					    <div class="input-group">
+						    <input type="text" class="form-control" id="end-game-adm" name="end-game-adm" readonly>
+					    </div>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+			        	<label for="potValue-game-adm">Valor do Pote</label>
+					    <div class="input-group">
+						    <input type="text" class="form-control" id="potValue-game-adm" name="potValue-game-adm" readonly>
+					    </div>
+					</div>
+					<div class="form-group col-xs-12 col-md-6">
+			        	<label for="currentBet-game-adm">Aposta Atual</label>
+					    <div class="input-group">
+						    <input type="text" class="form-control" id="currentBet-game-adm" name="currentBet-game-adm" readonly>
+					    </div>
+					</div>
+					<div class="form-group col-md-12">
+			        	<label for="cards-game-adm">Cartas da Mesa</label>
+					    <div class="input-group">
+						    <input type="text" class="form-control" id="cards-game-adm" name="cards-game-adm" readonly>
+					    </div>
+					</div>
+					<div class="col-md-12">
+			        	<label>Jogadores e Cartas</label>
+			        	<table class="table table-striped table-responsive">
+			        		<thead>
+			        			<tr>
+			        				<th>Username</th>
+			        				<th>Cartas</th>
+			        				<th>Aposta do Jogador</th>
+			        				<th>Desistiu</th>
+			        			</tr>
+			        		</thead>
+			        		<tbody id="players-game-adm"></tbody>
+			        	</table>
+					</div>
+					<div class="col-md-12">
+			        	<label>Aposta de Cada Jogador</label>
+			        	<ul id="histoy-game-adm"></ul>
 					</div>
 				</div>
 			</div>

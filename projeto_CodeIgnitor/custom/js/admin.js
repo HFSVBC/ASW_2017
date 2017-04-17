@@ -46,11 +46,22 @@ $(window).on('load', function(){
 	setInterval( function () {
     	userAdminTable.ajax.reload();
 	}, 5000 );
-
+    // Games Table
+    pesquisaGame = "NULL";
+    gamesAdminTable = $('#admin-plays').DataTable({
+        "columnDefs": [{
+              "orderable": false,
+              "targets"  : -1
+        }],
+        "ajax": baseURL + "index.php/game/getGamesDataAdmin/" + pesquisaGame,
+    });
+    setInterval( function () {
+        gamesAdminTable.ajax.reload();
+    }, 5000 );
     // Setup - add a text input to each footer cell
-    $('#admin-users tfoot th').each( function () {
+    $('#admin-users tfoot th, #admin-plays tfoot th').each( function () {
         var title = $(this).text();
-        if (title == "Saldo" || title == "D. Nascimento"){
+        if (title == "Saldo" || title == "D. Nascimento" || title == "Estado" || title == "Total de utilizadores"){
             $(this).html( '<input type="text" readonly placeholder="'+title+'"/>' );
         }else{
             $(this).html( '<input type="text" placeholder="'+title+'" />' );
@@ -68,38 +79,43 @@ $(window).on('load', function(){
 			}
 		});
 	});
+    gamesAdminTable.columns().every( function () {
+        var that = this;
 
+        $( 'input', this.footer() ).on( 'keyup change', function (){
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        });
+    });
+    // advance search user
     $('.adv_search_fields').on('click, change', function(){
         adv_Search();
     });
-
-    // Games Table
-    // var gamesAdminTable = $('#admin-plays').DataTable({
-    //     "columnDefs": [{
-    //           "orderable": false,
-    //           "targets"  : -1
-    //     }],
-    //     "ajax": baseURL + "index.php/user/getGamesDataAdmin",
-    // });
-
-	// setInterval( function () {
- //    	gamesAdminTable.ajax.reload();
-	// }, 5000 );
-
+    // advance search game
+    $('.adv_search_fieldsGame').on('click, change', function(){
+        adv_SearchGame();
+    });
     // Load user details modal
     $('body').on('click', '.details-user', function(){
         var id = $(this).attr('data-userId');
         loadUserData_admin(id);
     });
-
     // Delete user modal
     $('body').on('click', '.delete-user', function(){
         var id = $(this).attr('data-userId');
         deleteUser_admin(id);
     });
+    // Load user details modal
+    $('body').on('click', '.details-game', function(){
+        var id = $(this).attr('data-gameId');
+        loadGameData_admin(id);
+    });
 });
 
-var pesquisa, userAdminTable;
+var pesquisa, userAdminTable, pesquisaGame, gamesAdminTable;
 
 var showConAdm = function(obg){
     var distVal = $(obg).val();
@@ -131,6 +147,15 @@ var adv_Search = function(table, pesquisa){
     var concelho_op = $('#concelho').val();
     pesquisa = age_op + "/" + age2_op + "/" + district_op + "/" + concelho_op;
     userAdminTable.ajax.url(baseURL + "index.php/user/getUserDataAdmin/" + pesquisa).load();
+
+    return false;
+}
+
+var adv_SearchGame = function(table, pesquisa){
+    var state_op = $('#state').val();
+    
+    pesquisaGame = state_op;
+    gamesAdminTable.ajax.url(baseURL + "index.php/game/getGamesDataAdmin/" + pesquisaGame).load();
 
     return false;
 }
@@ -190,6 +215,39 @@ var deleteUser_admin = function(id){
                 setTimeout(function(){
                     $(".alert-success").hide();
                 }, 3000);
+            }else{
+                $("#alertError-user-admin > .message").html(response.messages);
+                $("#alertError-user-admin").show();
+                setTimeout(function(){
+                    $(".alert-danger").hide();
+                }, 3000);
+            }
+        }
+    });
+}
+var loadGameData_admin = function(id){
+    var data = {id_jogo: id};
+    $.ajax({
+        url:  baseURL + "index.php/game/gameAdmInfo",
+        type: "post",
+        data: data,
+        dataType: 'json',
+        success:function(response) {
+            if(response.success === true) {
+                $('#name-game-adm').val(response.messages[0][0]);
+                $('#desc-game-adm').val(response.messages[0][1]);
+                $('#owner-game-adm').val(response.messages[0][2]);
+                $('#nowPlyer-game-adm').val(response.messages[0][3]);
+                $("#begin-game-adm").val(response.messages[0][4]);
+                $("#end-game-adm").val(response.messages[0][5]);
+                $("#potValue-game-adm").val(response.messages[0][6]);
+                $("#currentBet-game-adm").val(response.messages[0][7]);
+                $("#cards-game-adm").val(response.messages[0][8]);
+                $("#players-game-adm").html(response.messages[0][9]);
+                $("#histoy-game-adm").html(response.messages[0][10]);
+                setTimeout(function(){
+                    loadGameData_admin(id);
+                }, 1000);
             }else{
                 $("#alertError-user-admin > .message").html(response.messages);
                 $("#alertError-user-admin").show();

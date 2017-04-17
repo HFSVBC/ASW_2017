@@ -421,27 +421,6 @@ class User extends CI_Controller {
 
 
 	}
-	public function getGamesDataAdmin()
-	{
-		$outputData = array('data' => array());
-
-		$result = $this->user_model->getGamesDataAdmin();
-		foreach ($result as $row) {
-			$data = [
-				$row['name'],
-				$row['createdBy'],
-				$row['active'],
-				$row['creationDate'],
-				$row['endedDate'],
-				$row['totalUsers'],
-				$row['winner'],
-				'<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                 <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>'
-			];
-			array_push($outputData['data'], $data);
-		}
-		echo json_encode($outputData);
-	}
 
 	public function checkEmail()
 	{

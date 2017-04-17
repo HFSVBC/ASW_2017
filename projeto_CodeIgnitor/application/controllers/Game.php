@@ -270,5 +270,109 @@ class Game extends CI_Controller {
 
 		echo json_encode($validator);
 	}
+	public function getGamesDataAdmin($state_op)
+	{
+		$outputData = array('data' => array());
+
+		$result = $this->game_model->getGamesDataAdmin();
+		foreach ($result as $row) {
+			if ($this->checkAdvSearch($row['id'], $state_op)){
+				$data = [
+					$row['name'],
+					$row['description'],
+					$this->game_model->getUsernameById($row['owner']),
+					$this->game_model->getGameState($row['id']),
+					$this->game_model->playersCount($row['id']),
+					"<button type='button' class='btn btn-info details-game' data-toggle='modal' data-gameId='".$row['id']."' data-target='#gameDetails'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button>"
+				];
+				array_push($outputData['data'], $data);
+			}
+		}
+		echo json_encode($outputData);
+	}
+	public function checkAdvSearch($id_jogo, $state_op)
+	{
+		$result = $this->game_model->getGameState($id_jogo);
+		switch ($state_op) {
+			case 'NULL':
+				return true;
+				break;
+			case '1':
+				return $result == 'Em espera';
+				break;
+			case '0':
+				return $result == 'A decorrer';
+				break;
+			case '-1':
+				return $result == 'Terminado';
+				break;
+		}
+	}
+	public function gameAdmInfo($state)
+	{
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'id_jogo',
+	                'label' => 'Game id',
+	                'rules' => 'trim|integer|required|strip_tags',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+
+			$requestGameInfo = $this->game_model->requestGameInfoAdm();
+			$gameStatusInfo  = $this->game_model->gameStatusInfoAdm();
+			$gamePlayersInfo = $this->game_model->gamePlayersInfoAdm();
+			$gameHistInfo    = $this->gameHistory($this->input->post('id_jogo'));
+			
+			$validator['success']  = true;
+			$validator['messages'] = array();
+			$data = [
+				$requestGameInfo->name,
+				$requestGameInfo->description,
+				$this->game_model->getUsernameById($requestGameInfo->owner),
+				$this->game_model->getUsernameById($gameStatusInfo->current_player),
+				$gameStatusInfo->started_at,
+				$gameStatusInfo->ended_at,
+				$gameStatusInfo->current_pot,
+				$gameStatusInfo->current_bet,
+				$gameStatusInfo->table_cards,
+				$this->playersTablePerGameAdm($gamePlayersInfo),
+				$gameHistInfo,
+			];
+			array_push($validator['messages'], $data);
+		} else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o'.validation_errors();
+		}
+
+		echo json_encode($validator);
+	}
+	public function playersTablePerGameAdm($info)
+	{
+		$output = "";
+		foreach ($info as $row) {
+			$output .= "
+						<tr>
+							<td>".$this->game_model->getUsernameById($row['player_id'])."</td>
+							<td>".$row['player_cards']."</td>
+							<td>".$row['player_bet']."</td>
+							<td>".$this->playerFoldedToString($row['player_folded'])."</td>
+						</tr>";
+		}
+		return $output;
+	}
+	public function playerFoldedToString($value){
+		if($value == 0){
+			return "Não";
+		}else{
+			return "Sim";
+		}
+	}
 }
 ?>

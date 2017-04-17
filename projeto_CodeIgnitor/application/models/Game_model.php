@@ -497,5 +497,75 @@
 				return false;
 			}
 	  	}
+	  	public function getGamesDataAdmin()
+	  	{
+	  		$sql = "SELECT *
+	  				FROM proj_game_request";
+
+	  		$query = $this->db->query($sql);
+			if($query){
+				return $query->result_array();
+			}else{
+				return false;
+			}
+	  	}
+	  	public function requestGameInfoAdm()
+	  	{
+	  		$gameId = $this->input->post('id_jogo');
+	  		$sql = "SELECT *
+	  				FROM proj_game_request
+	  				WHERE id=$gameId";
+
+	  		$query = $this->db->query($sql);
+	  		$row   = $query->row();
+			if(!empty($row)){
+				return $row;
+			}else{
+				return false;
+			}
+	  	}
+	  	public function gameStatusInfoAdm()
+	  	{
+	  		$gameId = $this->input->post('id_jogo');
+	  		$sql = "SELECT *
+	  				FROM proj_game_status
+	  				WHERE id='$gameId'";
+
+	  		$query = $this->db->query($sql);
+	  		$row   = $query->row();
+			if(!empty($row)){
+				return $row;
+			}else{
+				return false;
+			}
+	  	}
+	  	public function gamePlayersInfoAdm()
+	  	{
+	  		$gameId = $this->input->post('id_jogo');
+	  		$sql = "SELECT player_id, player_cards, player_bet, player_folded
+	  				FROM proj_game_players
+	  				WHERE id='$gameId'";
+
+	  		$query = $this->db->query($sql);
+			if($query){
+				return $query->result_array();
+			}else{
+				return false;
+			}
+	  	}
+	  	public function gameHistInfo()
+	  	{
+	  		$gameId = $this->input->post('id_jogo');
+	  		$sql = "SELECT *
+	  				FROM proj_game_hist
+	  				WHERE game_id='$gameId'";
+
+	  		$query = $this->db->query($sql);
+			if($query){
+				return $query->result_array();
+			}else{
+				return false;
+			}
+	  	}
   	}
 ?>
