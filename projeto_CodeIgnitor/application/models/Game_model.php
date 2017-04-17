@@ -30,16 +30,23 @@
 			return $result;
 		}
 		public function createGameP($gameid ,$id)
-		{
-				$gameid = $this->db->escape($gameid);
+		{			
+			$gameid        = $this->db->escape($gameid);
+			$gameMinBet    = $this->getGameMinBet($gameid);
+			$playerBalance = $this->getPlayerBalance($id);
+
+			if ($playerBalance >= $gameMinBet){
 				$sql = "INSERT INTO proj_game_players (id, player_id, player_folded)
 						VALUES($gameid, $id, false)";
 
 				if($this->db->query($sql)){
 					return true;
 				}else{
-					return $this->db->_error_message();
+					return false;
 				}
+			}else{
+				return false;
+			}
 		}
 		public function checksIfAlreadyAdded($gameid ,$id)
 		{
@@ -109,6 +116,21 @@
 
 			if(!empty($row)){
 				return $row->owner;
+			}else{
+				return false;
+			}
+		}
+		public function getPlayerBalance($id)
+		{
+			$sql = "SELECT balance
+					FROM proj_users
+					WHERE id=$id";
+
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row->balance;
 			}else{
 				return false;
 			}
@@ -232,7 +254,7 @@
 				$playerCards = json_encode(array($deck[$i], $deck[$i+1]));
 				$i           = $i+2;
 				$sql         = "UPDATE proj_game_players
-								SET player_cards='$playerCards'
+								SET player_cards='$playerCards', player_bet=0
 								WHERE id=$gameId AND player_id=".$row['player_id'];
 				$query = $this->db->query($sql);
 			}
@@ -286,17 +308,64 @@
 			$query = $this->db->query($sql);
 
 		}
-		// private function checksToBeAdded()
-		// {
-		//
-		// }
-  	
+  		public function getGameCurrentBet($id)
+  		{
+  			$sql = "SELECT current_bet
+					FROM proj_game_status
+					WHERE id='$id'";
+
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row->current_bet;
+			}else{
+				return false;
+			}
+  		}
 	  	public function PlayerCalled($player_id, $id_jogo)
 	  	{
+	  		$currentBet  = $this->getGameCurrentBet($id_jogo);
+	  		$userBalance = $this->getPlayerBalance($player_id);
+	  		if ($userBalance>=$currentBet){
+	  			$sql = "UPDATE proj_game_players
+	  					SET player_bet=player_bet+$currentBet, betted=1
+	  					WHERE id=$id_jogo AND player_id=$player_id";
+	  			if($this->db->query($sql)){
+	  				$this->setCurrentPlayer($player_id, $id_jogo);
+	  				return true;
+	  			}else{
+	  				return false;
+	  			}
+	  		}else{
+	  			// desistir
+	  		}
 
 	  	}
 	  	public function PlayerRaised($player_id, $id_jogo){
 
+	  	}
+	  	public function setCurrentPlayer($player_id, $id_jogo)
+	  	{
+	  		$sql = "SELECT player_id, betted
+					FROM proj_game_players
+					WHERE id=$id_jogo
+					ORDER BY player_id ASC";
+			$query = $this->db->query($sql);
+			foreach ($query->result_array() as $row){
+				if($row['betted'] == 0){
+					$next_player = $row['player_id'];
+					break;
+				}
+			}
+			$sql = "UPDATE proj_game_status
+					SET current_player = $next_player
+					WHERE id=$id_jogo";
+			if($this->db->query($sql)){
+				return true;
+			}else{
+				return false;
+			}
 	  	}
   	}
 ?>

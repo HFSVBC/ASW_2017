@@ -35,7 +35,8 @@ var joinGame = function(id){
                 window.location.href = baseURL + "game?id="+id;
             }
             else{
-                console.log(response.messages)
+                $('#erroGame-msg').html(response.messages);
+                $('#erroGame').show();
             }
         }
     });

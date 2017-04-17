@@ -66,7 +66,7 @@ class Game extends CI_Controller {
 
 			}else{
 				$validator['success']  = false;
-				$validator['messages'] = 'Erro ao atualizar a base de dados<br>'.json_encode($result);
+				$validator['messages'] = 'Jogador com balanço inferior a aposta minima';
 			}
 		} else{
 			$validator['success']  = false;
@@ -103,7 +103,7 @@ class Game extends CI_Controller {
 					}
 				}else{
 					$validator['success']  = false;
-					$validator['messages'] = 'Erro ao atualizar a base de dados';
+					$validator['messages'] = 'Jogador com balanço inferior a aposta minima';
 				}
 			}else{
 				$validator['success']  = true;
@@ -163,9 +163,7 @@ class Game extends CI_Controller {
 			$resultGame = $this->game_model->gameInfo();
 			if($resultGame != false){
 				$resultPlayer = $this->game_model->PlayerOnGame($this->session->userdata['loggedIn_asw004']['id']);
-				if($resultPlayer->player_folded=='1')
-				{
-
+				if($resultPlayer->player_folded=='1'){
 					$validator['success']  = true;
 					$validator['messages'] = array();
 					$data = [
@@ -178,7 +176,6 @@ class Game extends CI_Controller {
 						$resultPlayer->player_folded,
 					];
 				} else{
-
 					$validator['success']  = true;
 					$validator['messages'] = array();
 					$data = [

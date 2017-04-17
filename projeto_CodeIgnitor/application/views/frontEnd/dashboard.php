@@ -12,6 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
         </div>
     </div>
     <!-- tabela historico -->
+    <div class="alert alert-danger" id="erroGame" role="alert"><strong>Erro! </strong><span id="erroGame-msg"></span></div>
     <div class="TabelaJogos">
         <table id="jogos" class="table table-striped">
             <thead>

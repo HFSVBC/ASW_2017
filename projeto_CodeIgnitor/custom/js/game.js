@@ -4,13 +4,13 @@ $(window).on('load', function(){
     	loadGameInfo();
 	}, 5000 );
 	// loadGameInfo();
-	$('body').on('click', '#desistir', function(){
-        PlayerAction("Desistir", "Desistiu da sua mao" );
+	$('#desistir').on('click', function(){
+    	PlayerAction("Desistir", "Desistiu da sua mao" );
     });
-    $('body').on('click', '#cobrir_aposta', function(){
+    $('#cobrir_aposta').on('click', function(){
         PlayerAction("Cobrir", "Cobriu a aposta");
     });
-    $('body').on('click', '#aumentSend', function(){
+    $('#aumentSend').on('click', function(){
         PlayerAction("Aumenta", "Aumentou a aposta");
     });
 });
@@ -22,6 +22,7 @@ var gameControl = function(nowUsername, cardsOnTable)
     $('#boardCards-Game').html(cardsOnTable[card] +' , ' +cardsOnTable[card+1]+' , ' +cardsOnTable[card+2] );
 	if(nowUsername == myUsername){
         $('#gameBody button, #gameBody input').prop('disabled', false);
+        // ativa escuta de botoes
         
 	}else{
         $('#gameBody button, #gameBody input').prop('disabled', true);
