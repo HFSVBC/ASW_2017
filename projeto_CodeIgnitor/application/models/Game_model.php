@@ -328,7 +328,7 @@
 	  				return false;
 	  			}
 	  		}else{
-	  			$this->PlayerFolded($player_id, $id_jogo)
+	  			$this->PlayerFolded($player_id, $id_jogo);
 	  		}
 
 	  	}
