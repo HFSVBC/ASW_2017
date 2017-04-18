@@ -567,5 +567,15 @@
 				return false;
 			}
 	  	}
+
+	  	public function updateBalance($id,$user)
+	  	{
+	  		//a casa recebeo valor da minBet
+	  		$tax = $this->getGameMinBet($id);
+	  		$sql = "UPDATE proj_users
+	  		 		SET balance=balance-$tax 
+	  		 		WHERE id=$user";
+	  		$this->db->query($sql);
+	  	}
   	}
 ?>
