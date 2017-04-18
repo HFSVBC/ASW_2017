@@ -118,7 +118,7 @@
 				return false;
 			}
 		}
-		private function getGameOwner($id)
+		public function getGameOwner($id)
 		{
 			$sql = "SELECT owner
 					FROM proj_game_request
@@ -419,10 +419,14 @@
 	  		}
 
 	  	}
-	  	public function PlayerRaised($player_id, $id_jogo){
+	  	public function PlayerRaised($player_id, $id_jogo, $all){
 	  		$userBalance = $this->getPlayerBalance($player_id);
 	  		$currentBet  = $this->getGameCurrentBet($id_jogo);
-	  		$raise       = $this->input->post('raiseAmount');
+	  		if($all==0){
+	  			$raise =  $userBalance;
+	  		} else{
+	  			$raise = $this->input->post('raiseAmount');
+	  		}
 	  		if ($raise > $currentBet){
 	  			if($userBalance >= $raise){
 	  				$sql = "UPDATE proj_game_players
@@ -567,5 +571,6 @@
 				return false;
 			}
 	  	}
+
   	}
 ?>

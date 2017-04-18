@@ -10,6 +10,9 @@ $(window).on('load', function(){
     $('#cobrir_aposta').on('click', function(){
         PlayerAction("Cobrir", "Cobriu a aposta");
     });
+    $('#All_in').on('click', function(){
+        PlayerAction("Allin", "Apostou tudo");
+    });
     $('#aumentSend').on('click', function(){
         PlayerAction("Aumenta", "Aumentou a aposta");
     });
