@@ -283,7 +283,12 @@
 		}
 		public function startGame()
 		{
-			$gameId         = $this->db->escape($this->input->post('id_jogo'));
+			$gameId     = $this->db->escape($this->input->post('id_jogo'));
+		 	$playersNow = $this->playersCount($gameId);
+		 	if($playersNow < 2){
+				return $this->db->_error_message();
+		 	}
+
 			$timeNow        = date('Y-m-d H:i:s');
 			$deck           = array("As de paus","Rei de paus","Dama de paus","Valete de paus", "10 de paus","9 de paus","8 de paus","7 de paus","6 de paus",
 							   "5 de paus","4 de paus","3 de paus","2 de paus","As de copas","Rei de copas","Dama de copas","Valete de copas", "10 de copas","9 de copas",
