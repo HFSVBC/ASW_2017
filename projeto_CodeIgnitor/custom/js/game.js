@@ -25,6 +25,7 @@ var gameControl = function(nowUsername, cardsOnTable, round)
 	}else{
         $('#gameBody button, #gameBody input').prop('disabled', true);
 	}
+    console.log(round)
 	switch(round){
     	case '1':
     		$('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2] );

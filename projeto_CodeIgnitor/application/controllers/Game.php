@@ -308,7 +308,7 @@ class Game extends CI_Controller {
 				break;
 		}
 	}
-	public function gameAdmInfo($state)
+	public function gameAdmInfo()
 	{
 		$validator = array('success' => false, 'messages' => array());
 

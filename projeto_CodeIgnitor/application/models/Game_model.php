@@ -362,10 +362,10 @@
 
 			$query = $this->db->query($sql);
 			$bet   = $this->getGameCurrentBet($id_jogo);
-			$check = false;
+			$check = true;
 			foreach ($query->result_array() as $row){
-				if($row['last_bet'] == $bet){
-					$check = true;
+				if($row['last_bet'] != $bet){
+					$check = false;
 				}
 			}
 			return $check;
