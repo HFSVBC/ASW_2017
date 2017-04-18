@@ -38,8 +38,9 @@ var joinGame = function(id, per){
             if(response.success === true) {
                 if(response.messages === 'Dono'){
                     OwnerPopUp();
+                } else{
+                    window.location.href = baseURL + "game?id="+id;
                 }
-                //window.location.href = baseURL + "game?id="+id;
             } else{
                 $('#erroGame-msg').html(response.messages);
                 $('#erroGame').show();
