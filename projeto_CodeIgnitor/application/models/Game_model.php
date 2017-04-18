@@ -118,7 +118,7 @@
 				return false;
 			}
 		}
-		public function getGameOwner($id)
+		private function getGameOwner($id)
 		{
 			$sql = "SELECT owner
 					FROM proj_game_request
@@ -283,12 +283,7 @@
 		}
 		public function startGame()
 		{
-			$gameId     = $this->db->escape($this->input->post('id_jogo'));
-		 	$playersNow = $this->playersCount($gameId);
-		 	if($playersNow < 2){
-				return $this->db->_error_message();
-		 	}
-
+			$gameId         = $this->db->escape($this->input->post('id_jogo'));
 			$timeNow        = date('Y-m-d H:i:s');
 			$deck           = array("As de paus","Rei de paus","Dama de paus","Valete de paus", "10 de paus","9 de paus","8 de paus","7 de paus","6 de paus",
 							   "5 de paus","4 de paus","3 de paus","2 de paus","As de copas","Rei de copas","Dama de copas","Valete de copas", "10 de copas","9 de copas",
@@ -424,14 +419,10 @@
 	  		}
 
 	  	}
-	  	public function PlayerRaised($player_id, $id_jogo, $all){
+	  	public function PlayerRaised($player_id, $id_jogo){
 	  		$userBalance = $this->getPlayerBalance($player_id);
 	  		$currentBet  = $this->getGameCurrentBet($id_jogo);
-	  		if($all==0){
-	  			$raise =  $userBalance;
-	  		} else{
-	  			$raise = $this->input->post('raiseAmount');
-	  		}
+	  		$raise       = $this->input->post('raiseAmount');
 	  		if ($raise > $currentBet){
 	  			if($userBalance >= $raise){
 	  				$sql = "UPDATE proj_game_players
@@ -576,17 +567,5 @@
 				return false;
 			}
 	  	}
-
-	  	public function updateBalance($id,$user)
-	  	{
-	  		//Partimos do inicio que o pagamento a casa
-	  		//e igual ao minBet
-	  		$tax = $this->getGameMinBet($id);
-	  		$sql = "UPDATE proj_users 
-	  				SET balance=balance-$tax
-	  				WHERE id=$user ";
-	  		$this->db->query($sql);
-	  	}
-
   	}
 ?>

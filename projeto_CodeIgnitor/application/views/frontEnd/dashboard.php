@@ -39,9 +39,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Histórico</h4>
-                    <div id="OwnForm" role="alert">
-                        <span class="ownermessage"></span>
-                    </div>
                 </div>
                 <form id="createGame-Form" onsubmit="event.preventDefault(); return createGame();" method="post" action="<?php base_url(); ?>index.php/game/create">
                     <div class="modal-body">

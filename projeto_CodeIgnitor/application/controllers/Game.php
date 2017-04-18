@@ -86,46 +86,28 @@ class Game extends CI_Controller {
 	                'label' => 'Game id',
 	                'rules' => 'trim|integer|required|strip_tags',
 	        ),
-	        array(
-	                'field' => 'permission',
-	                'label' => 'Permission of game',
-	                'rules' => 'trim|required|strip_tags',
-	        ),
 		);
 
 		$this->form_validation->set_rules($config);
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 		if($this->form_validation->run() === true){
-			if($this->input->post('permission') === 'DON'){
-				$result = $this->game_model->startGame();
-				$this->game_model->giveCardsToPlayers($result);
-			}else{
-				if(!$this->game_model->checksIfAlreadyAdded($this->input->post('id_jogo'), $this->session->userdata['loggedIn_asw004']['id'])){
-					$result = $this->game_model->createGameP($this->input->post('id_jogo'), $this->session->userdata['loggedIn_asw004']['id']);
-					if($result === true){
-						$validator['success']  = true;
-						$validator['messages'] = 'Utilizador adicionado ao jogo com sucesso';
-						$this->game_model->updateBalance($this->session->userdata['loggedIn_asw004']['id']);
-						if($this->game_model->checksConditionstoStart()){
-							$result = $this->game_model->startGame();
-							$this->game_model->giveCardsToPlayers($result);
-						}
-					}else{
-						$validator['success']  = false;
-						$validator['messages'] = 'Jogador com balanço inferior a aposta minima';
+			if(!$this->game_model->checksIfAlreadyAdded($this->input->post('id_jogo'), $this->session->userdata['loggedIn_asw004']['id'])){
+				$result = $this->game_model->createGameP($this->input->post('id_jogo'), $this->session->userdata['loggedIn_asw004']['id']);
+				if($result === true){
+					$validator['success']  = true;
+					$validator['messages'] = 'Utilizador adicionado ao jogo com sucesso';
+					if($this->game_model->checksConditionstoStart()){
+						$result = $this->game_model->startGame();
+						$this->game_model->giveCardsToPlayers($result);
 					}
 				}else{
-					if($this->game_model->getGameOwner($this->input->post('id_jogo'))===$this->session->userdata['loggedIn_asw004']['id']){
-						
-						$validator['success']  = true;
-						$validator['messages'] = 'Dono';					
-					} else{
-						$validator['success']  = true;
-						$validator['messages'] = 'Utilizador ja adicionado ao jogo';
-
-					}
+					$validator['success']  = false;
+					$validator['messages'] = 'Jogador com balanço inferior a aposta minima';
 				}
+			}else{
+				$validator['success']  = true;
+				$validator['messages'] = 'Utilizador ja adicionado ao jogo';
 			}
 		} else{
 			$validator['success']  = false;
@@ -277,11 +259,7 @@ class Game extends CI_Controller {
 				$validator['success']=true;
 				$validator['messages'] = "You called the bet";
 			} elseif($action=="Aumenta"){
-				$result = $this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'), 1);
-				$validator['success']=true;
-				$validator['messages']="You raised the bet";
-			} elseif($action=='Allin'){
-				$result = $this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'), 0);
+				$result = $this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
 				$validator['success']=true;
 				$validator['messages']="You raised the bet";
 			}

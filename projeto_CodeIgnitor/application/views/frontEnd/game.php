@@ -17,7 +17,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					<div id="botoes_game" class="btn-group-vertical" role="group" aria-label="...">
 						<button type="button" id="desistir" class="btn btn-danger">Desistir</button>
 						<button type="button" id="cobrir_aposta" class="btn btn-warning">Cobrir a aposta (<span class="actualBet-Game"></span> créditos)</button>
-						<button type="button" id="All_in" class="btn btn-danger">Allin</button>
 					</div>
 					<div class="input-group">
 						<input id="aumentValue" type="number" class="form-control"  placeholder="Aumentar para">
