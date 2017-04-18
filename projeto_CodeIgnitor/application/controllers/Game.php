@@ -252,20 +252,20 @@ class Game extends CI_Controller {
 
 		if($this->form_validation->run() === true){
 			if($action=='Desistir'){
-				$this->game_model->PlayerFolded($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
-				$validator['success']  = true;
+				$result = $this->game_model->PlayerFolded($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
+				$validator['success']  = $result;
 				$validator['messages'] = "You folded your hand";
 			} elseif($action=="Cobrir"){
-				$this->game_model->PlayerCalled($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
-				$validator['success']=true;
+				$result = $this->game_model->PlayerCalled($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
+				$validator['success']=$result;
 				$validator['messages'] = "You called the bet";
 			} elseif($action=="Aumenta"){
 				$result = $this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'),0);
-				$validator['success']=true;
+				$validator['success']=$result;
 				$validator['messages']="You raised the bet";
-			} elseif($action=="All In"){
+			} elseif($action=="AllIn"){
 				$result = $this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'),1);
-				$validator['success']=true;
+				$validator['success']=$result;
 				$validator['messages']="You're all in";
 			}
 		} else{

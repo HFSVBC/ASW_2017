@@ -245,9 +245,6 @@ var loadGameData_admin = function(id){
                 $("#cards-game-adm").val(response.messages[0][8]);
                 $("#players-game-adm").html(response.messages[0][9]);
                 $("#histoy-game-adm").html(response.messages[0][10]);
-                setTimeout(function(){
-                    loadGameData_admin(id);
-                }, 1000);
             }else{
                 $("#alertError-user-admin > .message").html(response.messages);
                 $("#alertError-user-admin").show();

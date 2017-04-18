@@ -385,6 +385,36 @@
 				return false;
 			}
 		}
+		public function checksAllIn($id_jogo)
+		{
+			$sql = "SELECT allin
+					FROM proj_game_players
+					WHERE id=$id_jogo AND allin=1
+					LIMIT 1";
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		public function checksAllInPlayer($player_id, $id_jogo)
+		{
+			$sql = "SELECT allin
+					FROM proj_game_players
+					WHERE id=$id_jogo AND player_id=$player_id AND allin=1
+					LIMIT 1";
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return true;
+			}else{
+				return false;
+			}
+		}
 		public function PlayerFolded($player_id, $id_jogo)
 		{
 			$currentBet  = $this->getGameCurrentBet($id_jogo);
@@ -392,7 +422,7 @@
 					SET player_folded=1 
 					WHERE player_id=$player_id AND id=$id_jogo";
 			if($this->db->query($sql)){
-  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet);
+  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet, 0);
   				$this->updateHist($player_id, $id_jogo, "desistiu");
   				return true;
   			}else{
@@ -408,7 +438,7 @@
 	  					SET player_bet=player_bet+$currentBet, last_bet = $currentBet, betted=1
 	  					WHERE id=$id_jogo AND player_id=$player_id";
 	  			if($this->db->query($sql)){
-	  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet);
+	  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet, 0);
 	  				$this->updateHist($player_id, $id_jogo, "$currentBet creditos");
 	  				return true;
 	  			}else{
@@ -422,19 +452,19 @@
 	  	public function PlayerRaised($player_id, $id_jogo, $flag){
 	  		$userBalance = $this->getPlayerBalance($player_id);
 	  		$currentBet  = $this->getGameCurrentBet($id_jogo);
-	  		if($flag === 1){
-	  			$raise = $userBalance;
-	  		} else{
-	  			$raise   = $this->input->post('raiseAmount');
-	  		}
+	  		$raise   = $this->input->post('raiseAmount');
 	  		if ($raise > $currentBet){
 	  			if($userBalance >= $raise){
 	  				$sql = "UPDATE proj_game_players
-	  						SET player_bet=player_bet+$raise, last_bet = $raise, betted=1
+	  						SET player_bet=player_bet+$raise, last_bet = $raise, betted=1, allIn=$flag
 	  						WHERE id=$id_jogo AND player_id=$player_id";
 		  			if($this->db->query($sql)){
-		  				$result = $this->setCurrentPlayer($player_id, $id_jogo, $raise);
-		  				$this->updateHist($player_id, $id_jogo, "$raise creditos");
+		  				$result = $this->setCurrentPlayer($player_id, $id_jogo, $raise, $flag);
+		  				if ($flag == 0){
+		  					$this->updateHist($player_id, $id_jogo, "$raise creditos");
+		  				}else{
+		  					$this->updateHist($player_id, $id_jogo, "$raise creditos, AllIn");
+		  				}
 		  				$sql = "UPDATE proj_game_status
 								SET last_to_raise = $player_id, current_bet = $raise
 								WHERE id=$id_jogo";
@@ -450,12 +480,12 @@
 	  			return false;
 	  		}
 	  	}
-	  	public function setCurrentPlayer($player_id, $id_jogo, $value)
+	  	public function setCurrentPlayer($player_id, $id_jogo, $value, $flag)
 	  	{
 	  		$next_player = $this->getGameOwner($id_jogo);
 	  		$sql = "SELECT player_id, betted
 					FROM proj_game_players
-					WHERE id=$id_jogo AND player_folded=0
+					WHERE id=$id_jogo AND player_folded=0 AND allIn=0
 					ORDER BY player_id ASC";
 			$query = $this->db->query($sql);
 			foreach ($query->result_array() as $row){
@@ -479,9 +509,18 @@
 					}
 					$checkBet = $this->checksPlayerBet($id_jogo);
 					$round    = $this->getGameRound($id_jogo);
-					if($checkBet && $round < 3){
+					if($checkBet && $round < 4){
 						$sql = "UPDATE proj_game_status
 								SET round = round+1
+								WHERE id=$id_jogo";
+						$this->db->query($sql);
+					}
+					$resultFold = $this->checksPlayerFolded($next_player, $id_jogo);
+					$resultALL  = $this->checksAllInPlayer($next_player, $id_jogo);
+					$result     = $this->checksAllIn($id_jogo);
+					if($result && ($resultFold || $resultALL)){
+						$sql = "UPDATE proj_game_status
+								SET round = 4
 								WHERE id=$id_jogo";
 						$this->db->query($sql);
 					}
