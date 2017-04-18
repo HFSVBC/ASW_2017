@@ -260,9 +260,13 @@ class Game extends CI_Controller {
 				$validator['success']=true;
 				$validator['messages'] = "You called the bet";
 			} elseif($action=="Aumenta"){
-				$result = $this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
+				$result = $this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'),0);
 				$validator['success']=true;
 				$validator['messages']="You raised the bet";
+			} elseif($action=="All In"){
+				$result = $this->game_model->PlayerRaised($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'),1);
+				$validator['success']=true;
+				$validator['messages']="You're all in";
 			}
 		} else{
 			$validator['success']  = false;

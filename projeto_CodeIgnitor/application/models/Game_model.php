@@ -419,10 +419,14 @@
 	  		}
 
 	  	}
-	  	public function PlayerRaised($player_id, $id_jogo){
+	  	public function PlayerRaised($player_id, $id_jogo, $flag){
 	  		$userBalance = $this->getPlayerBalance($player_id);
 	  		$currentBet  = $this->getGameCurrentBet($id_jogo);
-	  		$raise       = $this->input->post('raiseAmount');
+	  		if($flag === 1){
+	  			$raise = $userBalance;
+	  		} else{
+	  			$raise   = $this->input->post('raiseAmount');
+	  		}
 	  		if ($raise > $currentBet){
 	  			if($userBalance >= $raise){
 	  				$sql = "UPDATE proj_game_players

@@ -13,6 +13,9 @@ $(window).on('load', function(){
     $('#aumentSend').on('click', function(){
         PlayerAction("Aumenta", "Aumentou a aposta");
     });
+    $('#allIn').on('click', function(){
+        PlayerAction("All In", "Apostou tudo");
+    });
 });
 var gameControl = function(nowUsername, cardsOnTable, round)
 {
