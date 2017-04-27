@@ -22,3 +22,14 @@
 #chat{
 	display: none;
 }
+.cards-table{
+	overflow: hidden;
+	width: 200px;
+	height: 260px;
+	float: left;
+}
+.cards-table > img{
+	display: none;
+	position: relative;
+    width: 2750px;
+}

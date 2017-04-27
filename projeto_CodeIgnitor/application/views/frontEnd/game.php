@@ -42,7 +42,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					        	<td><b>Jogadores</b> <span id="players-Game"></span></td>
 					      	</tr>
 					      	<tr id="BoardCards">
-					        	<td><b>Cartas da mesa</b> <span id="boardCards-Game"></span></td>
+					        	<td><b>Cartas da mesa</b> <span id="boardCards-Game"></span>
+					        		<div "table-cards-cont">
+						        		<div class="cards-table">
+						        			<img id="table-card01" src="custom/images/cards.png">
+						        		</div>
+						        		<div class="cards-table">
+						        			<img id="table-card02" src="custom/images/cards.png">
+						        		</div>
+						        		<div class="cards-table">
+						        			<img id="table-card03" src="custom/images/cards.png">
+						        		</div>
+						        		<div class="cards-table">
+						        			<img id="table-card04" src="custom/images/cards.png">
+						        		</div>
+						        		<div class="cards-table">
+						        			<img id="table-card05" src="custom/images/cards.png">
+						        		</div>
+						        	</div>
+					        	</td>
 					      	</tr>
 							<tr id="MyCards">
 								<td><b>Minhas cartas</b> <span id="myCars-Game"></span></td>

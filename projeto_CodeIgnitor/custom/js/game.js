@@ -22,6 +22,23 @@ $(window).on('load', function(){
     });
 });
 var cleanAlert;
+var cards_table = {"As de paus":[-10, 0],"Rei de paus":[-2560, 0],"Dama de paus":[-2345, 0],"Valete de paus":[-2130, 0], "10 de paus":[-1920, 0],"9 de paus":[-1705, 0],"8 de paus":[-1495, 0],"7 de paus":[-1285, 0],"6 de paus":[-1070, 0],
+                   "5 de paus":[-860, 0],"4 de paus":[-645, 0],"3 de paus":[-435, 0],"2 de paus":[-225, 0],"As de copas":[-10, -265],"Rei de copas":[-2560, -265],"Dama de copas":[-2345, -265],"Valete de copas":[-2130, -265], 
+                   "10 de copas":[-1920, -265],"9 de copas":[-1705, -265],"8 de copas":[-1495, -265],"7 de copas":[-1285, -265],"6 de copas":[-1070, -265],"5 de copas":[-860, -265],"4 de copas":[-645, -265],"3 de copas":[-435, -265],
+                   "2 de copas":[-225, -265],"As de espadas":[-10, -535],"Rei de espadas":[-2560, -535],"Dama de espadas":[-2345, -535],"Valete de espadas":[-2130, -535], "10 de espadas":[-1920, -535],"9 de espadas":[-1705, -535],
+                   "8 de espadas":[-1495, -535],"7 de espadas":[-1285, -535],"6 de espadas":[-1070, -535],"5 de espadas":[-860, -535],"4 de espadas":[-645, -535],"3 de espadas":[-435, -535],"2 de espadas":[-225, -535],"As de ouros":[-10, -800],
+                   "Rei de ouros":[-2560, -800],"Dama de ouros":[-2345, -800],"Valete de ouros":[-2130, -800],"10 de ouros":[-1920, -800],"9 de ouros":[-1705, -800],"8 de ouros":[-1495, -800],"7 de ouros":[-1285, -800],"6 de ouros":[-1070, -800],
+                   "5 de ouros":[-860, -800],"4 de ouros":[-645, -800],"3 de ouros":[-435, -800],"2 de ouros":[-225, -800]}
+
+var showCards = function(cards){
+    for(var i=0; i < cards.length; i++){
+        $('#table-card0'+String(i+1)).css({
+            'left': cards_table[cards[i]][0]+'px',
+            'top': cards_table[cards[i]][1]+'px',
+            'display': 'inline'
+        });
+    }
+}
 var gameControl = function(nowUsername, cardsOnTable, round, allIn)
 {
 	cardsOnTable = $.parseJSON(cardsOnTable);
@@ -41,15 +58,19 @@ var gameControl = function(nowUsername, cardsOnTable, round, allIn)
 	switch(round){
     	case '1':
     		$('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2] );
+            showCards([cardsOnTable[0],cardsOnTable[1],cardsOnTable[2]])
     		break;
     	case '2':
     		$('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2]+' , ' +cardsOnTable[3] );
+            showCards([cardsOnTable[0],cardsOnTable[1],cardsOnTable[2],cardsOnTable[3]])
     		break;
     	case '3':
     		$('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2]+' , ' +cardsOnTable[3]+' , ' +cardsOnTable[4] );
+            showCards([cardsOnTable[0],cardsOnTable[1],cardsOnTable[2],cardsOnTable[3],cardsOnTable[4]])
     		break;
         case '4':
             $('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2]+' , ' +cardsOnTable[3]+' , ' +cardsOnTable[4] );
+            showCards([cardsOnTable[0],cardsOnTable[1],cardsOnTable[2],cardsOnTable[3],cardsOnTable[4]])
             $('#gameBody button, #gameBody input').prop('disabled', true);
             $('#nowPlayer-Game').html('Terminou');
             break;
