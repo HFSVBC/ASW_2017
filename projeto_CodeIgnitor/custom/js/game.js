@@ -38,7 +38,6 @@ var gameControl = function(nowUsername, cardsOnTable, round, allIn)
 	}else{
         $('#gameBody button, #gameBody input').prop('disabled', true);
 	}
-    console.log(round)
 	switch(round){
     	case '1':
     		$('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2] );
@@ -72,6 +71,7 @@ var loadGameInfo = function()
         		$('#start-Game').html(response.messages[0][0]);
         		$('#nowPlayer-Game').html(response.messages[0][1]);
         		$('#myCars-Game').html(response.messages[0][3]);
+                console.log(response.messages[0][3]);
         		$('.actualBet-Game').html(response.messages[0][4]);
         		$("#userPoints").html(response.messages[0][5]);
         		$("#gameHistory").html(response.messages[0][7]);

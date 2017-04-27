@@ -282,52 +282,52 @@
 
 		}
 		public function startGame()
-		{
-			$gameId         = $this->db->escape($this->input->post('id_jogo'));
-			$timeNow        = date('Y-m-d H:i:s');
-			$deck           = array("As de paus","Rei de paus","Dama de paus","Valete de paus", "10 de paus","9 de paus","8 de paus","7 de paus","6 de paus",
-							   "5 de paus","4 de paus","3 de paus","2 de paus","As de copas","Rei de copas","Dama de copas","Valete de copas", "10 de copas","9 de copas",
-							   "8 de copas","7 de copas","6 de copas","5 de copas","4 de copas","3 de copas","2 de copas","As de espadas","Rei de espadas","Dama de espadas",
-							   "Valete de espadas", "10 de espadas","9 de espadas","8 de espadas","7 de espadas","6 de espadas","5 de espadas","4 de espadas","3 de espadas",
-							   "2 de espadas","As de ouros","Rei de ouros","Dama de ouros","Valete de ouros", "10 de ouros","9 de ouros","8 de ouros","7 de ouros","6 de ouros",
-							   "5 de ouros","4 de ouros","3 de ouros","2 de ouros");
-			shuffle($deck);
-			$table_cards    = array();
-			for($i=0; $i<5; $i++){
-				$x = rand(0, 52);
-				array_push($table_cards, $deck[$x]);
-			}
-			$deck           = json_encode($deck);
-			$table_cards    = json_encode($table_cards);
-			$current_player = $this->getGameOwner($gameId);
-			$current_bet    = $this->getGameMinBet($gameId);
+        {
+            $gameId         = $this->db->escape($this->input->post('id_jogo'));
+            $timeNow        = date('Y-m-d H:i:s');
+            $deck           = array("As de paus","Rei de paus","Dama de paus","Valete de paus", "10 de paus","9 de paus","8 de paus","7 de paus","6 de paus",
+                               "5 de paus","4 de paus","3 de paus","2 de paus","As de copas","Rei de copas","Dama de copas","Valete de copas", "10 de copas","9 de copas",
+                               "8 de copas","7 de copas","6 de copas","5 de copas","4 de copas","3 de copas","2 de copas","As de espadas","Rei de espadas","Dama de espadas",
+                               "Valete de espadas", "10 de espadas","9 de espadas","8 de espadas","7 de espadas","6 de espadas","5 de espadas","4 de espadas","3 de espadas",
+                               "2 de espadas","As de ouros","Rei de ouros","Dama de ouros","Valete de ouros", "10 de ouros","9 de ouros","8 de ouros","7 de ouros","6 de ouros",
+                               "5 de ouros","4 de ouros","3 de ouros","2 de ouros");
+            shuffle($deck);
+            $table_cards    = array();
+            //Dar cartas a players
+            $deck = $this->giveCardsToPlayers($deck);
+            //Enviar table cards, falta queimar cartas --> EXTRA
+            array_push($table_cards, array_shift($deck), array_shift($deck), array_shift($deck), array_shift($deck), array_shift($deck));
+            $deck           = json_encode($deck);
+            $table_cards    = json_encode($table_cards);
+            $current_player = $this->getGameOwner($gameId);
+            $current_bet    = $this->getGameMinBet($gameId);
 
-			$sql = "INSERT INTO proj_game_status (id, started_at, deck, table_cards, current_player, current_bet, current_pot)
-			 		 VALUES ($gameId, '$timeNow', '$deck', '$table_cards', $current_player, $current_bet, 0)";
-			
-			if($this->db->query($sql)){
-				return $deck;
-			}else{
-				return $this->db->_error_message();
-			}
-		}
-		public function giveCardsToPlayers($deck)
-		{
-			$deck   = json_decode($deck);
-			$i      = 0;
-			$gameId = $this->input->post('id_jogo');
-			$sql    = "SELECT player_id
-					   FROM proj_game_players
-					   WHERE id=$gameId";
-			$query = $this->db->query($sql);
-			foreach ($query->result_array() as $row) {
-				$playerCards = json_encode(array($deck[$i], $deck[$i+1]));
-				$i           = $i+2;
-				$sql         = "UPDATE proj_game_players
-								SET player_cards='$playerCards', player_bet=0
-								WHERE id=$gameId AND player_id=".$row['player_id'];
-				$query = $this->db->query($sql);
-			}
+            $sql = "INSERT INTO proj_game_status (id, started_at, deck, table_cards, current_player, current_bet, current_pot)
+                      VALUES ($gameId, '$timeNow', '$deck', '$table_cards', $current_player, $current_bet, 0)";
+
+            if($this->db->query($sql)){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        private function giveCardsToPlayers($deck)
+        {
+            $gameId = $this->input->post('id_jogo');
+            $sql    = "SELECT player_id
+                       FROM proj_game_players
+                       WHERE id=$gameId";
+            $query = $this->db->query($sql);
+            foreach ($query->result_array() as $row) {
+                //isto da 2 cartas de cada vez para cada jogador
+                $playerCards = array(array_shift($deck), array_shift($deck));
+                $playerCards = json_encode($playerCards);
+                $sql         = "UPDATE proj_game_players
+                                SET player_cards='$playerCards', player_bet=0
+                                WHERE id=$gameId AND player_id=".$row['player_id'];
+                $query = $this->db->query($sql);
+            }
+            return $deck;
 		}
 		private function getIdByUsername($username)
 		{

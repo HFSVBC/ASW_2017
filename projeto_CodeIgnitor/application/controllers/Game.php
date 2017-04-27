@@ -99,8 +99,7 @@ class Game extends CI_Controller {
 					$validator['messages'] = 'Utilizador adicionado ao jogo com sucesso';
 					$this->game_model->updateBalance($this->input->post('id_jogo'), $this->session->userdata['loggedIn_asw004']['id']);
 					if($this->game_model->checksConditionstoStart()){
-						$result = $this->game_model->startGame();
-						$this->game_model->giveCardsToPlayers($result);
+						$this->game_model->startGame();
 					}
 				}else{
 					$validator['success']  = false;
@@ -129,6 +128,12 @@ class Game extends CI_Controller {
 				$button_state = "<button class='btn btn-success gameJoin gameJoin-BTN' data-gameId='".$row['id']."'><span> <i class='glyphicon glyphicon-ok' aria-hidden='true'></i></span></button>";
 			}else{
 				$button_state = "<button class='btn btn-danger disabled gameJoin' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-remove' aria-hidden='true'></i></span></button>";
+			}
+			$players = $this->game_model->getPlayersInGame($row['id']);
+			foreach ($players as $value) {
+				if($value['player_id'] == $this->session->userdata['loggedIn_asw004']['id'] && $game_state!='Terminado'){
+					$button_state = "<button class='btn btn-info gameJoin gameJoin-BTN' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-play' aria-hidden='true'></i></span></button>";
+				}
 			}
 			$data = [
 				$row['name'],

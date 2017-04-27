@@ -58,6 +58,7 @@ var showResponse_createGame = function(responseText, statusText, xhr, $form){
         $("#alertSuccess > .message").html(response.messages);
         $(".alert-success").show();
         gamesTable.ajax.reload();
+        $('#EditPart').modal('hide');
     }else{
         $(".alert-danger > .message").html(response.messages);
         $(".alert-danger").show();
