@@ -259,7 +259,8 @@
 		{
 			$sql    = "SELECT player_id, operation
 					   FROM proj_game_hist
-					   WHERE game_id=$game_id";
+					   WHERE game_id=$game_id
+					   ORDER BY time_stamp DESC";
 			$query = $this->db->query($sql);
 			if($query){
 				return $query->result_array();
@@ -601,7 +602,8 @@
 	  		$gameId = $this->input->post('id_jogo');
 	  		$sql = "SELECT *
 	  				FROM proj_game_hist
-	  				WHERE game_id='$gameId'";
+	  				WHERE game_id='$gameId'
+	  				ORDER BY time_stamp DESC";
 
 	  		$query = $this->db->query($sql);
 			if($query){
