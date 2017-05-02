@@ -42,7 +42,13 @@ class Game extends CI_Controller {
                 'field' => 'maxBet',
                 'label' => 'Maximum bet of the round',
                 'rules' => 'trim|numeric|strip_tags',
+	        ),
+			array(
+                'field' => 'timeOut',
+                'label' => 'Time out',
+                'rules' => 'trim|strip_tags',
 	        )
+
 			// array(
    //              'field' => 'beginHour',
    //              'label' => 'Beggining hour of the game',
@@ -339,7 +345,7 @@ class Game extends CI_Controller {
 			$gameStatusInfo  = $this->game_model->gameStatusInfoAdm();
 			$gamePlayersInfo = $this->game_model->gamePlayersInfoAdm();
 			$gameHistInfo    = $this->gameHistory($this->input->post('id_jogo'));
-			
+
 			$validator['success']  = true;
 			$validator['messages'] = array();
 			$data = [

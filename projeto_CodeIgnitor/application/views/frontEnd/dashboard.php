@@ -24,6 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                     <th>Nº pessoas máximo</th>
                     <th>Primeira Aposta</th>
                     <th>Aposta Maxima</th>
+                    <th>Timeout</th>
                     <th>Estado</th>
                     <th>Opções</th>
                 </tr>
@@ -78,6 +79,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                             <div class="form-group">
                                 <label for="MaxBet">Maximo valor da aposta</label>
                                 <input type="text" class="form-control" id="maxAposta" value="200" name="maxBet">
+                            </div>
+                            <div class="form-group">
+                              <label for="TimeOut" id="timeOut">TimeOut</label>
+                              <div class="radio">
+                                <label>
+                                  <input type="radio" class="form-control" name="timeOut" value="Sim" checked>Sim
+                                </label>
+                              <div class="radio">
+                                <label>
+                                  <input type="radio" class="form-control" name="timeOut" value="Nao">Não
+                                </label>
                             </div>
                             <!--meter a escolher horas -->
                           <!--   <div class="form-group">
