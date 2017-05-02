@@ -149,12 +149,21 @@ class Game extends CI_Controller {
 				$row['max_players'],
 				$row['first_bet'],
 				$row['max_bet'],
+				$this->writeTimeOut($row['timeOut']),
 				$game_state,
 				$button_state
 			];
 			array_push($outputData['data'], $data);
 		}
 		echo json_encode($outputData);
+	}
+	private function writeTimeOut($data)
+	{
+		if ($data != NULL){
+			return $data;
+		}else{
+			return "Sem timeout";
+		}
 	}
 	public function getGameInfo()
 	{

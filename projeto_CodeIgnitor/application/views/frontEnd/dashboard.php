@@ -81,15 +81,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                                 <input type="text" class="form-control" id="maxAposta" value="200" name="maxBet">
                             </div>
                             <div class="form-group">
-                              <label for="TimeOut" id="timeOut">TimeOut</label>
-                              <div class="radio">
-                                <label>
-                                  <input type="radio" class="form-control" name="timeOut" value="Sim" checked>Sim
-                                </label>
-                              <div class="radio">
-                                <label>
-                                  <input type="radio" class="form-control" name="timeOut" value="Nao">Não
-                                </label>
+                                <label for="TimeOut" id="timeOut">Timeout (segundos)</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" aria-label="timeOut">
+                                    </span>
+                                    <input type="number" min="10" id="TimeOut" class="form-control" aria-label="timeOut">
+                                </div><!-- /input-group -->
                             </div>
                             <!--meter a escolher horas -->
                           <!--   <div class="form-group">
