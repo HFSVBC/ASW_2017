@@ -36,3 +36,12 @@
 	position: relative;
     width: 2750px;
 }
+#gameHistory{
+	height: 200px;
+    display: block;
+	-webkit-column-count: 4; /* Chrome, Safari, Opera */
+    -moz-column-count: 4; /* Firefox */
+    column-count: 4;
+    -moz-column-fill: auto;
+    column-fill: auto;
+}
