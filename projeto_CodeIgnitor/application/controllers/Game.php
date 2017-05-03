@@ -404,5 +404,64 @@ class Game extends CI_Controller {
 			return "Sim";
 		}
 	}
+	public function checkIfTimeOutActive(){
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'id_jogo',
+	                'label' => 'Game id',
+	                'rules' => 'trim|integer|required|strip_tags',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			$result = $this->game_model->timeOutActive();
+			if($result[0] != False){
+				$validator['success']  = true;
+				$validator['messages'] = $result[1];
+			}else{
+				$validator['success']  = false;
+				$validator['messages'] = 'Erro a obter o tempo restante para time out';
+			}
+		}else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o';
+		}
+		echo json_encode($validator);
+	}
+	public function checkTimeLeftForTimeOut()
+	{
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'id_jogo',
+	                'label' => 'Game id',
+	                'rules' => 'trim|integer|required|strip_tags',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			$result = $this->game_model->getTimeLeftforTimeOut();
+			if($result != False){
+				$validator['success']  = true;
+				$validator['messages'] = $result;
+			}else{
+				$validator['success']  = false;
+				$validator['messages'] = 'Erro a obter o tempo restante para time out';
+			}
+		}else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o';
+		}
+		echo json_encode($validator);
+	}
 }
 ?>

@@ -43,16 +43,52 @@ var gameControl = function(nowUsername, cardsOnTable, round)
 {
     //isto e o flop
 	if(nowUsername == myUsername){
-        $('#gameBody button, #gameBody input').prop('disabled', false);
+        if (round == '4'){
+            $('#gameBody button, #gameBody input').prop('disabled', true);
+            $('#nowPlayer-Game').html('Terminou');
+            // teste retirar na final
+            cheksTimeOut();
+        }else{
+            $('#gameBody button, #gameBody input').prop('disabled', false);
+            cheksTimeOut();
+        }
         // ativa escuta de botoes
 	}else{
         $('#gameBody button, #gameBody input').prop('disabled', true);
 	}
     showCards(cardsOnTable);
-    if (round == '4'){
-        $('#gameBody button, #gameBody input').prop('disabled', true);
-        $('#nowPlayer-Game').html('Terminou');
-    }
+}
+var cheksTimeOut = function(){
+    var data  = {id_jogo: gameId};
+    $.ajax({
+        url:  baseURL + "index.php/game/checkIfTimeOutActive",
+        type: "post",
+        data: data,
+        dataType: 'json',
+        success:function(response) {
+            if(response.success === true){
+                if(response.messages[1] == true){
+                    $.ajax({
+                        url:  baseURL + "index.php/game/checkTimeLeftForTimeOut",
+                        type: "post",
+                        data: data,
+                        dataType: 'json',
+                        success:function(response) {
+                            if(response.success === true){
+                                console.log(response.messages)
+                            }else{
+                                $('#erroGame-msg').html(response.messages);
+                                $('#erroGame').show();
+                            }
+                        }
+                    });
+                }
+            }else{
+                $('#erroGame-msg').html(response.messages);
+                $('#erroGame').show();
+            }
+        }
+    });
 }
 var loadGameInfo = function()
 {

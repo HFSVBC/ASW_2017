@@ -627,5 +627,55 @@
 	  		 		WHERE id=$user";
 	  		$this->db->query($sql);
 	  	}
+	  	public function timeOutActive(){
+	  		$gameId = $this->db->escape($this->input->post('id_jogo'));
+	  		$sql = "SELECT timeOut
+	  				FROM proj_game_request
+	  				WHERE id=$gameId
+	  				LIMIT 1";
+
+	  		$query = $this->db->query($sql);
+	  		$row   = $query->row();
+	  		if(!empty($row)){
+	  			if(isset($row->timeOut)){
+	  				return array(true, true);
+	  			}else{
+	  				return array(true, false);
+	  			}
+	  		}else{
+	  			return array(false, false);
+	  		}
+	  	}
+	  	public function getTimeLeftforTimeOut(){
+	  		$gameId = $this->db->escape($this->input->post('id_jogo'));
+	  		$sql = "SELECT started_at
+	  				FROM proj_game_status
+	  				WHERE id=$gameId
+	  				LIMIT 1";
+
+	  		$query = $this->db->query($sql);
+	  		$row   = $query->row();
+			if(!empty($row)){
+				$timeStarted = strtotime($row->started_at);
+				$timeNow     = strtotime(date('Y-m-d H:i:s'));
+				$timePassedSiceBeginning = $timeNow - $timeStarted;
+
+				$sql = "SELECT timeOut
+		  				FROM proj_game_request
+		  				WHERE id=$gameId
+		  				LIMIT 1";
+
+		  		$query = $this->db->query($sql);
+		  		$row   = $query->row();
+		  		if(!empty($row)){
+		  			return $row->timeOut - $timePassedSiceBeginning;
+		  		}else{
+		  			return false;
+				}
+			}else{
+				return false;
+			}
+
+	  	}
   	}
 ?>
