@@ -44,10 +44,15 @@ class Game extends CI_Controller {
                 'rules' => 'trim|numeric|strip_tags',
 	        ),
 			array(
-                'field' => 'timeOut',
+                'field' => 'TimeOutCheck',
                 'label' => 'Time out',
                 'rules' => 'trim|strip_tags',
-	        )
+	        ),
+	        array(
+                'field' => 'TimeOut',
+                'label' => 'Time out',
+                'rules' => 'trim|strip_tags|integer',
+	        ),
 
 			// array(
    //              'field' => 'beginHour',

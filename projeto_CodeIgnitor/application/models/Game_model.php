@@ -12,10 +12,15 @@
 			$max_players = $this->db->escape($this->input->post('numberPeople'));
 			$first_bet 	 = $this->db->escape($this->input->post('firstBet'));
 			$max_bet 	 = $this->db->escape($this->input->post('maxBet'));
+			$TimeOut 	 = $this->db->escape($this->input->post('TimeOut'));
 
-			$sql = "INSERT INTO proj_game_request (owner, name, description, max_players, first_bet, max_bet)
-					VALUES($owner, $game_name, $description, $max_players, $first_bet, $max_bet)";
-
+			if (isset($TimeOut)){
+				$sql = "INSERT INTO proj_game_request (owner, name, description, max_players, first_bet, max_bet, timeOut)
+						VALUES($owner, $game_name, $description, $max_players, $first_bet, $max_bet, $TimeOut)";
+			}else{
+				$sql = "INSERT INTO proj_game_request (owner, name, description, max_players, first_bet, max_bet)
+						VALUES($owner, $game_name, $description, $max_players, $first_bet, $max_bet)";
+			}
 			if($this->db->simple_query($sql)){
 			 	$owner_id = $this->getIdByUsername($username);
 				$last_id  = $this->db->insert_id();
