@@ -15,6 +15,13 @@ $(window).on('load', function(){
         var id = $(this).attr('data-gameId');
         joinGame(id);
     });
+    $('#TimeOutCheck').on('change', function(){
+        if($(this).prop('checked')){
+            $('#TimeOut').prop('disabled', false);
+        }else{
+            $('#TimeOut').prop('disabled', true);
+        }
+    });
 });
 
 

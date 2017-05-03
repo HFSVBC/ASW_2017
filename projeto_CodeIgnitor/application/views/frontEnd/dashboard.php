@@ -84,9 +84,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                                 <label for="TimeOut" id="timeOut">Timeout (segundos)</label>
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <input type="checkbox" aria-label="timeOut">
+                                        <input type="checkbox" aria-label="timeOut" id="TimeOutCheck">
                                     </span>
-                                    <input type="number" min="10" id="TimeOut" class="form-control" aria-label="timeOut">
+                                    <input type="number" min="10" id="TimeOut" class="form-control" aria-label="timeOut" value="120" disabled>
                                 </div><!-- /input-group -->
                             </div>
                             <!--meter a escolher horas -->
