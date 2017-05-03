@@ -39,48 +39,24 @@ var showCards = function(cards){
         });
     }
 }
-var gameControl = function(nowUsername, cardsOnTable, round, allIn)
+var gameControl = function(nowUsername, cardsOnTable, round, end)
 {
-	cardsOnTable = $.parseJSON(cardsOnTable);
     //isto e o flop
 	if(nowUsername == myUsername){
         $('#gameBody button, #gameBody input').prop('disabled', false);
         // ativa escuta de botoes
-        if (allIn){
-            $('#gameBody button, #gameBody input').prop('disabled', true);
-            if ($('#userPoints').html() != 0){
-                $("#allIn, #desistir").prop('disabled', false);
-            }
-        }
 	}else{
         $('#gameBody button, #gameBody input').prop('disabled', true);
 	}
-	switch(round){
-    	case '1':
-    		$('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2] );
-            showCards([cardsOnTable[0],cardsOnTable[1],cardsOnTable[2]])
-    		break;
-    	case '2':
-    		$('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2]+' , ' +cardsOnTable[3] );
-            showCards([cardsOnTable[0],cardsOnTable[1],cardsOnTable[2],cardsOnTable[3]])
-    		break;
-    	case '3':
-    		$('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2]+' , ' +cardsOnTable[3]+' , ' +cardsOnTable[4] );
-            showCards([cardsOnTable[0],cardsOnTable[1],cardsOnTable[2],cardsOnTable[3],cardsOnTable[4]])
-    		break;
-        case '4':
-            $('#boardCards-Game').html(cardsOnTable[0] +' , ' +cardsOnTable[1]+' , ' +cardsOnTable[2]+' , ' +cardsOnTable[3]+' , ' +cardsOnTable[4] );
-            showCards([cardsOnTable[0],cardsOnTable[1],cardsOnTable[2],cardsOnTable[3],cardsOnTable[4]])
-            $('#gameBody button, #gameBody input').prop('disabled', true);
-            $('#nowPlayer-Game').html('Terminou');
-            break;
+    showCards(cardsOnTable);
+    if (end == '1'){
+        $('#gameBody button, #gameBody input').prop('disabled', true);
+        $('#nowPlayer-Game').html('Terminou');
     }
 }
 var loadGameInfo = function()
 {
-    if (cleanAlert){
-        $('.alert').hide();
-    }
+    
 	var data  = {id_jogo: gameId};
     $.ajax({
         url:  baseURL + "index.php/game/getGameInfo",
@@ -88,25 +64,30 @@ var loadGameInfo = function()
         data: data,
         dataType: 'json',
         success:function(response) {
+            if (cleanAlert){$('.alert').hide();}
         	if (response.success === true){
+                // console.log(response.messages)
         		$('#start-Game').html(response.messages[0][0]);
-        		$('#nowPlayer-Game').html(response.messages[0][1]);
-        		$('#myCars-Game').html(response.messages[0][3]);
-                console.log(response.messages[0][3]);
-        		$('.actualBet-Game').html(response.messages[0][4]);
-        		$("#userPoints").html(response.messages[0][5]);
-        		$("#gameHistory").html(response.messages[0][7]);
-                var allIn = false;
-                if (response.messages[0][7].indexOf("AllIn") > -1){
-                    allIn = true;
+                $('.actualBet-Game').html(response.messages[0][1]);
+                $("#pot-Game").html(response.messages[0][2]);
+                if(response.messages[0][4] == '1'){
+                    $('#myCars-Game').html("Jogo terminado");
+                }else{
+                    $('#myCars-Game').html(response.messages[0][3]);
                 }
-        		$("#pot-Game").html(response.messages[0][8]);
-        		$("#players-Game").html(response.messages[0][9]);
-        		gameControl(response.messages[0][1], response.messages[0][2], response.messages[0][6], allIn);
+
+                $("#gameHistory").html(response.messages[0][5]);
+                $("#players-Game").html(response.messages[0][6]);
+        		$('#nowPlayer-Game').html(response.messages[0][8]);
+        		$("#userPoints").html(response.messages[0][9]);
+        		
+        		gameControl(response.messages[0][8], response.messages[0][7], response.messages[0][6], response.messages[0][4]);
         	}else{
-        		if(response.messages = "Em Espera"){
+        		if(response.messages[0] == "Em Espera"){
                     cleanAlert = true;
         			$('#warningGame-msg').html("Em Espera, sem utilizadores suficientes.");
+                    $("#players-Game").html(response.messages[1]);
+                    $("#userPoints").html(response.messages[2]);
         			$('#warningGame').show();
         		}else{
         			$('#erroGame-msg').html(response.messages);

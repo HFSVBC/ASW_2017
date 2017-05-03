@@ -188,49 +188,35 @@ class Game extends CI_Controller {
 		if($this->form_validation->run() === true){
 			$resultGame = $this->game_model->gameInfo();
 			if($resultGame != false){
+				$validator['success']  = true;
 				$resultPlayer  = $this->game_model->PlayerOnGame($this->session->userdata['loggedIn_asw004']['id']);
-				$playerCredits = $this->game_model->getPlayerBalance($this->session->userdata['loggedIn_asw004']['id'])-$this->game_model->getPlayerBet($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'));
-				$cardsRound    = $this->game_model->getGameRound($this->input->post('id_jogo'));
-				$history       = $this->gameHistory($this->input->post('id_jogo'));
-				if($resultPlayer->player_folded=='1'){
-					$validator['success']  = true;
-					$validator['messages'] = array();
-					$data = [
-						$resultGame->started_at,
-						$this->game_model->getUsernameById($resultGame->current_player),
-						$resultGame->table_cards,
-						'Desististe',
-						$resultGame->current_bet,
-						$playerCredits,
-						$cardsRound,
-						$history,
-						$resultGame->current_pot,
-						$this->playersInGame($this->input->post('id_jogo')),
-					];
-				} else{
-					$validator['success']  = true;
-					$validator['messages'] = array();
-					$data = [
-						$resultGame->started_at,
-						$this->game_model->getUsernameById($resultGame->current_player),
-						$resultGame->table_cards,
-						$resultPlayer->player_cards,
-						$resultGame->current_bet,
-						$playerCredits,
-						$cardsRound,
-						$history,
-						$resultGame->current_pot,
-						$this->playersInGame($this->input->post('id_jogo')),
-					];
-				}
+				$cardsRound    = 
+				
+				$data = [
+					$resultGame->started_at,
+					$resultGame->current_bet,
+					$resultGame->current_pot,
+					$resultPlayer->player_cards,
+					$resultPlayer->player_folded,
+
+					$this->gameHistory($this->input->post('id_jogo')),
+					$this->playersInGame($this->input->post('id_jogo')),
+					$this->cardsOnTableNow($resultGame->table_cards, $this->game_model->getGameRound($this->input->post('id_jogo'))),
+
+					$this->game_model->getUsernameById($resultGame->current_player),
+					$this->game_model->getPlayerBalance($this->session->userdata['loggedIn_asw004']['id']) - $this->game_model->getPlayerBet($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo')),
+				];
 				array_push($validator['messages'], $data);
 			}else{
 				$validator['success']  = false;
-				$validator['messages'] = 'Em Espera';
+				$validator['messages'] = array('Em Espera', 
+												$this->playersInGame($this->input->post('id_jogo')),
+												$this->game_model->getPlayerBalance($this->session->userdata['loggedIn_asw004']['id'])
+											  );
 			}
 		} else{
 			$validator['success']  = false;
-			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o'.validation_errors();
+			$validator['messages'] = array('Erro a validar a informa&ccedil;&atilde;o');
 		}
 
 		echo json_encode($validator);
@@ -254,6 +240,19 @@ class Game extends CI_Controller {
 			$output  .=$username."&#8192;";
 		}
 		return $output;
+	}
+	private function cardsOnTableNow($cards, $round){
+		$cards = json_decode($cards);
+		switch($round){
+	    	case 1:
+	            return [$cards[0],$cards[1],$cards[2]];
+	    	case 2:
+	            return [$cards[0],$cards[1],$cards[2],$cards[3]];
+	    	case 3:
+
+	        case 4:
+	            return [$cards[0],$cards[1],$cards[2],$cards[3],$cards[4]];
+    	}
 	}
 	public function playerAction($action){
 

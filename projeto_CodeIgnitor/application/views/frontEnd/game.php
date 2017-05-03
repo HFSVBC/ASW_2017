@@ -7,6 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		<div id="gameBody">
 			<div class="container-alerts">
 				<div class="alert alert-warning" id="warningGame" role="alert"><strong>Aviso! </strong><span id="warningGame-msg"></span></div>
+				<div class="alert alert-danger" id="dangerGame" role="alert"><strong>Perigo! </strong><span id="dangerGame-msg"></span></div>
 				<div class="alert alert-danger" id="erroGame" role="alert"><strong>Erro! </strong><span id="erroGame-msg"></span></div>
 			</div>
 			<div class="row">
