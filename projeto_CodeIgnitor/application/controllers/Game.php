@@ -142,7 +142,7 @@ class Game extends CI_Controller {
 			}
 			$players = $this->game_model->getPlayersInGame($row['id']);
 			foreach ($players as $value) {
-				if($value['player_id'] == $this->session->userdata['loggedIn_asw004']['id'] && $game_state!='Terminado'){
+				if($value['player_id'] == $this->session->userdata['loggedIn_asw004']['id'] && $game_state!='Terminado' && $game_state!='Jogo Invalidado'){
 					$button_state = "<button class='btn btn-info gameJoin gameJoin-BTN' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-play' aria-hidden='true'></i></span></button>";
 				}
 			}
@@ -307,13 +307,19 @@ class Game extends CI_Controller {
 		$result = $this->game_model->getGamesDataAdmin();
 		foreach ($result as $row) {
 			if ($this->checkAdvSearch($row['id'], $state_op)){
+				$deactivateButton = "";
+				if($this->game_model->getGameActiveStatus($row['id']) == 1){
+					$deactivateButton = "<button type='button' class='btn btn-danger deactivate-game active' data-gameId='".$row['id']."' data-activeUpdateStatus='0'><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>";
+				}else{
+					$deactivateButton = "<button type='button' class='btn btn-danger deactivate-game' data-gameId='".$row['id']."' data-activeUpdateStatus='1'><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>";
+				}
 				$data = [
 					$row['name'],
 					$row['description'],
 					$this->game_model->getUsernameById($row['owner']),
 					$this->game_model->getGameState($row['id']),
 					$this->game_model->playersCount($row['id']),
-					"<button type='button' class='btn btn-info details-game' data-toggle='modal' data-gameId='".$row['id']."' data-target='#gameDetails'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button>"
+					"<button type='button' class='btn btn-info details-game' data-toggle='modal' data-gameId='".$row['id']."' data-target='#gameDetails'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button>".$deactivateButton,
 				];
 				array_push($outputData['data'], $data);
 			}
@@ -456,6 +462,40 @@ class Game extends CI_Controller {
 			}else{
 				$validator['success']  = false;
 				$validator['messages'] = 'Erro a obter o tempo restante para time out';
+			}
+		}else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o';
+		}
+		echo json_encode($validator);
+	}
+	public function deactivateGame(){
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'id_jogo',
+	                'label' => 'Game id',
+	                'rules' => 'trim|integer|required|strip_tags',
+	        ),
+	        array(
+	                'field' => 'active',
+	                'label' => 'active status',
+	                'rules' => 'trim|integer|required|strip_tags',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			$result = $this->game_model->makeGameUnavailable();
+			if($result != False){
+				$validator['success']  = true;
+				$validator['messages'] = "Jogo desativado com sucesso";
+			}else{
+				$validator['success']  = false;
+				$validator['messages'] = 'Erro a desativar o jogo';
 			}
 		}else{
 			$validator['success']  = false;

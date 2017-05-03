@@ -250,14 +250,28 @@
 			$query = $this->db->query($sql);
 			$row   = $query->row();
 
+			$sql2   = "SELECT active
+					  FROM proj_game_request
+					  WHERE id='$id'";
+			$query2 = $this->db->query($sql2);
+			$row2   = $query2->row();
+
 			if(!empty($row)){
 				if($row->ended_at === NULL){
-					return 'A decorrer';
+					if($row2->active == '0'){
+						return 'Jogo Invalidado';
+					}else{
+						return 'A decorrer';
+					}
 				}else{
 					return 'Terminado';
 				}
 			}else{
-				return 'Em espera';
+				if($row2->active == '0'){
+					return 'Jogo Invalidado';
+				}else{
+					return 'Em espera';
+				}
 			}
 		}
 		public function getGameHistory($game_id)
@@ -317,6 +331,20 @@
                 return false;
             }
         }
+
+		public function endGame(){
+			$gameId = $this->db->escape($this->input->post('id_jogo'));
+			$timeNow        = date('Y-m-d H:i:s');
+
+			$sql = "UPDATE proj_game_status
+					SET ended_at=$timeNow
+					id=$id";
+			if($this->db->query($sql)){
+                return true;
+            }else{
+                return false;
+            }		
+		}
         private function giveCardsToPlayers($deck)
         {
             $gameId = $this->input->post('id_jogo');
@@ -676,6 +704,33 @@
 				return false;
 			}
 
+	  	}
+	  	public function makeGameUnavailable(){
+	  		$gameId = $this->db->escape($this->input->post('id_jogo'));
+	  		$active = $this->db->escape($this->input->post('active'));
+	  		$sql    = "UPDATE proj_game_request
+	  				   SET active = $active
+	  				   WHERE id=$gameId"; 
+
+	  		if($this->db->query($sql)){
+	  			return true;
+	  		}else{
+	  			return flase;
+	  		}
+	  	}
+	  	public function getGameActiveStatus($id){
+	  		$sql = "SELECT active
+	  				FROM proj_game_request
+	  				WHERE id='$id'
+	  				LIMIT 1";
+
+	  		$query = $this->db->query($sql);
+	  		$row   = $query->row();
+	  		if(!empty($row)){
+	  			return $row->active;
+	  		}else{
+	  			return false;
+			}
 	  	}
   	}
 ?>

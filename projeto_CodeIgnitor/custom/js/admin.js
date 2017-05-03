@@ -113,6 +113,12 @@ $(window).on('load', function(){
         var id = $(this).attr('data-gameId');
         loadGameData_admin(id);
     });
+    // Invalidade game
+    $('body').on('click', '.deactivate-game', function(){
+        var id = $(this).attr('data-gameId');
+        var activeUpdate = $(this).attr('data-activeUpdateStatus');
+        deactivateGame_admin(id, activeUpdate);
+    });
 });
 
 var pesquisa, userAdminTable, pesquisaGame, gamesAdminTable;
@@ -245,6 +251,32 @@ var loadGameData_admin = function(id){
                 $("#cards-game-adm").val(response.messages[0][8]);
                 $("#players-game-adm").html(response.messages[0][9]);
                 $("#histoy-game-adm").html(response.messages[0][10]);
+            }else{
+                $("#alertError-user-admin > .message").html(response.messages);
+                $("#alertError-user-admin").show();
+                setTimeout(function(){
+                    $(".alert-danger").hide();
+                }, 3000);
+            }
+        }
+    });
+}
+
+var deactivateGame_admin = function(id, active){
+    var data = {id_jogo: id, active: active};
+    $.ajax({
+        url:  baseURL + "index.php/game/deactivateGame",
+        type: "post",
+        data: data,
+        dataType: 'json',
+        success:function(response) {
+            if(response.success === true) {
+                $("#alertSuccess-user-admin > .message").html(response.messages);
+                $("#alertSuccess-user-admin").show();
+                gamesAdminTable.ajax.reload();
+                setTimeout(function(){
+                    $(".alert-success").hide();
+                }, 3000);
             }else{
                 $("#alertError-user-admin > .message").html(response.messages);
                 $("#alertError-user-admin").show();

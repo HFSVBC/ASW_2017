@@ -8,3 +8,6 @@
 .TabelaJogos{
 	margin-top: 20px;
 }
+.hideTableSerach{
+	opacity: 0;
+}

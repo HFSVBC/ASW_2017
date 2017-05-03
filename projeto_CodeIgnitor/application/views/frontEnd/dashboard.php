@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
     <!-- tabela historico -->
     <div class="alert alert-danger" id="erroGame" role="alert"><strong>Erro! </strong><span id="erroGame-msg"></span></div>
     <div class="TabelaJogos">
-        <table id="jogos" class="table table-striped">
+        <table id="jogos" class="table table-condensed table-striped">
             <thead>
                 <tr>
                     <th>Nome da mesa</th>
