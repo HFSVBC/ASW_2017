@@ -190,7 +190,7 @@ class Game extends CI_Controller {
 			if($resultGame != false){
 				$validator['success']  = true;
 				$resultPlayer  = $this->game_model->PlayerOnGame($this->session->userdata['loggedIn_asw004']['id']);
-				$cardsRound    = 
+				$cardsRound    = $this->game_model->getGameRound($this->input->post('id_jogo'));
 				
 				$data = [
 					$resultGame->started_at,
@@ -198,10 +198,11 @@ class Game extends CI_Controller {
 					$resultGame->current_pot,
 					$resultPlayer->player_cards,
 					$resultPlayer->player_folded,
+					$cardsRound,
 
 					$this->gameHistory($this->input->post('id_jogo')),
 					$this->playersInGame($this->input->post('id_jogo')),
-					$this->cardsOnTableNow($resultGame->table_cards, $this->game_model->getGameRound($this->input->post('id_jogo'))),
+					$this->cardsOnTableNow($resultGame->table_cards, $cardsRound),
 
 					$this->game_model->getUsernameById($resultGame->current_player),
 					$this->game_model->getPlayerBalance($this->session->userdata['loggedIn_asw004']['id']) - $this->game_model->getPlayerBet($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo')),

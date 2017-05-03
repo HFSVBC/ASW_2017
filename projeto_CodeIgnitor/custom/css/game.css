@@ -4,6 +4,9 @@
 .row{
 	margin-top: 100px;
 }
+#tableCardsRow{
+	margin-top: 40px;
+}
 .container-alerts{
 	position: absolute;
 	width: 86%;

@@ -39,7 +39,7 @@ var showCards = function(cards){
         });
     }
 }
-var gameControl = function(nowUsername, cardsOnTable, round, end)
+var gameControl = function(nowUsername, cardsOnTable, round)
 {
     //isto e o flop
 	if(nowUsername == myUsername){
@@ -49,7 +49,7 @@ var gameControl = function(nowUsername, cardsOnTable, round, end)
         $('#gameBody button, #gameBody input').prop('disabled', true);
 	}
     showCards(cardsOnTable);
-    if (end == '1'){
+    if (round == '4'){
         $('#gameBody button, #gameBody input').prop('disabled', true);
         $('#nowPlayer-Game').html('Terminou');
     }
@@ -71,17 +71,17 @@ var loadGameInfo = function()
                 $('.actualBet-Game').html(response.messages[0][1]);
                 $("#pot-Game").html(response.messages[0][2]);
                 if(response.messages[0][4] == '1'){
-                    $('#myCars-Game').html("Jogo terminado");
+                    $('#myCars-Game').html("Desistiu");
                 }else{
                     $('#myCars-Game').html(response.messages[0][3]);
                 }
 
-                $("#gameHistory").html(response.messages[0][5]);
-                $("#players-Game").html(response.messages[0][6]);
-        		$('#nowPlayer-Game').html(response.messages[0][8]);
-        		$("#userPoints").html(response.messages[0][9]);
+                $("#gameHistory").html(response.messages[0][6]);
+                $("#players-Game").html(response.messages[0][7]);
+        		$('#nowPlayer-Game').html(response.messages[0][9]);
+        		$("#userPoints").html(response.messages[0][10]);
         		
-        		gameControl(response.messages[0][8], response.messages[0][7], response.messages[0][6], response.messages[0][4]);
+        		gameControl(response.messages[0][9], response.messages[0][8], response.messages[0][5]);
         	}else{
         		if(response.messages[0] == "Em Espera"){
                     cleanAlert = true;

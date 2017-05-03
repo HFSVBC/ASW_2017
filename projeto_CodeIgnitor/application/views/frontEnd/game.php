@@ -42,7 +42,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					      	<tr id="Players">
 					        	<td><b>Jogadores</b> <span id="players-Game"></span></td>
 					      	</tr>
-					      	<tr id="BoardCards">
+							<tr id="MyCards">
+								<td><b>Minhas cartas</b> <span id="myCars-Game"></span></td>
+							</tr>
+							<tr id="pot">
+								<td><b>Valor do pote</b> <span id="pot-Game"></span> créditos</td>
+							</tr>
+							<tr id="ActualBet">
+								<td><b>Aposta atual</b> <span class="actualBet-Game"></span> créditos</td>
+							</tr>
+					    </tbody>
+			  		</table>
+				</div>
+			</div>
+			<div class="row" id="tableCardsRow">
+				<div class="col-xs-12 col-md-12">
+					<table class="table">
+						<tbody>
+							<tr id="BoardCards">
 					        	<td><b>Cartas da mesa</b>
 					        		<div "table-cards-cont">
 						        		<div class="cards-table">
@@ -63,20 +80,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						        	</div>
 					        	</td>
 					      	</tr>
-							<tr id="MyCards">
-								<td><b>Minhas cartas</b> <span id="myCars-Game"></span></td>
-							</tr>
-							<tr id="pot">
-								<td><b>Valor do pote</b> <span id="pot-Game"></span> créditos</td>
-							</tr>
-							<tr id="ActualBet">
-								<td><b>Aposta atual</b> <span class="actualBet-Game"></span> créditos</td>
-							</tr>
 							<tr>
 								<td id="PlayersBet"><b>Aposta de cada jogador</b><br><span id="gameHistory"></span></td>
 							</tr>
-					    </tbody>
-			  		</table>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
