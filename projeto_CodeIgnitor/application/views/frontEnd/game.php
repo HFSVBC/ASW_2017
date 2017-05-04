@@ -10,6 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				<div class="alert alert-danger" id="dangerGame" role="alert"><strong>Perigo! </strong><span id="dangerGame-msg"></span></div>
 				<div class="alert alert-danger" id="erroGame" role="alert"><strong>Erro! </strong><span id="erroGame-msg"></span></div>
 			</div>
+			<div class="TimerCounter"></div>
 			<div class="row">
 				<div class="col-xs-12 col-md-4">
 					<div id="messa-game">

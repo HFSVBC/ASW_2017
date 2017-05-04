@@ -21,7 +21,7 @@ $(window).on('load', function(){
         PlayerAction("AllIn", "Apostou tudo");
     });
 });
-var cleanAlert;
+var cleanAlert, firstTimeRun = true, counter = 0;
 var cards_table = {"As de paus":[-10, 0],"Rei de paus":[-2560, 0],"Dama de paus":[-2345, 0],"Valete de paus":[-2130, 0], "10 de paus":[-1920, 0],"9 de paus":[-1705, 0],"8 de paus":[-1495, 0],"7 de paus":[-1285, 0],"6 de paus":[-1070, 0],
                    "5 de paus":[-860, 0],"4 de paus":[-645, 0],"3 de paus":[-435, 0],"2 de paus":[-225, 0],"As de copas":[-10, -265],"Rei de copas":[-2560, -265],"Dama de copas":[-2345, -265],"Valete de copas":[-2130, -265], 
                    "10 de copas":[-1920, -265],"9 de copas":[-1705, -265],"8 de copas":[-1495, -265],"7 de copas":[-1285, -265],"6 de copas":[-1070, -265],"5 de copas":[-860, -265],"4 de copas":[-645, -265],"3 de copas":[-435, -265],
@@ -31,12 +31,14 @@ var cards_table = {"As de paus":[-10, 0],"Rei de paus":[-2560, 0],"Dama de paus"
                    "5 de ouros":[-860, -800],"4 de ouros":[-645, -800],"3 de ouros":[-435, -800],"2 de ouros":[-225, -800]}
 
 var showCards = function(cards){
-    for(var i=0; i < cards.length; i++){
-        $('#table-card0'+String(i+1)).css({
-            'left': cards_table[cards[i]][0]+'px',
-            'top': cards_table[cards[i]][1]+'px',
-            'display': 'inline'
-        });
+    if(cards != null){
+        for(var i=0; i < cards.length; i++){
+            $('#table-card0'+String(i+1)).css({
+                'left': cards_table[cards[i]][0]+'px',
+                'top': cards_table[cards[i]][1]+'px',
+                'display': 'inline'
+            });
+        }
     }
 }
 var gameControl = function(nowUsername, cardsOnTable, round)
@@ -99,9 +101,14 @@ var loadGameInfo = function()
         type: "post",
         data: data,
         dataType: 'json',
+
         success:function(response) {
             if (cleanAlert){$('.alert').hide();}
         	if (response.success === true){
+                if(firstTimeRun){
+                    firstTimeRun = false;
+                    loadTimer();
+                }
                 // console.log(response.messages)
         		$('#start-Game').html(response.messages[0][0]);
                 $('.actualBet-Game').html(response.messages[0][1]);
@@ -163,4 +170,35 @@ var PlayerAction = function(action, msg)
             }
         }
     })
+}
+
+var loadTimer = function()
+{
+    setInterval(function(){ 
+        counter++;
+        $(".TimerCounter").html(convertTime(counter));
+         }, 1000);
+}
+
+var convertTime = function(segundos)
+{
+    var horas = 0, minutos = 0;
+    while(segundos > 59){
+        minutos++;
+        segundos-=60;
+        if(minutos > 59){
+            horas++; 
+            minutos-=60;
+        }
+    }
+    if(horas < 10){
+        horas = "0" + horas.toString();
+    }
+    if(minutos<10){
+        minutos = "0" + minutos.toString();
+    }
+    if(segundos<10){
+        segundos = "0" + segundos.toString();
+    }
+    return horas.toString() + ":" + minutos.toString() + ":" + segundos.toString();
 }
