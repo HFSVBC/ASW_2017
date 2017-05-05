@@ -1,47 +1,82 @@
-#gameBody{
-	padding: 80px 7% 20px 7%;
+body{
+	background: url(../images/backgroundGame.png);
 }
-.row{
-	margin-top: 100px;
-}
-#tableCardsRow{
-	margin-top: 40px;
-}
+#main, #cont-Body, #gameBody, #gameMainCont, #lateralComands{height: 100%;}
+#gameMainCont{margin: 0}
 .container-alerts{
 	position: absolute;
-	width: 86%;
+	padding-left: 15px;
+    width: 95%;
 }
-#messa-game{
-	border-bottom: #616161 solid 1px;
-	margin-bottom: 30px;
+/*Buttons on the left*/
+#lateralComands{
+	position: relative;
+    background: rgba(34, 34, 34, 0.8);
+    padding-top: 50px;
+    padding-left: 15px;
+    color: white;
 }
 #botoes_game{
 	width: 100%;
 	margin-bottom: 10px;
+	margin-top: 30px;
 }
 #desistir, #cobrir_aposta{
     height: 55px;
 }
-#chat{
-	display: none;
+#gameHistory-cont{
+    position: absolute;
+    width: 100%;
+    margin-left: -30px;
+    padding: 0 15px 20px 30px;
+    bottom: 0;
 }
+#gameHistory{
+	padding-left: 15px;
+	height: 200px;
+	overflow-y: scroll;
+}
+/*gameMainArea styles */
+#gameMainArea{
+	padding-top: 70px;
+	position: relative;
+    height: 100%;
+    padding-left: 0;
+}
+#GameTableConts{
+	width: 100%;
+	padding-left: 15px;
+    position: absolute;
+    top: 50%;
+    margin-top: -213.375px;
+}
+#tableTop{
+	width: 849.39px;
+    position: absolute;
+    left: 50%;
+    margin-left: -423.295px;
+}
+/*Table Cards div style*/
+#table-cards-cont{
+	position: absolute;
+    left: 50%;
+    margin-left: -375px;
+    top: 40%;
+    margin-top: -100px;
+}
+
 .cards-table{
 	overflow: hidden;
-	width: 195px;
-	height: 260px;
+	width: 150px;
+    height: 200px;
 	float: left;
 }
 .cards-table > img{
 	display: none;
 	position: relative;
-    width: 2750px;
+    width: 2050px;
 }
-#gameHistory{
-	height: 200px;
-    display: block;
-	-webkit-column-count: 4; /* Chrome, Safari, Opera */
-    -moz-column-count: 4; /* Firefox */
-    column-count: 4;
-    -moz-column-fill: auto;
-    column-fill: auto;
-}
+
+
+
+

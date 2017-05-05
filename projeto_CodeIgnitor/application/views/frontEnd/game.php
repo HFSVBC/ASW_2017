@@ -5,14 +5,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <div id="main">
 	<div id="cont-Body">
 		<div id="gameBody">
-			<div class="container-alerts">
-				<div class="alert alert-warning" id="warningGame" role="alert"><strong>Aviso! </strong><span id="warningGame-msg"></span></div>
-				<div class="alert alert-danger" id="dangerGame" role="alert"><strong>Perigo! </strong><span id="dangerGame-msg"></span></div>
-				<div class="alert alert-danger" id="erroGame" role="alert"><strong>Erro! </strong><span id="erroGame-msg"></span></div>
-			</div>
-			<div class="TimerCounter"></div>
-			<div class="row">
-				<div class="col-xs-12 col-md-4">
+			<!-- <div class="TimerCounter"></div> -->
+			<div class="row" id="gameMainCont">
+				<div class="col-xs-12 col-md-3" id="lateralComands">
 					<div id="messa-game">
 						<h3 class="mesa-creditos" >Créditos disponiveis: <span id="userPoints"></span></h3>
 					</div>
@@ -27,12 +22,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 							<button id="aumentSend" type="button" class="btn btn-default">Aumentar</button>
       					</span>
 					</div>
-					<button class="btn btn-primary" id="chat" type="button">
-						Chat <span class="badge">4</span>
-					</button>
+					<div id="gameHistory-cont">
+						<h4>Histórico de Jogadas</h4>
+						<div id="gameHistory"></div>
+					</div>
 				</div>
-				<div class="col-xs-12 col-md-8">
-					<table id="table_game" class="table">
+				<div class="col-xs-12 col-md-9" id="gameMainArea">
+					<div class="container-alerts">
+						<div class="alert alert-warning" id="warningGame" role="alert"><strong>Aviso! </strong><span id="warningGame-msg"></span></div>
+						<div class="alert alert-danger" id="dangerGame" role="alert"><strong>Perigo! </strong><span id="dangerGame-msg"></span></div>
+						<div class="alert alert-danger" id="erroGame" role="alert"><strong>Erro! </strong><span id="erroGame-msg"></span></div>
+					</div>
+					<div id="GameTableConts">
+						<img src="custom/images/gameTable.png" id="tableTop">
+						<div id="table-cards-cont">
+			        		<div class="cards-table">
+			        			<img id="table-card01" src="custom/images/cards.png">
+			        		</div>
+			        		<div class="cards-table">
+			        			<img id="table-card02" src="custom/images/cards.png">
+			        		</div>
+			        		<div class="cards-table">
+			        			<img id="table-card03" src="custom/images/cards.png">
+			        		</div>
+			        		<div class="cards-table">
+			        			<img id="table-card04" src="custom/images/cards.png">
+			        		</div>
+			        		<div class="cards-table">
+			        			<img id="table-card05" src="custom/images/cards.png">
+			        		</div>
+			        	</div>
+					</div>
+					<!-- <table id="table_game" class="table">
 					    <tbody>
 					      	<tr id="InitialTime">
 					        	<td><b>Início</b> <span id="start-Game"></span></td>
@@ -53,16 +74,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 								<td><b>Aposta atual</b> <span class="actualBet-Game"></span> créditos</td>
 							</tr>
 					    </tbody>
-			  		</table>
+			  		</table> -->
 				</div>
 			</div>
-			<div class="row" id="tableCardsRow">
+			<!-- <div class="row" id="tableCardsRow">
 				<div class="col-xs-12 col-md-12">
 					<table class="table">
 						<tbody>
 							<tr id="BoardCards">
 					        	<td><b>Cartas da mesa</b>
-					        		<div "table-cards-cont">
+					        		<div id="table-cards-cont">
 						        		<div class="cards-table">
 						        			<img id="table-card01" src="custom/images/cards.png">
 						        		</div>
@@ -87,7 +108,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						</tbody>
 					</table>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>

@@ -1,9 +1,9 @@
 $(window).on('load', function(){
     $('#gameBody button, #gameBody input').prop('disabled', true);
-	setInterval( function () {
-    	loadGameInfo();
-	}, 500 );
-	// loadGameInfo();
+	// setInterval( function () {
+ //    	loadGameInfo();
+	// }, 500 );
+	loadGameInfo();
 	$('#desistir').on('click', function(){
         $('.alert').hide();
     	PlayerAction("Desistir", "Desistiu da sua mao" );
@@ -20,15 +20,21 @@ $(window).on('load', function(){
         $('.alert').hide();
         PlayerAction("AllIn", "Apostou tudo");
     });
+
+    // margin table left
+    $(window).on( "resize load", function() {
+        var h = $('#tableTop').height();
+        $('#GameTableConts').css('height', h);
+    });
 });
 var cleanAlert, firstTimeRun = true, counter = 0;
-var cards_table = {"As de paus":[-10, 0],"Rei de paus":[-2560, 0],"Dama de paus":[-2345, 0],"Valete de paus":[-2130, 0], "10 de paus":[-1920, 0],"9 de paus":[-1705, 0],"8 de paus":[-1495, 0],"7 de paus":[-1285, 0],"6 de paus":[-1070, 0],
-                   "5 de paus":[-860, 0],"4 de paus":[-645, 0],"3 de paus":[-435, 0],"2 de paus":[-225, 0],"As de copas":[-10, -265],"Rei de copas":[-2560, -265],"Dama de copas":[-2345, -265],"Valete de copas":[-2130, -265], 
-                   "10 de copas":[-1920, -265],"9 de copas":[-1705, -265],"8 de copas":[-1495, -265],"7 de copas":[-1285, -265],"6 de copas":[-1070, -265],"5 de copas":[-860, -265],"4 de copas":[-645, -265],"3 de copas":[-435, -265],
-                   "2 de copas":[-225, -265],"As de espadas":[-10, -535],"Rei de espadas":[-2560, -535],"Dama de espadas":[-2345, -535],"Valete de espadas":[-2130, -535], "10 de espadas":[-1920, -535],"9 de espadas":[-1705, -535],
-                   "8 de espadas":[-1495, -535],"7 de espadas":[-1285, -535],"6 de espadas":[-1070, -535],"5 de espadas":[-860, -535],"4 de espadas":[-645, -535],"3 de espadas":[-435, -535],"2 de espadas":[-225, -535],"As de ouros":[-10, -800],
-                   "Rei de ouros":[-2560, -800],"Dama de ouros":[-2345, -800],"Valete de ouros":[-2130, -800],"10 de ouros":[-1920, -800],"9 de ouros":[-1705, -800],"8 de ouros":[-1495, -800],"7 de ouros":[-1285, -800],"6 de ouros":[-1070, -800],
-                   "5 de ouros":[-860, -800],"4 de ouros":[-645, -800],"3 de ouros":[-435, -800],"2 de ouros":[-225, -800]}
+var cards_table = {"As de paus":[-5, 5],"Rei de paus":[-1905, 5],"Dama de paus":[-1745, 5],"Valete de paus":[-1590, 5], "10 de paus":[-1430, 5],"9 de paus":[-1270, 5],"8 de paus":[-1115, 5],"7 de paus":[-955, 5],"6 de paus":[-795, 5],
+                   "5 de paus":[-640, 5],"4 de paus":[-480, 5],"3 de paus":[-325, 5],"2 de paus":[-165, 5],"As de copas":[-5, -195],"Rei de copas":[-1905, -195],"Dama de copas":[-1745, -195],"Valete de copas":[-1590, -195], 
+                   "10 de copas":[-1430, -195],"9 de copas":[-1270, -195],"8 de copas":[-1115, -195],"7 de copas":[-955, -195],"6 de copas":[-795, -195],"5 de copas":[-640, -195],"4 de copas":[-480, -195],"3 de copas":[-325, -195],
+                   "2 de copas":[-165, -195],"As de espadas":[-10, -395],"Rei de espadas":[-1905, -395],"Dama de espadas":[-1745, -395],"Valete de espadas":[-1590, -395], "10 de espadas":[-1430, -395],"9 de espadas":[-1270, -395],
+                   "8 de espadas":[-1115, -395],"7 de espadas":[-955, -395],"6 de espadas":[-795, -395],"5 de espadas":[-640, -395],"4 de espadas":[-480, -395],"3 de espadas":[-325, -395],"2 de espadas":[-165, -395],"As de ouros":[-10, -595],
+                   "Rei de ouros":[-1905, -595],"Dama de ouros":[-1745, -595],"Valete de ouros":[-1590, -595],"10 de ouros":[-1430, -595],"9 de ouros":[-1270, -595],"8 de ouros":[-1115, -595],"7 de ouros":[-955, -595],"6 de ouros":[-795, -595],
+                   "5 de ouros":[-640, -595],"4 de ouros":[-480, -595],"3 de ouros":[-325, -595],"2 de ouros":[-165, -595]}
 
 var showCards = function(cards){
     var i =0;
@@ -75,7 +81,6 @@ var cheksTimeOut = function(){
                         dataType: 'json',
                         success:function(response) {
                             if(response.success === true){
-                                console.log(response.messages)
                             }else{
                                 $('#erroGame-msg').html(response.messages);
                                 $('#erroGame').show();
