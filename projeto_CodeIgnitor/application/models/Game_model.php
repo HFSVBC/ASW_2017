@@ -321,9 +321,10 @@
             $table_cards    = json_encode($table_cards);
             $current_player = $this->getGameOwner($gameId);
             $current_bet    = $this->getGameMinBet($gameId);
+            $timeNow		= strtotime(date('Y-m-d H:i:s'));
 
-            $sql = "INSERT INTO proj_game_status (id, started_at, deck, table_cards, current_player, current_bet, current_pot)
-                      VALUES ($gameId, '$timeNow', '$deck', '$table_cards', $current_player, $current_bet, 0)";
+            $sql = "INSERT INTO proj_game_status (id, started_at, deck, table_cards, current_player, initTurnTime, current_bet, current_pot)
+                      VALUES ($gameId, '$timeNow', '$deck', '$table_cards', $current_player, '$timeNow', $current_bet, 0)";
 
             if($this->db->query($sql)){
                 return true;
@@ -528,8 +529,9 @@
 					break;
 				}
 			}
+			$timeNow = strtotime(date('Y-m-d H:i:s'));
 			$sql = "UPDATE proj_game_status
-					SET current_player = $next_player, current_pot=current_pot+$value
+					SET current_player = $next_player, current_pot=current_pot+$value, initTurnTime='$timeNow'
 					WHERE id=$id_jogo";
 			if($this->db->query($sql)){
 				if($next_player == $this->getGameOwner($id_jogo)){
@@ -676,7 +678,7 @@
 	  	}
 	  	public function getTimeLeftforTimeOut(){
 	  		$gameId = $this->db->escape($this->input->post('id_jogo'));
-	  		$sql = "SELECT started_at
+	  		$sql = "SELECT initTurnTime
 	  				FROM proj_game_status
 	  				WHERE id=$gameId
 	  				LIMIT 1";
@@ -684,7 +686,7 @@
 	  		$query = $this->db->query($sql);
 	  		$row   = $query->row();
 			if(!empty($row)){
-				$timeStarted = strtotime($row->started_at);
+				$timeStarted = strtotime($row->initTurnTime);
 				$timeNow     = strtotime(date('Y-m-d H:i:s'));
 				$timePassedSiceBeginning = $timeNow - $timeStarted;
 

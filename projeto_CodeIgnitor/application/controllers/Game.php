@@ -205,7 +205,7 @@ class Game extends CI_Controller {
 					$this->cardsOnTableNow($resultGame->table_cards, $cardsRound),
 
 					$this->game_model->getUsernameById($resultGame->current_player),
-					$this->game_model->getPlayerBalance($this->session->userdata['loggedIn_asw004']['id']) - $this->game_model->getPlayerBet($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo'))
+					$this->game_model->getPlayerBalance($this->session->userdata['loggedIn_asw004']['id']) - $this->game_model->getPlayerBet($this->session->userdata['loggedIn_asw004']['id'], $this->input->post('id_jogo')),
 				];
 				array_push($validator['messages'], $data);
 			}else{

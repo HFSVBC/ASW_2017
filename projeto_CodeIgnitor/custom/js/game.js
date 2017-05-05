@@ -31,14 +31,14 @@ var cards_table = {"As de paus":[-10, 0],"Rei de paus":[-2560, 0],"Dama de paus"
                    "5 de ouros":[-860, -800],"4 de ouros":[-645, -800],"3 de ouros":[-435, -800],"2 de ouros":[-225, -800]}
 
 var showCards = function(cards){
-    if(cards != null){
-        for(var i=0; i < cards.length; i++){
-            $('#table-card0'+String(i+1)).css({
-                'left': cards_table[cards[i]][0]+'px',
-                'top': cards_table[cards[i]][1]+'px',
-                'display': 'inline'
-            });
-        }
+    var i =0;
+    while(cards != null && i < cards.length){
+        $('#table-card0'+String(i+1)).css({
+            'left': cards_table[cards[i]][0]+'px',
+            'top': cards_table[cards[i]][1]+'px',
+            'display': 'inline'
+        });
+        i++;
     }
 }
 var gameControl = function(nowUsername, cardsOnTable, round)
@@ -48,8 +48,6 @@ var gameControl = function(nowUsername, cardsOnTable, round)
         if (round == '4'){
             $('#gameBody button, #gameBody input').prop('disabled', true);
             $('#nowPlayer-Game').html('Terminou');
-            // teste retirar na final
-            cheksTimeOut();
         }else{
             $('#gameBody button, #gameBody input').prop('disabled', false);
             cheksTimeOut();
@@ -69,7 +67,7 @@ var cheksTimeOut = function(){
         dataType: 'json',
         success:function(response) {
             if(response.success === true){
-                if(response.messages[1] == true){
+                if(response.messages == true){
                     $.ajax({
                         url:  baseURL + "index.php/game/checkTimeLeftForTimeOut",
                         type: "post",
