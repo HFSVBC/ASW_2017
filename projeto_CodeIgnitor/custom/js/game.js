@@ -3,7 +3,7 @@ $(window).on('load', function(){
 	   setInterval( function () {
         loadGameInfo();
 	   }, 500 );
-	loadGameInfo();
+	cheksTimeOut();
 	$('#desistir').on('click', function(){
         $('.alert').hide();
     	PlayerAction("Desistir", "Desistiu da sua mao" );
@@ -29,7 +29,7 @@ $(window).on('load', function(){
 });
 var cleanAlert, firstTimeRun = true, counter = 0;
 var cards_table = {"As de paus":[-5, 5],"Rei de paus":[-1905, 5],"Dama de paus":[-1745, 5],"Valete de paus":[-1590, 5], "10 de paus":[-1430, 5],"9 de paus":[-1270, 5],"8 de paus":[-1115, 5],"7 de paus":[-955, 5],"6 de paus":[-795, 5],
-                   "5 de paus":[-640, 5],"4 de paus":[-480, 5],"3 de paus":[-325, 5],"2 de paus":[-165, 5],"As de copas":[-5, -195],"Rei de copas":[-1905, -195],"Dama de copas":[-1745, -195],"Valete de copas":[-1590, -195], 
+                   "5 de paus":[-640, 5],"4 de paus":[-480, 5],"3 de paus":[-325, 5],"2 de paus":[-165, 5],"As de copas":[-5, -195],"Rei de copas":[-1905, -195],"Dama de copas":[-1745, -195],"Valete de copas":[-1590, -195],
                    "10 de copas":[-1430, -195],"9 de copas":[-1270, -195],"8 de copas":[-1115, -195],"7 de copas":[-955, -195],"6 de copas":[-795, -195],"5 de copas":[-640, -195],"4 de copas":[-480, -195],"3 de copas":[-325, -195],
                    "2 de copas":[-165, -195],"As de espadas":[-10, -395],"Rei de espadas":[-1905, -395],"Dama de espadas":[-1745, -395],"Valete de espadas":[-1590, -395], "10 de espadas":[-1430, -395],"9 de espadas":[-1270, -395],
                    "8 de espadas":[-1115, -395],"7 de espadas":[-955, -395],"6 de espadas":[-795, -395],"5 de espadas":[-640, -395],"4 de espadas":[-480, -395],"3 de espadas":[-325, -395],"2 de espadas":[-165, -395],"As de ouros":[-10, -595],
@@ -101,7 +101,7 @@ var cheksTimeOut = function(){
 }
 var loadGameInfo = function()
 {
-    
+
 	var data  = {id_jogo: gameId};
     $.ajax({
         url:  baseURL + "index.php/game/getGameInfo",
@@ -130,7 +130,7 @@ var loadGameInfo = function()
                 $("#players-Game").html(response.messages[0][7]);
         		$('#nowPlayer-Game').html(response.messages[0][9]);
         		$("#userPoints").html(response.messages[0][10]);
-        		
+
         		gameControl(response.messages[0][9], response.messages[0][8], response.messages[0][5]);
         	}else{
         		if(response.messages[0] == "Em Espera"){
@@ -156,7 +156,7 @@ var PlayerAction = function(action, msg)
     }else{
         var raise = $('#aumentValue').val();
     }
-	
+
     //qual o jogador
     //atualizar o proximo jogador
     //mudar o player_folded para true
@@ -181,7 +181,7 @@ var PlayerAction = function(action, msg)
 
 var loadTimer = function()
 {
-    setInterval(function(){ 
+    setInterval(function(){
         counter++;
         $(".TimerCounter").html(convertTime(counter));
          }, 1000);
@@ -194,7 +194,7 @@ var convertTime = function(segundos)
         minutos++;
         segundos-=60;
         if(minutos > 59){
-            horas++; 
+            horas++;
             minutos-=60;
         }
     }
