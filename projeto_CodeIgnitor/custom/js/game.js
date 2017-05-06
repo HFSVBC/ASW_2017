@@ -1,8 +1,8 @@
 $(window).on('load', function(){
     $('#gameBody button, #gameBody input').prop('disabled', true);
-	// setInterval( function () {
- //    	loadGameInfo();
-	// }, 500 );
+	   setInterval( function () {
+        loadGameInfo();
+	   }, 500 );
 	loadGameInfo();
 	$('#desistir').on('click', function(){
         $('.alert').hide();
@@ -74,19 +74,23 @@ var cheksTimeOut = function(){
         success:function(response) {
             if(response.success === true){
                 if(response.messages == true){
-                    $.ajax({
-                        url:  baseURL + "index.php/game/checkTimeLeftForTimeOut",
-                        type: "post",
-                        data: data,
-                        dataType: 'json',
-                        success:function(response) {
-                            if(response.success === true){
-                            }else{
-                                $('#erroGame-msg').html(response.messages);
-                                $('#erroGame').show();
+                    setInterval(function(){
+                        $.ajax({
+                            url:  baseURL + "index.php/game/checkTimeLeftForTimeOut",
+                            type: "post",
+                            data: data,
+                            dataType: 'json',
+                            success:function(response) {
+                                if(response.success === true){
+                                    if(response.messages < 0){
+                                        PlayerAction("Desistir", "Desistiu da sua mao" );
+                                    }
+                                }else{
+                                    $('#erroGame-msg').html(response.messages);
+                                    $('#erroGame').show();
+                                }
                             }
-                        }
-                    });
+                        });}, 500);
                 }
             }else{
                 $('#erroGame-msg').html(response.messages);
