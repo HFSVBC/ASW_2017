@@ -368,19 +368,38 @@ class Game extends CI_Controller {
 
 			$validator['success']  = true;
 			$validator['messages'] = array();
-			$data = [
-				$requestGameInfo->name,
-				$requestGameInfo->description,
-				$this->game_model->getUsernameById($requestGameInfo->owner),
-				$this->game_model->getUsernameById($gameStatusInfo->current_player),
-				$gameStatusInfo->started_at,
-				$gameStatusInfo->ended_at,
-				$gameStatusInfo->current_pot,
-				$gameStatusInfo->current_bet,
-				$gameStatusInfo->table_cards,
-				$this->playersTablePerGameAdm($gamePlayersInfo),
-				$gameHistInfo,
-			];
+			//1 e 0 na ultima posiçao para saber o pote
+			if($gameStatusInfo->current_pot > 10000){
+				$data = [
+					$requestGameInfo->name,
+					$requestGameInfo->description,
+					$this->game_model->getUsernameById($requestGameInfo->owner),
+					$this->game_model->getUsernameById($gameStatusInfo->current_player),
+					$gameStatusInfo->started_at,
+					$gameStatusInfo->ended_at,
+					$gameStatusInfo->current_pot,
+					$gameStatusInfo->current_bet,
+					$gameStatusInfo->table_cards,
+					$this->playersTablePerGameAdm($gamePlayersInfo),
+					$gameHistInfo,
+					1,
+				];
+			}else{
+				$data = [
+					$requestGameInfo->name,
+					$requestGameInfo->description,
+					$this->game_model->getUsernameById($requestGameInfo->owner),
+					$this->game_model->getUsernameById($gameStatusInfo->current_player),
+					$gameStatusInfo->started_at,
+					$gameStatusInfo->ended_at,
+					$gameStatusInfo->current_pot,
+					$gameStatusInfo->current_bet,
+					$gameStatusInfo->table_cards,
+					$this->playersTablePerGameAdm($gamePlayersInfo),
+					$gameHistInfo,
+					0,
+				];
+			}
 			array_push($validator['messages'], $data);
 		} else{
 			$validator['success']  = false;
