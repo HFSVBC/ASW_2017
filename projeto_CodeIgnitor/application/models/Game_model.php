@@ -389,6 +389,18 @@
 				return false;
 			}
 		}
+		public function getGamePot($id_jogo)
+		{
+			$sql   = "SELECT current_pot FROM proj_game_status WHERE id=$id_jogo LIMIT 1";
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row->current_pot;
+			}else{
+				return false;
+			}
+		}
 		public function checksPlayerBet($id_jogo)
 		{
 			$sql  = "SELECT last_bet
