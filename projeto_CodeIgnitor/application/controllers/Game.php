@@ -394,7 +394,7 @@ class Game extends CI_Controller {
 	public function ExcedingPot()
 	{
 		$result = $this->game_model->checksIfPotExceding();
-		echo json_encode(array("sucess" => $result[0], "messages" => $result[1]);
+		echo json_encode(array("sucess" => $result[0], "messages" => $result[1]));
 	}
 	public function playersTablePerGameAdm($info)
 	{
