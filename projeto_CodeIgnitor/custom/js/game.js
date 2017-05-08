@@ -127,15 +127,15 @@ var cheksTimeOut = function(){
 }
 var loadGameInfo = function()
 {
-
+    console.log('kvjbdf')
 	var data  = {id_jogo: gameId};
     $.ajax({
         url:  baseURL + "index.php/game/getGameInfo",
         type: "post",
         data: data,
         dataType: 'json',
-
         success:function(response) {
+            console.log(response)
             if (cleanAlert){$('.alert').hide();}
         	if (response.success === true){
                 if(firstTimeRun){
@@ -219,9 +219,9 @@ var convertTime = function(segundos)
         if(minutos > 59){
             horas++;
             minutos-=60;
-            if(horas > 59){
+            if(horas > 23){
                 dias++;
-                horas-=60;
+                horas-=24;
             }
         }
     }

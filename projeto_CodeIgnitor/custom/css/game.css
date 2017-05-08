@@ -3,6 +3,11 @@ body{
     min-width: 1250px;
 }
 #main, #cont-Body, #gameBody, #gameMainCont, #lateralComands{height: 100%;}
+/*1440px*/
+@media screen and (max-width: 1440px) {
+    #gamePlayers{max-width: 760px;}
+    #tableTop{max-width: 760px;}
+}
 #gameMainCont{margin: 0}
 .container-alerts{
 	position: absolute;
