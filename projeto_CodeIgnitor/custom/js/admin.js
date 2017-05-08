@@ -119,9 +119,25 @@ $(window).on('load', function(){
         var activeUpdate = $(this).attr('data-activeUpdateStatus');
         deactivateGame_admin(id, activeUpdate);
     });
+    setInterval(function(){
+        verifiyPot();
+    },5000),
 });
 
 var pesquisa, userAdminTable, pesquisaGame, gamesAdminTable;
+
+var verifiyPot = function(){
+    $.ajax({
+        url:  baseURL + "index.php/game/ExcedingPot",
+        type: "get",
+        success:function(response) {
+            if(response.sucess == true){
+                for(overPot : response.messages){
+                    
+                }
+            }
+        });
+}
 
 var showConAdm = function(obg){
     var distVal = $(obg).val();
