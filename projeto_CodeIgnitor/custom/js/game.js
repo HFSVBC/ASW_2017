@@ -22,7 +22,7 @@ $(window).on('load', function(){
     });
 
     // margin table left
-    $(window).on( "resize load", function() {
+    $(window).on( "resize load", function() { 
         var h = $('#tableTop').height();
         $('#GameTableConts').css('height', h);
     });
