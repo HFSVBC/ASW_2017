@@ -4,8 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <link rel="stylesheet" type="text/css" href="custom/css/game.css">
 <div id="main">
 	<div id="cont-Body">
-		<div id="gameBody">
-			<!-- <div class="TimerCounter"></div> -->
+		<div id="gameBody">			
 			<div class="row" id="gameMainCont">
 				<div class="col-xs-12 col-md-3" id="lateralComands">
 					<div id="messa-game">
@@ -21,6 +20,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<span class="input-group-btn">
 							<button id="aumentSend" type="button" class="btn btn-default">Aumentar</button>
       					</span>
+					</div>
+					<div id="gametimmer" class="hideBeforeGame">
+						<h3>Duração do Jogo</h3>
+						<h4>
+							<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+							<span class="TimerCounter"></span>
+						</h4>
+					</div>
+					<div id="nowPlayer" class="hideBeforeGame">
+						<h3>Próximo a Jorgar:</h3>
+						<h4>
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+							<span id="nowPlayer-Game"></span>
+						</h4>
 					</div>
 					<div id="gameHistory-cont">
 						<h4>Histórico de Jogadas</h4>
@@ -52,63 +65,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			        			<img id="table-card05" src="custom/images/cards.png">
 			        		</div>
 			        	</div>
+			        	<div id="gameValuesStats" class="hideBeforeGame">
+			        		<h4>Aposta Atual: <span class="actualBet-Game"></span> créditos</h4>
+			        		<h4>Valor do Pote: <span id="pot-Game"></span> créditos</h4>
+			        	</div>
 					</div>
-					<!-- <table id="table_game" class="table">
-					    <tbody>
-					      	<tr id="InitialTime">
-					        	<td><b>Início</b> <span id="start-Game"></span></td>
-					      	</tr>
-					      	<tr id="ActualPlayer">
-					        	<td><b>Jogador atual</b> <span id="nowPlayer-Game"></span></td>
-					      	</tr>
-					      	<tr id="Players">
-					        	<td><b>Jogadores</b> <span id="players-Game"></span></td>
-					      	</tr>
-							<tr id="MyCards">
-								<td><b>Minhas cartas</b> <span id="myCars-Game"></span></td>
-							</tr>
-							<tr id="pot">
-								<td><b>Valor do pote</b> <span id="pot-Game"></span> créditos</td>
-							</tr>
-							<tr id="ActualBet">
-								<td><b>Aposta atual</b> <span class="actualBet-Game"></span> créditos</td>
-							</tr>
-					    </tbody>
-			  		</table> -->
+					<div id="gamePlayers">
+						<div class="players" id="player-01">
+							<div class="playerAvatar"></div>
+							<div class="playerUsername"></div>
+						</div>
+						<div class="players" id="player-02">
+							<div class="playerAvatar"></div>
+							<div class="playerUsername"></div>
+						</div>
+						<div class="players" id="player-03">
+							<div class="playerAvatar"><span class='glyphicon glyphicon-user' aria-hidden='true'></span></div>
+							<div class="playerUsername"></div>
+						</div>
+						<div class="players" id="player-04">
+							<div class="playerAvatar"></div>
+							<div class="playerUsername"></div>
+						</div>
+						<div class="players" id="player-05">
+							<div class="playerAvatar"></div>
+							<div class="playerUsername"></div>
+						</div>
+						<div class="players" id="player-06">
+							<div class="playerAvatar"></div>
+							<div class="playerUsername"></div>
+						</div>
+						<div class="players" id="player-07">
+							<div class="playerAvatar"></div>
+							<div class="playerUsername"></div>
+						</div>
+						<div class="players" id="player-08">
+							<div class="playerAvatar"></div>
+							<div class="playerUsername"></div>
+						</div>
+						<div class="players" id="player-09">
+							<div class="playerAvatar"></div>
+							<div class="playerUsername"></div>
+						</div>
+						<div class="players" id="player-10">
+							<div class="playerAvatar"></div>
+							<div class="playerUsername"></div>
+						</div>
+					</div>
+					<div id="myCards">
+						<div class="myCards-table">
+		        			<img id="myCards-card01" src="custom/images/cards.png">
+		        		</div>
+		        		<div class="myCards-table">
+		        			<img id="myCards-card02" src="custom/images/cards.png">
+		        		</div>
+					</div>
 				</div>
 			</div>
-			<!-- <div class="row" id="tableCardsRow">
-				<div class="col-xs-12 col-md-12">
-					<table class="table">
-						<tbody>
-							<tr id="BoardCards">
-					        	<td><b>Cartas da mesa</b>
-					        		<div id="table-cards-cont">
-						        		<div class="cards-table">
-						        			<img id="table-card01" src="custom/images/cards.png">
-						        		</div>
-						        		<div class="cards-table">
-						        			<img id="table-card02" src="custom/images/cards.png">
-						        		</div>
-						        		<div class="cards-table">
-						        			<img id="table-card03" src="custom/images/cards.png">
-						        		</div>
-						        		<div class="cards-table">
-						        			<img id="table-card04" src="custom/images/cards.png">
-						        		</div>
-						        		<div class="cards-table">
-						        			<img id="table-card05" src="custom/images/cards.png">
-						        		</div>
-						        	</div>
-					        	</td>
-					      	</tr>
-							<tr>
-								<td id="PlayersBet"><b>Aposta de cada jogador</b><br><span id="gameHistory"></span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div> -->
 		</div>
 	</div>
 </div>

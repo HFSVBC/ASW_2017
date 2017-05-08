@@ -1,8 +1,10 @@
 $(window).on('load', function(){
     $('#gameBody button, #gameBody input').prop('disabled', true);
-	   setInterval( function () {
-        loadGameInfo();
-	   }, 500 );
+	// setInterval( function () {
+ //        loadGameInfo();
+	// }, 500 );
+    loadGameInfo();
+
 	cheksTimeOut();
 	$('#desistir').on('click', function(){
         $('.alert').hide();
@@ -22,9 +24,9 @@ $(window).on('load', function(){
     });
 
     // margin table left
-    $(window).on( "resize load", function() { 
-        var h = $('#tableTop').height();
-        $('#GameTableConts').css('height', h);
+    gameCssChanges();
+    $(window).on('resize', function() {
+        gameCssChanges();
     });
 });
 var cleanAlert, firstTimeRun = true, counter = 0;
@@ -36,10 +38,34 @@ var cards_table = {"As de paus":[-5, 5],"Rei de paus":[-1905, 5],"Dama de paus":
                    "Rei de ouros":[-1905, -595],"Dama de ouros":[-1745, -595],"Valete de ouros":[-1590, -595],"10 de ouros":[-1430, -595],"9 de ouros":[-1270, -595],"8 de ouros":[-1115, -595],"7 de ouros":[-955, -595],"6 de ouros":[-795, -595],
                    "5 de ouros":[-640, -595],"4 de ouros":[-480, -595],"3 de ouros":[-325, -595],"2 de ouros":[-165, -595]}
 
-var showCards = function(cards){
+var gameCssChanges = function (){
+    var h, w;
+    var tableTop = $('#tableTop');
+    h = tableTop.height();
+    w = tableTop.width();
+    $('#GameTableConts').css('height', h);
+    tableTop.css('margin-left', '-'+String(w/2)+'px');
+    $('#gamePlayers').css({
+        'margin-left': '-'+String(w/2)+'px',
+        'height':h
+    });
+
+    var tableCardsCont = $('#table-cards-cont');
+    h = tableCardsCont.height();
+    w = tableCardsCont.width();
+    tableCardsCont.css({
+        'margin-top' : '-'+String(h/2)+'px',
+        'margin-left': '-'+String(w/2)+'px'
+    });
+
+    var gameValuesStats = $('#gameValuesStats');
+    w = gameValuesStats.width();
+    gameValuesStats.css('margin-left', '-'+String(w/2)+'px');
+}
+var showCards = function(cards, object){
     var i =0;
     while(cards != null && i < cards.length){
-        $('#table-card0'+String(i+1)).css({
+        $(object+'-card0'+String(i+1)).css({
             'left': cards_table[cards[i]][0]+'px',
             'top': cards_table[cards[i]][1]+'px',
             'display': 'inline'
@@ -62,7 +88,7 @@ var gameControl = function(nowUsername, cardsOnTable, round)
 	}else{
         $('#gameBody button, #gameBody input').prop('disabled', true);
 	}
-    showCards(cardsOnTable);
+    showCards(cardsOnTable, '#table');
 }
 var cheksTimeOut = function(){
     var data  = {id_jogo: gameId};
@@ -114,24 +140,21 @@ var loadGameInfo = function()
         	if (response.success === true){
                 if(firstTimeRun){
                     firstTimeRun = false;
-                    loadTimer();
+                    loadTimer(response.messages[0][0]);
                 }
                 // console.log(response.messages)
-        		$('#start-Game').html(response.messages[0][0]);
                 $('.actualBet-Game').html(response.messages[0][1]);
                 $("#pot-Game").html(response.messages[0][2]);
-                if(response.messages[0][4] == '1'){
-                    $('#myCars-Game').html("Desistiu");
-                }else{
-                    $('#myCars-Game').html(response.messages[0][3]);
-                }
+                showCards($.parseJSON(response.messages[0][3]), '#myCards')
 
                 $("#gameHistory").html(response.messages[0][6]);
-                $("#players-Game").html(response.messages[0][7]);
+                // $("#players-Game").html(response.messages[0][7]);
+                console.log(response.messages[0][7])
         		$('#nowPlayer-Game').html(response.messages[0][9]);
         		$("#userPoints").html(response.messages[0][10]);
 
         		gameControl(response.messages[0][9], response.messages[0][8], response.messages[0][5]);
+                $('.hideBeforeGame').show();
         	}else{
         		if(response.messages[0] == "Em Espera"){
                     cleanAlert = true;
@@ -179,24 +202,31 @@ var PlayerAction = function(action, msg)
     })
 }
 
-var loadTimer = function()
+var loadTimer = function(counter)
 {
     setInterval(function(){
-        counter++;
         $(".TimerCounter").html(convertTime(counter));
-         }, 1000);
+        counter++;
+    }, 1000);
 }
 
 var convertTime = function(segundos)
 {
-    var horas = 0, minutos = 0;
+    var dias = 0, horas = 0, minutos = 0;
     while(segundos > 59){
         minutos++;
         segundos-=60;
         if(minutos > 59){
             horas++;
             minutos-=60;
+            if(horas > 59){
+                dias++;
+                horas-=60;
+            }
         }
+    }
+    if(dias < 10){
+        dias = "0" + dias.toString();
     }
     if(horas < 10){
         horas = "0" + horas.toString();
@@ -207,5 +237,10 @@ var convertTime = function(segundos)
     if(segundos<10){
         segundos = "0" + segundos.toString();
     }
-    return horas.toString() + ":" + minutos.toString() + ":" + segundos.toString();
+    if (dias > 0){
+        return dias.toString() + " dias " + horas.toString() + ":" + minutos.toString() + ":" + segundos.toString();
+    }
+    else{
+        return horas.toString() + ":" + minutos.toString() + ":" + segundos.toString();
+    }
 }

@@ -1,5 +1,6 @@
 body{
 	background: url(../images/backgroundGame.png);
+    min-width: 1250px;
 }
 #main, #cont-Body, #gameBody, #gameMainCont, #lateralComands{height: 100%;}
 #gameMainCont{margin: 0}
@@ -31,6 +32,9 @@ body{
     padding: 0 15px 20px 30px;
     bottom: 0;
 }
+.hideBeforeGame{
+    display: none;
+}
 #gameHistory{
 	padding-left: 15px;
 	height: 200px;
@@ -38,23 +42,32 @@ body{
 }
 /*gameMainArea styles */
 #gameMainArea{
-	padding-top: 70px;
+	padding: 70px 0 40px 0;
 	position: relative;
     height: 100%;
-    padding-left: 0;
+
 }
 #GameTableConts{
 	width: 100%;
 	padding-left: 15px;
     position: absolute;
-    top: 50%;
+    top: 45%;
     margin-top: -213.375px;
 }
 #tableTop{
-	width: 849.39px;
+	width: 80%;
     position: absolute;
     left: 50%;
     margin-left: -423.295px;
+}
+#gameValuesStats{
+    position: absolute;
+    text-align: center;
+    color: white;
+    padding: 5px;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -122px;
 }
 /*Table Cards div style*/
 #table-cards-cont{
@@ -64,19 +77,56 @@ body{
     top: 40%;
     margin-top: -100px;
 }
-
-.cards-table{
+#myCards{
+    position: absolute;
+    left: 50%;
+    margin-left: -150px;
+    bottom: 10px;
+}
+.cards-table, .myCards-table{
 	overflow: hidden;
 	width: 150px;
     height: 200px;
 	float: left;
 }
-.cards-table > img{
+.cards-table > img, .myCards-table > img{
 	display: none;
 	position: relative;
     width: 2050px;
 }
-
-
-
-
+#gamePlayers{
+    position: absolute;
+    height: 473.328px;
+    width: 80%;
+    left: 49%;
+    top: 44.5%;
+    margin-top: -213.375px;
+}
+.players{
+    position: absolute;
+    margin-left: -50px;
+}
+.players > .playerAvatar{
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    line-height: 100px;
+    color: white;
+}
+.players > .playerAvatar > span{
+    line-height: 100px;
+    width: 100%;
+    font-size: 60px;
+    text-align: center;
+}
+#gamePlayers > #player-01{left: 50%;top: 98%;}
+#gamePlayers > #player-02{left: 25%;top: 98%;}
+#gamePlayers > #player-03{left: 1%;top: 70%;}
+#gamePlayers > #player-04{left: 1%;top: 10%;}
+#gamePlayers > #player-05{left: 25%;top: -18%;}
+#gamePlayers > #player-06{left: 50%;top: -18%;}
+#gamePlayers > #player-07{left: 75%;top: -18%;}
+#gamePlayers > #player-08{left: 102%;top: 10%;}
+#gamePlayers > #player-09{left: 102%;top: 70%;}
+#gamePlayers > #player-10{left: 75%;top: 98%;}

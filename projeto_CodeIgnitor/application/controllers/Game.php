@@ -191,12 +191,13 @@ class Game extends CI_Controller {
 				$validator['success']  = true;
 				$resultPlayer  = $this->game_model->PlayerOnGame($this->session->userdata['loggedIn_asw004']['id']);
 				$cardsRound    = $this->game_model->getGameRound($this->input->post('id_jogo'));
-				
+				$playerCards   = $resultPlayer->player_cards;
 				$data = [
-					$resultGame->started_at,
+					strtotime(date('Y-m-d H:i:s'))-strtotime($resultGame->started_at),
 					$resultGame->current_bet,
 					$resultGame->current_pot,
-					$resultPlayer->player_cards,
+					// array($playerCards[0], $playerCards[1]),
+					$playerCards,
 					$resultPlayer->player_folded,
 					$cardsRound,
 
@@ -235,10 +236,11 @@ class Game extends CI_Controller {
 	public function playersInGame($game_id)
 	{
 		$result = $this->game_model->getPlayersInGame($game_id);
-		$output = "";
+		$output = array();
 		foreach ($result as $row) {
 			$username = $this->game_model->getUsernameById($row['player_id']);
-			$output  .=$username."&#8192;";
+			$avatar   = "<span class='glyphicon glyphicon-user' aria-hidden='true'></span>";
+			array_push($output, array($username, $avatar));
 		}
 		return $output;
 	}
