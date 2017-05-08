@@ -251,9 +251,6 @@ var loadGameData_admin = function(id){
                 $("#cards-game-adm").val(response.messages[0][8]);
                 $("#players-game-adm").html(response.messages[0][9]);
                 $("#histoy-game-adm").html(response.messages[0][10]);
-                if(response.messages[0][11] == 1){
-                    console.log('Notificaçao do pote'); //aqui e para por numa div notificaçoes
-                }
             }else{
                 $("#alertError-user-admin > .message").html(response.messages);
                 $("#alertError-user-admin").show();

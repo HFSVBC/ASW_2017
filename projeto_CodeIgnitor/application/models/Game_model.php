@@ -1,4 +1,4 @@
-<?php
+\<?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
 	class Game_model extends CI_Model {
@@ -389,16 +389,18 @@
 				return false;
 			}
 		}
-		public function getGamePot($id_jogo)
+		public function checksIfPotExceding()
 		{
-			$sql   = "SELECT current_pot FROM proj_game_status WHERE id=$id_jogo LIMIT 1";
+			$sql   = "SELECT id FROM proj_game_status WHERE current_pot > 10000";
 			$query = $this->db->query($sql);
-			$row   = $query->row();
-
-			if(!empty($row)){
-				return $row->current_pot;
+			$exceding_ids = array();
+			foreach ($query->result_array() as $row){
+				array_push($exceding_ids, $row->id);
+			}
+			if(!empty($exceding_ids)){
+				return array(true, $exceding_ids);
 			}else{
-				return false;
+				return array(false, NULL);
 			}
 		}
 		public function checksPlayerBet($id_jogo)

@@ -370,45 +370,31 @@ class Game extends CI_Controller {
 
 			$validator['success']  = true;
 			$validator['messages'] = array();
-			//1 e 0 na ultima posiçao para saber o pote
-			if($gameStatusInfo->current_pot > 10000){
-				$data = [
-					$requestGameInfo->name,
-					$requestGameInfo->description,
-					$this->game_model->getUsernameById($requestGameInfo->owner),
-					$this->game_model->getUsernameById($gameStatusInfo->current_player),
-					$gameStatusInfo->started_at,
-					$gameStatusInfo->ended_at,
-					$gameStatusInfo->current_pot,
-					$gameStatusInfo->current_bet,
-					$gameStatusInfo->table_cards,
-					$this->playersTablePerGameAdm($gamePlayersInfo),
-					$gameHistInfo,
-					1,
-				];
-			}else{
-				$data = [
-					$requestGameInfo->name,
-					$requestGameInfo->description,
-					$this->game_model->getUsernameById($requestGameInfo->owner),
-					$this->game_model->getUsernameById($gameStatusInfo->current_player),
-					$gameStatusInfo->started_at,
-					$gameStatusInfo->ended_at,
-					$gameStatusInfo->current_pot,
-					$gameStatusInfo->current_bet,
-					$gameStatusInfo->table_cards,
-					$this->playersTablePerGameAdm($gamePlayersInfo),
-					$gameHistInfo,
-					0,
-				];
-			}
-			array_push($validator['messages'], $data);
+			$data = [
+				$requestGameInfo->name,
+				$requestGameInfo->description,
+				$this->game_model->getUsernameById($requestGameInfo->owner),
+				$this->game_model->getUsernameById($gameStatusInfo->current_player),
+				$gameStatusInfo->started_at,
+				$gameStatusInfo->ended_at,
+				$gameStatusInfo->current_pot,
+				$gameStatusInfo->current_bet,
+				$gameStatusInfo->table_cards,
+				$this->playersTablePerGameAdm($gamePlayersInfo),
+				$gameHistInfo,
+			];
+		array_push($validator['messages'], $data);
 		} else{
 			$validator['success']  = false;
 			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o'.validation_errors();
 		}
 
 		echo json_encode($validator);
+	}
+	public function ExcedingPot()
+	{
+		$result = $this->game_model->checksIfPotExceding();
+		echo json_encode(array("sucess" => $result[0], "messages" => $result[1]);
 	}
 	public function playersTablePerGameAdm($info)
 	{
