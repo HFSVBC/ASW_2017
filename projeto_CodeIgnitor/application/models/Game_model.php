@@ -321,7 +321,7 @@
             $table_cards    = json_encode($table_cards);
             $current_player = $this->getGameOwner($gameId);
             $current_bet    = $this->getGameMinBet($gameId);
-            $timeNow		= strtotime(date('Y-m-d H:i:s'));
+            $timeNow		= date('Y-m-d H:i:s');
 
             $sql = "INSERT INTO proj_game_status (id, started_at, deck, table_cards, current_player, initTurnTime, current_bet, current_pot)
                       VALUES ($gameId, '$timeNow', '$deck', '$table_cards', $current_player, '$timeNow', $current_bet, 0)";
@@ -391,11 +391,12 @@
 		}
 		public function checksIfPotExceding()
 		{
-			$sql   = "SELECT id FROM proj_game_status WHERE current_pot > 10000";
+			$sql   = "SELECT name FROM proj_game_request WHERE id=(SELECT id FROM proj_game_status WHERE current_bet > 10000)";
 			$query = $this->db->query($sql);
 			$exceding_ids = array();
+
 			foreach ($query->result_array() as $row){
-				array_push($exceding_ids, $row->id);
+				array_push($exceding_ids, $row['name']);
 			}
 			if(!empty($exceding_ids)){
 				return array(true, $exceding_ids);

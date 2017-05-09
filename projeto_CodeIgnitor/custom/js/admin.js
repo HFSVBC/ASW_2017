@@ -126,6 +126,7 @@ $(window).on('load', function(){
         var activeUpdate = $(this).attr('data-activeUpdateStatus');
         deactivateGame_admin(id, activeUpdate);
     });
+    verifiyPot();
     setInterval(function(){
         verifiyPot();
     },5000);
@@ -134,14 +135,21 @@ $(window).on('load', function(){
 var pesquisa, userAdminTable, pesquisaGame, gamesAdminTable, gameDataInterval, lastGameId;
 
 var verifiyPot = function(){
+    console.log('ola')
     $.ajax({
         url:  baseURL + "index.php/game/ExcedingPot",
         type: "get",
+        dataType: 'json',
         success:function(response) {
             if(response.sucess == true){
-                for(overPot in response.messages){
-                    console.log(response.messages[overPot])
+                var outHtml = "";
+                for(var overPot in response.messages){
+                    outHtml += "<li>"+response.messages[overPot]+"</li>"
                 }
+                $('#potSpan').html(outHtml);   
+                $("#potAlert").show();         
+            }else{
+                $("#potAlert").hide();
             }
         }
     });

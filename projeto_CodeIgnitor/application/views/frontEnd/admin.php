@@ -10,6 +10,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	<div class="alert alert-danger" id="alertError-user-admin" role="alert">
 		<strong>Erro! </strong><span class="message"></span>
 	</div>
+	<div class="alert alert-info alert-dismissible" id="potAlert" role="alert">
+      	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      	<strong>Warning!</strong> O(s) Seguinte(s) jogo(s) execedeu(ram) os 10 000 créditos de valor de aposta:
+      	<ul><span id="potSpan"></span></ul>
+    </div> 
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href='#users' class="tabTriger" aria-controls="users" role="tab" data-toggle="tab">Utilizadores</a></li>
 		<li role="presentation"><a href='#game' class="tabTriger" aria-controls="game" role="tab" data-toggle="tab">Jogos</a></li>
