@@ -1,9 +1,9 @@
 $(window).on('load', function(){
     $('#gameBody button, #gameBody input').prop('disabled', true);
-	// setInterval( function () {
- //        loadGameInfo();
-	// }, 1000 );
     loadGameInfo();
+	setInterval( function () {
+        loadGameInfo();
+	}, 1000 );
 
 	cheksTimeOut();
 	$('#desistir').on('click', function(){
