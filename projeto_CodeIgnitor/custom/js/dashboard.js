@@ -5,6 +5,7 @@ $(window).on('load', function(){
             "orderable": false,
             "targets"  : -1
         }],
+        paging: false,
         "ajax": baseURL + "index.php/game/getGames",
 	  });
     setInterval( function () {

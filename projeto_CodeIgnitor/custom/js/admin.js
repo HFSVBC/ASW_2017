@@ -41,6 +41,8 @@ $(window).on('load', function(){
               "orderable": false,
               "targets"  : -1
          }],
+        paging: false,
+        searching: false,
         "ajax": baseURL + "index.php/user/getUserDataAdmin/" + pesquisa,
 	});
 	setInterval( function () {
@@ -53,6 +55,8 @@ $(window).on('load', function(){
               "orderable": false,
               "targets"  : -1
         }],
+        paging: false,
+        searching: false,
         "ajax": baseURL + "index.php/game/getGamesDataAdmin/" + pesquisaGame,
     });
     setInterval( function () {
@@ -112,6 +116,9 @@ $(window).on('load', function(){
     $('body').on('click', '.details-game', function(){
         var id = $(this).attr('data-gameId');
         loadGameData_admin(id);
+        gameDataInterval  = setInterval(function () {
+            loadGameData_admin(id);
+        }, 5000);
     });
     // Invalidade game
     $('body').on('click', '.deactivate-game', function(){
@@ -121,10 +128,10 @@ $(window).on('load', function(){
     });
     setInterval(function(){
         verifiyPot();
-    },5000),
+    },5000);
 });
 
-var pesquisa, userAdminTable, pesquisaGame, gamesAdminTable;
+var pesquisa, userAdminTable, pesquisaGame, gamesAdminTable, gameDataInterval, lastGameId;
 
 var verifiyPot = function(){
     $.ajax({
@@ -132,11 +139,12 @@ var verifiyPot = function(){
         type: "get",
         success:function(response) {
             if(response.sucess == true){
-                for(overPot : response.messages){
-                    
+                for(overPot in response.messages){
+                    console.log(response.messages[overPot])
                 }
             }
-        });
+        }
+    });
 }
 
 var showConAdm = function(obg){
@@ -249,6 +257,11 @@ var deleteUser_admin = function(id){
 }
 var loadGameData_admin = function(id){
     var data = {id_jogo: id};
+    // console.log(lastGameId+"->"+id)
+    if (id != lastGameId){
+        // console.log('entrou')
+        clearInterval(gameDataInterval);
+    }
     $.ajax({
         url:  baseURL + "index.php/game/gameAdmInfo",
         type: "post",
@@ -267,6 +280,7 @@ var loadGameData_admin = function(id){
                 $("#cards-game-adm").val(response.messages[0][8]);
                 $("#players-game-adm").html(response.messages[0][9]);
                 $("#histoy-game-adm").html(response.messages[0][10]);
+                lastGameId = id;
             }else{
                 $("#alertError-user-admin > .message").html(response.messages);
                 $("#alertError-user-admin").show();
