@@ -139,6 +139,18 @@
 				return false;
 			}
 		}
+		public function getGamesOwner()
+		{
+			$sql = "SELECT owner
+					FROM proj_game_request";
+
+			$query = $this->db->query($sql);
+			if($query){
+				return $query->result_array();
+			}else{
+				return false;
+			}
+		}
 		private function getGameOwner($id)
 		{
 			$sql = "SELECT owner
@@ -763,6 +775,45 @@
 	  			return $row->active;
 	  		}else{
 	  			return false;
+			}
+	  	}
+	  	public function getAdvanceSearchResult($id, $jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx, $user)
+	  	{
+	  		$sql = "SELECT gs.id 
+	  				FROM proj_game_status gs 
+	  				WHERE id=$id"; 
+	  				// "1 <= (SELECT count(player_id) as total FROM proj_game_players WHERE id=gs.id) <= 2 ";
+	  		if($jogMin != 'NULL'){
+	  			$sql .= " AND $jogMin <= (SELECT count(player_id) as total FROM proj_game_players WHERE id=gs.id)";
+	  		}
+	  		if($jogMax != 'NULL'){
+	  			$sql .= " AND (SELECT count(player_id) as total FROM proj_game_players WHERE id=gs.id) <= $jogMax";
+	  		}
+	  		if($betMin != 'NULL'){
+	  			$sql .= " AND $betMin <= (SELECT first_bet FROM proj_game_request WHERE id=gs.id)";
+	  		}
+	  		if($betMax != 'NULL'){
+	  			$sql .= " AND (SELECT first_bet FROM proj_game_request WHERE id=gs.id) <= $betMax";
+	  		}
+	  		if($dateMin != "NULL"){
+				$sql .= " AND DATEDIFF(started_at, '$dateMin') >= 0";
+			}
+			if($dateMx != "NULL"){
+				$sql .= " AND DATEDIFF('$dateMx', started_at) >= 0";
+			}
+			if($user != "NULL"){
+				$sql .= " AND $user = (SELECT owner FROM proj_game_request WHERE id=gs.id)";
+			}
+			
+			$sql .= " LIMIT 1";
+
+			$query  = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return true;
+			}else{
+				return false;
 			}
 	  	}
   	}

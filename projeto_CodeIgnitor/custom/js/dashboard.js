@@ -27,7 +27,7 @@ $(window).on('load', function(){
             e.preventDefault();
         }
     });
-    pesquisa = "NULL/NULL/NULL/NULL/NULL/NULL";
+    pesquisa = "NULL/NULL/NULL/NULL/NULL/NULL/NULL";
 	gamesTable = $('#jogos').DataTable({
     	  "columnDefs": [{
             "orderable": false,
@@ -56,6 +56,10 @@ $(window).on('load', function(){
     // advance search user
     $('.adv_search_fields').on('click, change', function(){
         adv_Search();
+    });
+    $('#numPlayers').on('cahnge', function(){
+        var min = $(this).val()
+        $('#numPlayersTill').attr('min', min);
     });
 });
 
@@ -89,7 +93,7 @@ var adv_Search = function(table, pesquisa){
     }
     var creator_op     = $('#creator').val();
 
-    pesquisa = numPlayers_op + "/" + numPlayers2_op + "/" + bet_op + "/" + bet2_op + "/" + begin_op + "/" + begin2_op;
+    pesquisa = numPlayers_op + "/" + numPlayers2_op + "/" + bet_op + "/" + bet2_op + "/" + begin_op + "/" + begin2_op + "/" + creator_op;
     console.log(pesquisa)
     gamesTable.ajax.url(baseURL + "index.php/game/getGames/" + pesquisa).load();
 

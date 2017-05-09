@@ -34,16 +34,16 @@ class Userpages extends CI_Controller {
 				$page = 'acessdenied';
 			}
 			if($page == 'profile'){
-				$result            = $this->getLoggedInUserData($data['loggedIn_user']);
-				$data['fName']     = $result ->fName;
-				$data['lName']     = $result ->lName;
-				$data['birthDate'] = $result ->birthDate;
-				$data['sex']       = $result ->sex;
-				$data['country']   = $result ->country;
-				$data['district']  = $result ->district;
-				$data['county']    = $result ->county;
-				$data['balance']   = $result ->balance;
-				$data['avatar']    = $result ->avatar;
+				$result             = $this->getLoggedInUserData($data['loggedIn_user']);
+				$data['fName']      = $result ->fName;
+				$data['lName']      = $result ->lName;
+				$data['birthDate']  = $result ->birthDate;
+				$data['sex']        = $result ->sex;
+				$data['country']    = $result ->country;
+				$data['district']   = $result ->district;
+				$data['county']     = $result ->county;
+				$data['balance']    = $result ->balance;
+				$data['avatar']     = $result ->avatar;
 			}
 			else if($page == 'game'){
 				$data['apostaMin'] = $this->minGameBet($_GET['id']);
@@ -64,6 +64,7 @@ class Userpages extends CI_Controller {
 		$data['name']           = ucfirst($page);
 		$data['districts']      = $this->getDistricts();
 		$data['counties']       = $this->getCounties();
+		$data['gamesOwner'] = $this->getGamesOwner();
 
 		$this->load->view("frontEnd/templates/header", $data);
 		$this->load->view("frontEnd/".$page, $data);
@@ -89,7 +90,14 @@ class Userpages extends CI_Controller {
 		}
 		return $result;
 	}
-
+	private function getGamesOwner(){
+		$result     = "";
+		$data       = $this->game_model->getGamesOwner();
+		foreach ($data as $row) {
+			$result .="<option value='".$row['owner']."'>".$this->game_model->getUsernameById($row['owner'])."</option>";
+		}
+		return $result;
+	}
 	private function getLoggedInUserData($id)
 	{	
 		return $this->user_model->getUser($id);

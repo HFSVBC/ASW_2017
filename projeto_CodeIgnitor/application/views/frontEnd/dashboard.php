@@ -20,17 +20,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                     <label for="creator">Criador:</label>
                     <select id="creator" class="form-control adv_search_fields distAdm">
                         <option value="NULL">Não Selecionado</option>
-                        
+                        <?php echo $gamesOwner; ?>
                     </select>
                 </div>
                 <div id="ageGroup" class="form-group">
                     <div class="form-group">
                         <label for="numPlayers">Número de Jogadores de:</label>
-                        <input type="number" min="2" max="9" step="1" value="2" class="form-control adv_search_fields" id="numPlayers" autocomplete="off">
+                        <input type="number" min="1" max="9" step="1" value="2" class="form-control adv_search_fields" id="numPlayers" autocomplete="off">
                     </div>
-                    <div class="form-group" id="agetill">
+                    <div class="form-group">
                         <label for="numPlayersTill">Até:</label>
-                        <input type="number" min="3" max="10" step="1" value="10" class="form-control adv_search_fields" id="numPlayersTill" autocomplete="off">
+                        <input type="number" min="2" max="10" step="1" value="10" class="form-control adv_search_fields" id="numPlayersTill" autocomplete="off">
                     </div>
                 </div>
                 <div id="ageGroup" class="form-group">

@@ -128,7 +128,7 @@ class Game extends CI_Controller {
 		echo json_encode($validator);
 	}
 
-	public function getGames($jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx)
+	public function getGames($jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx, $user)
 	{
 		$outputData = array('data' => array());
 
@@ -149,7 +149,7 @@ class Game extends CI_Controller {
 			$playersCount = $this->game_model->playersCount($row['id']);
 			$dateBegin    = $this->game_model->getGameInit($row['id']);
 			$dataVer      = array($playersCount, $row['first_bet'], $dateBegin);
-			if ($this->checkAdvSearchDashboard($dataVer, $jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx)){
+			if ($this->checkAdvSearchDashboard($row['id'], $jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx, $user)){
 				$data = [
 					$row['name'],
 					$row['description'],
@@ -168,31 +168,12 @@ class Game extends CI_Controller {
 		}
 		echo json_encode($outputData);
 	}
-	private function checkAdvSearchDashboard($data, $jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx){
-		if($jogMin == 'NULL' && $jogMax == 'NULL' && $betMin == 'NULL' && $betMax == 'NULL' && $dateMin == 'NULL' && $dateMx == 'NULL'){
+	private function checkAdvSearchDashboard($id, $jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx, $user){
+		if($jogMin == 'NULL' && $jogMax == 'NULL' && $betMin == 'NULL' && $betMax == 'NULL' && $dateMin == 'NULL' && $dateMx == 'NULL' && $user == 'NULL'){
 			return true;
 		}else{
-			$result;
-			if(($data[0] <= $jogMax && $data[0] >= $jogMin) || ($data[0] <= $jogMax) || ($data[0] >= $jogMin)){
-				$result = true;
-			}
-			else {
-				$result = false;
-			}
-			if(($data[1] <= $betMax && $data[1] >= $betMin) || ($data[1] <= $betMax) || ($data[1] >= $betMin)){
-				$result = true;
-			}
-			else {
-				$result = false;
-			}
-			if((strtotime($data[2]) <= strtotime($betMax) && strtotime($data[2]) >= strtotime($dateMin)) || (strtotime($data[2]) <= strtotime($betMax)) || (strtotime($data[2]) >= strtotime($dateMin))){
-				$result = true;
-			}
-			else {
-				$result = false;
-			}
+			return $this->game_model->getAdvanceSearchResult($id, $jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx, $user);
 		}
-		return $result;
 	}
 	private function writeTimeOut($data)
 	{
