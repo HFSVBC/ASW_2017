@@ -92,6 +92,22 @@
 				return false;
 			}
 		}
+		public function getGameInit($id)
+		{
+			$sql = "SELECT started_at
+					FROM proj_game_status
+					WHERE id=$id
+					LIMIT 1";
+
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row->started_at;
+			}else{
+				return "";
+			}
+		}
 		public function getPlayersInGame($game_id)
 		{
 			$sql = "SELECT player_id

@@ -128,7 +128,7 @@ class Game extends CI_Controller {
 		echo json_encode($validator);
 	}
 
-	public function getGames()
+	public function getGames($jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx)
 	{
 		$outputData = array('data' => array());
 
@@ -146,21 +146,53 @@ class Game extends CI_Controller {
 					$button_state = "<button class='btn btn-info gameJoin gameJoin-BTN' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-play' aria-hidden='true'></i></span></button>";
 				}
 			}
-			$data = [
-				$row['name'],
-				$row['description'],
-				$this->game_model->getUsernameById($row['owner']),
-				$this->game_model->playersCount($row['id']),
-				$row['max_players'],
-				$row['first_bet'],
-				$row['max_bet'],
-				$this->writeTimeOut($row['timeOut']),
-				$game_state,
-				$button_state
-			];
-			array_push($outputData['data'], $data);
+			$playersCount = $this->game_model->playersCount($row['id']);
+			$dateBegin    = $this->game_model->getGameInit($row['id']);
+			$dataVer      = array($playersCount, $row['first_bet'], $dateBegin);
+			if ($this->checkAdvSearchDashboard($dataVer, $jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx)){
+				$data = [
+					$row['name'],
+					$row['description'],
+					$dateBegin,
+					$this->game_model->getUsernameById($row['owner']),
+					$playersCount,
+					$row['max_players'],
+					$row['first_bet'],
+					$row['max_bet'],
+					$this->writeTimeOut($row['timeOut']),
+					$game_state,
+					$button_state
+				];
+				array_push($outputData['data'], $data);
+			}
 		}
 		echo json_encode($outputData);
+	}
+	private function checkAdvSearchDashboard($data, $jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx){
+		if($jogMin == 'NULL' && $jogMax == 'NULL' && $betMin == 'NULL' && $betMax == 'NULL' && $dateMin == 'NULL' && $dateMx == 'NULL'){
+			return true;
+		}else{
+			$result;
+			if(($data[0] <= $jogMax && $data[0] >= $jogMin) || ($data[0] <= $jogMax) || ($data[0] >= $jogMin)){
+				$result = true;
+			}
+			else {
+				$result = false;
+			}
+			if(($data[1] <= $betMax && $data[1] >= $betMin) || ($data[1] <= $betMax) || ($data[1] >= $betMin)){
+				$result = true;
+			}
+			else {
+				$result = false;
+			}
+			if((strtotime($data[2]) <= strtotime($betMax) && strtotime($data[2]) >= strtotime($dateMin)) || (strtotime($data[2]) <= strtotime($betMax)) || (strtotime($data[2]) >= strtotime($dateMin))){
+				$result = true;
+			}
+			else {
+				$result = false;
+			}
+		}
+		return $result;
 	}
 	private function writeTimeOut($data)
 	{

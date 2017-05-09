@@ -11,3 +11,11 @@
 .hideTableSerach{
 	opacity: 0;
 }
+#opDash{width: 52px;}
+#advancedSearch > div, #advancedSearch > button{
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+#advancedSearch > input[type="number"]{
+	width: 67px!important;
+}

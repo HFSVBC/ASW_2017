@@ -14,19 +14,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
     <!-- tabela historico -->
     <div class="alert alert-danger" id="erroGame" role="alert"><strong>Erro! </strong><span id="erroGame-msg"></span></div>
     <div class="TabelaJogos">
+        <!-- advanced search -->
+            <form class="form-inline" id="advancedSearch" onsubmit="event.preventDefault(); return adv_Search();">
+                <div class="form-group">
+                    <label for="creator">Criador:</label>
+                    <select id="creator" class="form-control adv_search_fields distAdm">
+                        <option value="NULL">Não Selecionado</option>
+                        
+                    </select>
+                </div>
+                <div id="ageGroup" class="form-group">
+                    <div class="form-group">
+                        <label for="numPlayers">Número de Jogadores de:</label>
+                        <input type="number" min="2" max="9" step="1" value="2" class="form-control adv_search_fields" id="numPlayers" autocomplete="off">
+                    </div>
+                    <div class="form-group" id="agetill">
+                        <label for="numPlayersTill">Até:</label>
+                        <input type="number" min="3" max="10" step="1" value="10" class="form-control adv_search_fields" id="numPlayersTill" autocomplete="off">
+                    </div>
+                </div>
+                <div id="ageGroup" class="form-group">
+                    <div class="form-group">
+                        <label for="InputBet">Aposta mínima de:</label>
+                        <input type="number" min="0" step="0.01" class="form-control adv_search_fields" id="InputBet" autocomplete="off">
+                    </div>
+                    <div class="form-group" id="betTill">
+                        <label for="InputBetTill">Até:</label>
+                        <input type="number" min="0" step="0.01" class="form-control adv_search_fields" id="InputBetTill" autocomplete="off">
+                    </div>
+                </div>
+                <div id="ageGroup" class="form-group">
+                    <div class="form-group">
+                        <label for="InputBegin">Início do jogo:</label>
+                        <input type="text" class="form-control adv_search_fields" id="InputBegin" autocomplete="off">
+                    </div>
+                    <div class="form-group" id="beginTill">
+                        <label for="InputBeginTill">Até:</label>
+                        <input type="text" class="form-control adv_search_fields" id="InputBeginTill" autocomplete="off">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-default" id="searchAdv_btn">Busca</button>
+            </form>
         <table id="jogos" class="table table-condensed table-striped">
             <thead>
                 <tr>
-                    <th>Nome da mesa</th>
+                    <th>Nome</th>
                     <th>Descrição</th>
+                    <th>Início</th>
                     <th>Dono</th>
-                    <th>Nº pessoas</th>
-                    <th>Nº pessoas máximo</th>
+                    <th>Pessoas</th>
+                    <th>Pessoas máximo</th>
                     <th>Primeira Aposta</th>
                     <th>Aposta Maxima</th>
                     <th>Timeout</th>
                     <th>Estado</th>
-                    <th>Opções</th>
+                    <th id="opDash">Opções</th>
                 </tr>
             </thead>
             <tbody>

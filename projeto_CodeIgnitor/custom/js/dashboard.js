@@ -1,13 +1,42 @@
 "use strict";
 $(window).on('load', function(){
-	  gamesTable = $('#jogos').DataTable({
+    $('#InputBegin').datetimepicker({
+        format:'Y-m-d',
+        onShow:function( ct ){
+            this.setOptions({
+                maxDate:$('#InputBeginTill').val()?$('#InputBeginTill').val():'+1970/01/01'
+            })
+        },
+        timepicker:false
+    }).keydown(function(e) {
+        if(e.keyCode !== 8 && e.keyCode !== 46) {
+            e.preventDefault();
+        }
+    });
+    $('#InputBeginTill').datetimepicker({
+        format:'Y-m-d',
+        onShow:function( ct ){
+            this.setOptions({
+                minDate:$('#InputBegin').val()?$('#InputBegin').val():false
+            })
+        },
+        timepicker:false,
+        maxDate:'+1970/01/01'//today is maximum date calendar
+    }).keydown(function(e) {
+        if(e.keyCode !== 8 && e.keyCode !== 46) {
+            e.preventDefault();
+        }
+    });
+    pesquisa = "NULL/NULL/NULL/NULL/NULL/NULL";
+	gamesTable = $('#jogos').DataTable({
     	  "columnDefs": [{
             "orderable": false,
             "targets"  : -1
         }],
         paging: false,
-        "ajax": baseURL + "index.php/game/getGames",
-	  });
+        searching: false,
+        "ajax": baseURL + "index.php/game/getGames/"+pesquisa,
+	});
     setInterval( function () {
         gamesTable.ajax.reload();
     }, 5000 );
@@ -23,11 +52,49 @@ $(window).on('load', function(){
             $('#TimeOut').prop('disabled', true);
         }
     });
+
+    // advance search user
+    $('.adv_search_fields').on('click, change', function(){
+        adv_Search();
+    });
 });
 
 
-var gamesTable;
+var gamesTable, pesquisa;
 
+var adv_Search = function(table, pesquisa){
+    var begin_op = $('#InputBegin').val();
+    if (begin_op == ""){
+        begin_op = "NULL";
+    }
+    var begin2_op = $('#InputBeginTill').val();
+    if (begin2_op == ""){
+        begin2_op = "NULL";
+    }
+    var numPlayers_op = $('#numPlayers').val();
+    if (numPlayers_op == ""){
+        numPlayers_op = "NULL";
+    }
+    var numPlayers2_op = $('#numPlayersTill').val();
+    if (numPlayers2_op == ""){
+        numPlayers2_op = "NULL";
+    }
+    var bet_op = $('#InputBet').val();
+    if (bet_op == ""){
+        bet_op = "NULL";
+    }
+    var bet2_op = $('#InputBetTill').val();
+    if (bet2_op == ""){
+        bet2_op = "NULL";
+    }
+    var creator_op     = $('#creator').val();
+
+    pesquisa = numPlayers_op + "/" + numPlayers2_op + "/" + bet_op + "/" + bet2_op + "/" + begin_op + "/" + begin2_op;
+    console.log(pesquisa)
+    gamesTable.ajax.url(baseURL + "index.php/game/getGames/" + pesquisa).load();
+
+    return false;
+}
 
 var joinGame = function(id){
     //criar condiçao para entrar
