@@ -71,39 +71,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			        	</div>
 					</div>
 					<div id="gamePlayers">
-						<div class="players" id="player-01">
+						<div class="players" id="player-1">
 							<div class="playerAvatar"></div>
 							<div class="playerUsername"></div>
 						</div>
-						<div class="players" id="player-02">
+						<div class="players" id="player-2">
 							<div class="playerAvatar"></div>
 							<div class="playerUsername"></div>
 						</div>
-						<div class="players" id="player-03">
-							<div class="playerAvatar"><span class='glyphicon glyphicon-user' aria-hidden='true'></span></div>
-							<div class="playerUsername"></div>
-						</div>
-						<div class="players" id="player-04">
+						<div class="players" id="player-3">
 							<div class="playerAvatar"></div>
 							<div class="playerUsername"></div>
 						</div>
-						<div class="players" id="player-05">
+						<div class="players" id="player-4">
 							<div class="playerAvatar"></div>
 							<div class="playerUsername"></div>
 						</div>
-						<div class="players" id="player-06">
+						<div class="players" id="player-5">
 							<div class="playerAvatar"></div>
 							<div class="playerUsername"></div>
 						</div>
-						<div class="players" id="player-07">
+						<div class="players" id="player-6">
 							<div class="playerAvatar"></div>
 							<div class="playerUsername"></div>
 						</div>
-						<div class="players" id="player-08">
+						<div class="players" id="player-7">
 							<div class="playerAvatar"></div>
 							<div class="playerUsername"></div>
 						</div>
-						<div class="players" id="player-09">
+						<div class="players" id="player-8">
+							<div class="playerAvatar"></div>
+							<div class="playerUsername"></div>
+						</div>
+						<div class="players" id="player-9">
 							<div class="playerAvatar"></div>
 							<div class="playerUsername"></div>
 						</div>

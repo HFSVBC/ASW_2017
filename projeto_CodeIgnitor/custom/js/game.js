@@ -2,7 +2,7 @@ $(window).on('load', function(){
     $('#gameBody button, #gameBody input').prop('disabled', true);
 	// setInterval( function () {
  //        loadGameInfo();
-	// }, 500 );
+	// }, 1000 );
     loadGameInfo();
 
 	cheksTimeOut();
@@ -73,6 +73,13 @@ var showCards = function(cards, object){
         i++;
     }
 }
+var loadPlayers = function(players){
+    for (var p in players){
+        var idPlayer = parseInt(p) + 1;
+        $('#player-'+String(idPlayer)+' > .playerUsername').html(players[p][0]);
+        $('#player-'+String(idPlayer)+' > .playerAvatar').html(players[p][1]);
+    }
+}
 var gameControl = function(nowUsername, cardsOnTable, round)
 {
     //isto e o flop
@@ -127,7 +134,6 @@ var cheksTimeOut = function(){
 }
 var loadGameInfo = function()
 {
-    console.log('kvjbdf')
 	var data  = {id_jogo: gameId};
     $.ajax({
         url:  baseURL + "index.php/game/getGameInfo",
@@ -135,7 +141,6 @@ var loadGameInfo = function()
         data: data,
         dataType: 'json',
         success:function(response) {
-            console.log(response)
             if (cleanAlert){$('.alert').hide();}
         	if (response.success === true){
                 if(firstTimeRun){
@@ -148,8 +153,7 @@ var loadGameInfo = function()
                 showCards($.parseJSON(response.messages[0][3]), '#myCards')
 
                 $("#gameHistory").html(response.messages[0][6]);
-                // $("#players-Game").html(response.messages[0][7]);
-                console.log(response.messages[0][7])
+                loadPlayers(response.messages[0][7]);
         		$('#nowPlayer-Game').html(response.messages[0][9]);
         		$("#userPoints").html(response.messages[0][10]);
 

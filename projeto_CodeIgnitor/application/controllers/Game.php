@@ -238,8 +238,13 @@ class Game extends CI_Controller {
 		$result = $this->game_model->getPlayersInGame($game_id);
 		$output = array();
 		foreach ($result as $row) {
-			$username = $this->game_model->getUsernameById($row['player_id']);
-			$avatar   = "<span class='glyphicon glyphicon-user' aria-hidden='true'></span>";
+			$username  = $this->game_model->getUsernameById($row['player_id']);
+			$avatarImg = $this->user_model->getUserAvatar($row['player_id']);
+			if ($avatarImg){
+				$avatar   = "<img src='custom/images/users/profilePics/".$avatarImg."'>";
+			}else{
+				$avatar   = "<span class='glyphicon glyphicon-user' aria-hidden='true'></span>";
+			}
 			array_push($output, array($username, $avatar));
 		}
 		return $output;

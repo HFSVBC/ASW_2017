@@ -190,6 +190,21 @@
 			return $query->row();
 		}
 
+		public function getUserAvatar($id)
+		{
+			$sql = "SELECT avatar
+					FROM proj_users
+					WHERE id = $id
+					LIMIT 1";
+			$query = $this->db->query($sql);
+			$row = $query->row();
+			if(!empty($row)){
+				return $row->avatar;
+			}else{
+				return false;
+			}
+		}
+
 		public function getUserDataAdmin()
 		{
 			$sql   = "SELECT fName, lName, username, email, balance, birthDate, sex, country, district, county, creationDate, activationDate, level
