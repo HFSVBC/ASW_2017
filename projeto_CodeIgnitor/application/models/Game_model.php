@@ -549,7 +549,7 @@
 	  						SET player_bet=player_bet+$raise, last_bet = $raise, betted=1, allIn=$flag
 	  						WHERE id=$id_jogo AND player_id=$player_id";
 		  			if($this->db->query($sql)){
-		  				$result = $this->setCurrentPlayer($player_id, $id_jogo, $raise, $flag);
+		  				$result = $this->setCurrentPlayer($player_id, $id_jogo, $raise);
 		  				if ($flag == 0){
 		  					$this->updateHist($player_id, $id_jogo, "$raise creditos");
 		  				}else{
@@ -570,7 +570,7 @@
 	  			return false;
 	  		}
 	  	}
-	  	public function setCurrentPlayer($player_id, $id_jogo, $value, $flag)
+	  	public function setCurrentPlayer($player_id, $id_jogo, $value)
 	  	{
 	  		$next_player = $this->getGameOwner($id_jogo);
 	  		$sql = "SELECT player_id, betted
@@ -578,11 +578,15 @@
 					WHERE id=$id_jogo AND player_folded=0 AND allIn=0
 					ORDER BY player_id ASC";
 			$query = $this->db->query($sql);
-			foreach ($query->result_array() as $row){
-				if($row['betted'] == 0){
-					$next_player = $row['player_id'];
-					break;
+			if ($query->num_rows() > 0){
+				foreach ($query->result_array() as $row){
+					if($row['betted'] == 0){
+						$next_player = $row['player_id'];
+						break;
+					}
 				}
+			}else{
+				$next_player = NULL;
 			}
 			$timeNow = date('Y-m-d H:i:s');
 			$sql = "UPDATE proj_game_status

@@ -96,6 +96,7 @@ var gameControl = function(nowUsername, cardsOnTable, round)
     showCards(cardsOnTable, '#table');
 }
 var cheksTimeOut = function(){
+    console.log('entrou');
     var data  = {id_jogo: gameId};
     $.ajax({
         url:  baseURL + "index.php/game/checkIfTimeOutActive",
@@ -105,27 +106,28 @@ var cheksTimeOut = function(){
         success:function(response) {
             if(response.success === true){
                 if(response.messages == true){
-                    setInterval(function(){
-                        $.ajax({
-                            url:  baseURL + "index.php/game/checkTimeLeftForTimeOut",
-                            type: "post",
-                            data: data,
-                            dataType: 'json',
-                            success:function(response) {
-                                if(response.success === true){
-                                    if(response.messages < 0 && jogador_timer){
-                                        PlayerAction("Desistir", "Desistiu da sua mao" );
-                                    }
-                                    else if(response.messages < 10){
-                                        $('#erroGame-msg').html("O seu tempo esta a terminar");
-                                        $('#erroGame').show();
-                                    }
-                                }else{
-                                    $('#erroGame-msg').html(response.messages);
+                    $.ajax({
+                        url:  baseURL + "index.php/game/checkTimeLeftForTimeOut",
+                        type: "post",
+                        data: data,
+                        dataType: 'json',
+                        success:function(response) {
+                            if(response.success === true){
+                                if(response.messages < 0 && jogador_timer){
+                                    PlayerAction("Desistir", "Desistiu da sua mao" );
+                                    
+                                }
+                                else if(response.messages < 10){
+                                    $('#erroGame-msg').html("O seu tempo esta a terminar: " + response.messages);
                                     $('#erroGame').show();
                                 }
+                            }else{
+                                $('#erroGame-msg').html(response.messages);
+                                $('#erroGame').show();
                             }
-                        });}, 1000);
+                        }
+                    });
+
                 }
             }else{
                 $('#erroGame-msg').html(response.messages);
@@ -148,7 +150,7 @@ var loadGameInfo = function()
                 if(firstTimeRun){
                     firstTimeRun = false;
                     loadTimer(response.messages[0][0]);
-                    cheksTimeOut();
+                    // cheksTimeOut();
                 }
                 // console.log(response.messages)
                 $('.actualBet-Game').html(response.messages[0][1]);

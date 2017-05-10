@@ -489,7 +489,7 @@ class Game extends CI_Controller {
 				$validator['messages'] = $result[1];
 			}else{
 				$validator['success']  = false;
-				$validator['messages'] = 'Erro a obter o tempo restante para time out';
+				$validator['messages'] = 'Erro a obter o time out';
 			}
 		}else{
 			$validator['success']  = false;
