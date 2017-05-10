@@ -115,7 +115,7 @@ var cheksTimeOut = function(){
                             if(response.success === true){
                                 if(response.messages < 0 && jogador_timer){
                                     PlayerAction("Desistir", "Desistiu da sua mao" );
-                                    
+
                                 }
                                 else if(response.messages < 10){
                                     $('#erroGame-msg').html("O seu tempo esta a terminar: " + response.messages);
@@ -124,6 +124,7 @@ var cheksTimeOut = function(){
                             }else{
                                 $('#erroGame-msg').html(response.messages);
                                 $('#erroGame').show();
+                                cleanAlert = true;
                             }
                         }
                     });

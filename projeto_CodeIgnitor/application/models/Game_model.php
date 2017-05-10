@@ -512,7 +512,7 @@
 					SET player_folded=1 
 					WHERE player_id=$player_id AND id=$id_jogo";
 			if($this->db->query($sql)){
-  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet, 0);
+  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet);
   				$this->updateHist($player_id, $id_jogo, "desistiu");
   				return true;
   			}else{
@@ -528,7 +528,7 @@
 	  					SET player_bet=player_bet+$currentBet, last_bet = $currentBet, betted=1
 	  					WHERE id=$id_jogo AND player_id=$player_id";
 	  			if($this->db->query($sql)){
-	  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet, 0);
+	  				$this->setCurrentPlayer($player_id, $id_jogo, $currentBet);
 	  				$this->updateHist($player_id, $id_jogo, "$currentBet creditos");
 	  				return true;
 	  			}else{
@@ -589,9 +589,15 @@
 				$next_player = NULL;
 			}
 			$timeNow = date('Y-m-d H:i:s');
-			$sql = "UPDATE proj_game_status
-					SET current_player = $next_player, current_pot=current_pot+$value, initTurnTime='$timeNow'
-					WHERE id=$id_jogo";
+			if($next_player != NULL){
+				$sql = "UPDATE proj_game_status
+						SET current_player = $next_player, current_pot=current_pot+$value, initTurnTime='$timeNow'
+						WHERE id=$id_jogo";
+			}else{
+				$sql = "UPDATE proj_game_status
+						SET current_player = NULL, current_pot=current_pot+$value, initTurnTime='$timeNow'
+						WHERE id=$id_jogo";
+			}
 			if($this->db->query($sql)){
 				if($next_player == $this->getGameOwner($id_jogo)){
 					$sql = "UPDATE proj_game_players
