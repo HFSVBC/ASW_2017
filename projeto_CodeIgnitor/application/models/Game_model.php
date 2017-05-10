@@ -118,11 +118,17 @@
 		{
 			$sql = "SELECT player_id
 					FROM proj_game_players
-					WHERE id=$game_id";
+					WHERE id=$game_id AND player_id!=(SELECT owner FROM proj_game_request WHERE id=$game_id)
+					ORDER BY player_id ASC";
 
 			$query = $this->db->query($sql);
 			if($query){
-				return $query->result_array();
+				$result = array();
+				array_push($result, $this->getGameOwner($game_id));
+				foreach ($query->result_array() as $row) {
+					array_push($result, $row['player_id']);
+				}
+				return $result;
 			}else{
 				return false;
 			}

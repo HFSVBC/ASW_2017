@@ -286,11 +286,18 @@ class Game extends CI_Controller {
 	}
 	public function playersInGame($game_id)
 	{
+		$myId   = $this->session->userdata['loggedIn_asw004']['id'];
 		$result = $this->game_model->getPlayersInGame($game_id);
+		$i      = 0;
+		while ($result[0] != $myId && $i < count($result)) {
+			$ele = array_shift($result);
+			array_push($result, $ele);
+			$i++;
+		}
 		$output = array();
 		foreach ($result as $row) {
-			$username  = $this->game_model->getUsernameById($row['player_id']);
-			$avatarImg = $this->user_model->getUserAvatar($row['player_id']);
+			$username  = $this->game_model->getUsernameById($row);
+			$avatarImg = $this->user_model->getUserAvatar($row);
 			if ($avatarImg){
 				$avatar   = "<img src='custom/images/users/profilePics/".$avatarImg."'>";
 			}else{
