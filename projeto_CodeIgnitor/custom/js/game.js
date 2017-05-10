@@ -4,8 +4,6 @@ $(window).on('load', function(){
 	setInterval( function () {
         loadGameInfo();
 	}, 1000 );
-
-	cheksTimeOut();
 	$('#desistir').on('click', function(){
         $('.alert').hide();
     	PlayerAction("Desistir", "Desistiu da sua mao" );
@@ -116,8 +114,11 @@ var cheksTimeOut = function(){
                             success:function(response) {
                                 if(response.success === true){
                                     if(response.messages < 0){
-                                        console.log("Consegui");
                                         PlayerAction("Desistir", "Desistiu da sua mao" );
+                                    }
+                                    else if(response.messages < 10){
+                                        $('#erroGame-msg').html("O seu tempo esta a terminar");
+                                        $('#erroGame').show();
                                     }
                                 }else{
                                     $('#erroGame-msg').html(response.messages);
@@ -147,6 +148,7 @@ var loadGameInfo = function()
                 if(firstTimeRun){
                     firstTimeRun = false;
                     loadTimer(response.messages[0][0]);
+                    cheksTimeOut();
                 }
                 // console.log(response.messages)
                 $('.actualBet-Game').html(response.messages[0][1]);
