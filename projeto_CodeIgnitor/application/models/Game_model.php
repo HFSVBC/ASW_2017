@@ -77,7 +77,7 @@
 		}
 		public function getAllGamesByUser($id)
 		{
-			$sql   = "SELECT * FROM proj_game_request WHERE id = (SELECT id FROM proj_game_players WHERE player_id='$id')";
+			$sql   = "SELECT * FROM proj_game_request WHERE id IN (SELECT id FROM proj_game_players WHERE player_id='$id')";
 			$query = $this->db->query($sql);
 			return $query->result_array();
 		}

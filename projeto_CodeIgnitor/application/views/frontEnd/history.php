@@ -20,7 +20,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
                     <th>Aposta Maxima</th>
                     <th>Timeout</th>
                     <th>Estado</th>
-                    <th id="opDash">Opções</th>
                 </tr>
             </thead>
             <tbody>
