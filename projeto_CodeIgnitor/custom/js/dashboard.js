@@ -57,10 +57,6 @@ $(window).on('load', function(){
     $('.adv_search_fields').on('click, change', function(){
         adv_Search();
     });
-    $('#numPlayers').on('cahnge', function(){
-        var min = $(this).val()
-        $('#numPlayersTill').attr('min', min);
-    });
 });
 
 

@@ -134,22 +134,22 @@ class Game extends CI_Controller {
 
 		$result = $this->game_model->getAllGames();
 		foreach ($result as $row) {
-			$game_state = $this->game_model->getGameState($row['id']);
-			if($game_state=='Em espera'){
-				$button_state = "<button class='btn btn-success gameJoin gameJoin-BTN' data-gameId='".$row['id']."'><span> <i class='glyphicon glyphicon-ok' aria-hidden='true'></i></span></button>";
-			}else{
-				$button_state = "<button class='btn btn-danger disabled gameJoin' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-remove' aria-hidden='true'></i></span></button>";
-			}
-			$players = $this->game_model->getPlayersInGame($row['id']);
-			foreach ($players as $value) {
-				if($value['player_id'] == $this->session->userdata['loggedIn_asw004']['id'] && $game_state!='Terminado' && $game_state!='Jogo Invalidado'){
-					$button_state = "<button class='btn btn-info gameJoin gameJoin-BTN' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-play' aria-hidden='true'></i></span></button>";
-				}
-			}
-			$playersCount = $this->game_model->playersCount($row['id']);
-			$dateBegin    = $this->game_model->getGameInit($row['id']);
-			$dataVer      = array($playersCount, $row['first_bet'], $dateBegin);
 			if ($this->checkAdvSearchDashboard($row['id'], $jogMin, $jogMax, $betMin, $betMax, $dateMin, $dateMx, $user)){
+				$game_state = $this->game_model->getGameState($row['id']);
+				if($game_state=='Em espera'){
+					$button_state = "<button class='btn btn-success gameJoin gameJoin-BTN' data-gameId='".$row['id']."'><span> <i class='glyphicon glyphicon-ok' aria-hidden='true'></i></span></button>";
+				}else{
+					$button_state = "<button class='btn btn-danger disabled gameJoin' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-remove' aria-hidden='true'></i></span></button>";
+				}
+				$players = $this->game_model->getPlayersInGame($row['id']);
+				foreach ($players as $value) {
+					if($value['player_id'] == $this->session->userdata['loggedIn_asw004']['id'] && $game_state!='Terminado' && $game_state!='Jogo Invalidado'){
+						$button_state = "<button class='btn btn-info gameJoin gameJoin-BTN' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-play' aria-hidden='true'></i></span></button>";
+					}
+				}
+				$playersCount = $this->game_model->playersCount($row['id']);
+				$dateBegin    = $this->game_model->getGameInit($row['id']);
+				$dataVer      = array($playersCount, $row['first_bet'], $dateBegin);
 				$data = [
 					$row['name'],
 					$row['description'],
@@ -165,6 +165,44 @@ class Game extends CI_Controller {
 				];
 				array_push($outputData['data'], $data);
 			}
+		}
+		echo json_encode($outputData);
+	}
+	public function getGamesHistory()
+	{
+		$outputData = array('data' => array());
+
+		$result = $this->game_model->getAllGamesByUser($this->session->userdata['loggedIn_asw004']['id']);
+		foreach ($result as $row) {
+			$game_state = $this->game_model->getGameState($row['id']);
+			if($game_state=='Em espera'){
+				$button_state = "<button class='btn btn-success gameJoin gameJoin-BTN' data-gameId='".$row['id']."'><span> <i class='glyphicon glyphicon-ok' aria-hidden='true'></i></span></button>";
+			}else{
+				$button_state = "<button class='btn btn-danger disabled gameJoin' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-remove' aria-hidden='true'></i></span></button>";
+			}
+			$players = $this->game_model->getPlayersInGame($row['id']);
+			foreach ($players as $value) {
+				if($value['player_id'] == $this->session->userdata['loggedIn_asw004']['id'] && $game_state!='Terminado' && $game_state!='Jogo Invalidado'){
+					$button_state = "<button class='btn btn-info gameJoin gameJoin-BTN' data-gameId='".$row['id']."'><span ><i class='glyphicon glyphicon-play' aria-hidden='true'></i></span></button>";
+				}
+			}
+			$playersCount = $this->game_model->playersCount($row['id']);
+			$dateBegin    = $this->game_model->getGameInit($row['id']);
+			$dataVer      = array($playersCount, $row['first_bet'], $dateBegin);
+			$data = [
+				$row['name'],
+				$row['description'],
+				$dateBegin,
+				$this->game_model->getUsernameById($row['owner']),
+				$playersCount,
+				$row['max_players'],
+				$row['first_bet'],
+				$row['max_bet'],
+				$this->writeTimeOut($row['timeOut']),
+				$game_state,
+				$button_state
+			];
+			array_push($outputData['data'], $data);
 		}
 		echo json_encode($outputData);
 	}

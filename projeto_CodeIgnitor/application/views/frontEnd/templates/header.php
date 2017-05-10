@@ -56,6 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      		<ul class="nav navbar-nav">
 			        <li><a href="<?php echo base_url(); ?>dashboard">Gestão de Partidas</a></li>
+			        <li><a href="<?php echo base_url(); ?>history">Histórico</a></li>
 	      		</ul>
 	      		<ul class="nav navbar-nav navbar-right">
 	      			<?php

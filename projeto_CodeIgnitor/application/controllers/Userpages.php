@@ -19,6 +19,7 @@ class Userpages extends CI_Controller {
 
 		$protectedPages = array(
 			'dashboard' => 1,
+			'history'   => 1,
 			'game'      => 1,
 			'profile'   => 1,
 			'admin'     => 0
