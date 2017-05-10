@@ -27,7 +27,7 @@ $(window).on('load', function(){
         gameCssChanges();
     });
 });
-var cleanAlert, firstTimeRun = true, counter = 0;
+var cleanAlert, firstTimeRun = true, counter = 0, jogador_timer = true;
 var cards_table = {"As de paus":[-5, 5],"Rei de paus":[-1905, 5],"Dama de paus":[-1745, 5],"Valete de paus":[-1590, 5], "10 de paus":[-1430, 5],"9 de paus":[-1270, 5],"8 de paus":[-1115, 5],"7 de paus":[-955, 5],"6 de paus":[-795, 5],
                    "5 de paus":[-640, 5],"4 de paus":[-480, 5],"3 de paus":[-325, 5],"2 de paus":[-165, 5],"As de copas":[-5, -195],"Rei de copas":[-1905, -195],"Dama de copas":[-1745, -195],"Valete de copas":[-1590, -195],
                    "10 de copas":[-1430, -195],"9 de copas":[-1270, -195],"8 de copas":[-1115, -195],"7 de copas":[-955, -195],"6 de copas":[-795, -195],"5 de copas":[-640, -195],"4 de copas":[-480, -195],"3 de copas":[-325, -195],
@@ -113,7 +113,7 @@ var cheksTimeOut = function(){
                             dataType: 'json',
                             success:function(response) {
                                 if(response.success === true){
-                                    if(response.messages < 0){
+                                    if(response.messages < 0 && jogador_timer){
                                         PlayerAction("Desistir", "Desistiu da sua mao" );
                                     }
                                     else if(response.messages < 10){
@@ -200,10 +200,10 @@ var PlayerAction = function(action, msg)
             if(response.success === true){
                 $('#warningGame-msg').html(msg);
                 $('#warningGame').show();
+                jogador_timer = false;
             }else{
                 $('#erroGame-msg').html("Ação não permitida");
                 $('#erroGame').show();
-
             }
         }
     })
