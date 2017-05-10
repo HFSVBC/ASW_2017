@@ -578,7 +578,7 @@
 					break;
 				}
 			}
-			$timeNow = strtotime(date('Y-m-d H:i:s'));
+			$timeNow = date('Y-m-d H:i:s');
 			$sql = "UPDATE proj_game_status
 					SET current_player = $next_player, current_pot=current_pot+$value, initTurnTime='$timeNow'
 					WHERE id=$id_jogo";
