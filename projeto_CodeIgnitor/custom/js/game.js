@@ -116,6 +116,7 @@ var cheksTimeOut = function(){
                             success:function(response) {
                                 if(response.success === true){
                                     if(response.messages < 0){
+                                        console.log("Consegui");
                                         PlayerAction("Desistir", "Desistiu da sua mao" );
                                     }
                                 }else{
@@ -123,7 +124,7 @@ var cheksTimeOut = function(){
                                     $('#erroGame').show();
                                 }
                             }
-                        });}, 500);
+                        });}, 1000);
                 }
             }else{
                 $('#erroGame-msg').html(response.messages);
