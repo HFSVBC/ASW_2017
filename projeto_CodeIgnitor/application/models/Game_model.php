@@ -178,6 +178,20 @@
 				return false;
 			}
 		}
+		public function getGameLastRaised($id){
+			$sql = "SELECT last_to_raise
+					FROM proj_game_status
+					WHERE id=$id";
+
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row->owner;
+			}else{
+				return false;
+			}
+		}
 		public function getGameRound($id)
 		{
 			$sql = "SELECT round
@@ -273,6 +287,20 @@
 			$sql   = "SELECT count(player_id) as total
 					  FROM proj_game_players
 					  WHERE id='$id'";
+			$query = $this->db->query($sql);
+			$row   = $query->row();
+
+			if(!empty($row)){
+				return $row->total;
+			}else{
+				return false;
+			}
+		}
+		public function activePlayersCount($id)
+		{
+			$sql   = "SELECT count(player_id) as total
+					  FROM proj_game_players
+					  WHERE id='$id' AND player_folded=0 AND allIn=0";
 			$query = $this->db->query($sql);
 			$row   = $query->row();
 
@@ -572,21 +600,24 @@
 	  	}
 	  	public function setCurrentPlayer($player_id, $id_jogo, $value)
 	  	{
-	  		$next_player = $this->getGameOwner($id_jogo);
-	  		$sql = "SELECT player_id, betted
-					FROM proj_game_players
-					WHERE id=$id_jogo AND player_folded=0 AND allIn=0
-					ORDER BY player_id ASC";
-			$query = $this->db->query($sql);
-			if ($query->num_rows() > 0){
-				foreach ($query->result_array() as $row){
-					if($row['betted'] == 0){
-						$next_player = $row['player_id'];
-						break;
+	  		$next_player = NULL;
+	  		if($this->activePlayersCount($player_id) > 1){
+	  			$next_player = $this->getGameOwner($id_jogo);
+		  		$sql = "SELECT player_id, betted
+						FROM proj_game_players
+						WHERE id=$id_jogo AND player_folded=0 AND allIn=0
+						ORDER BY player_id ASC";
+				$query = $this->db->query($sql);
+				if ($query->num_rows() > 0){
+					foreach ($query->result_array() as $row){
+						if($row['betted'] == 0){
+							$next_player = $row['player_id'];
+							break;
+						}
 					}
+				}else{
+					$next_player = NULL;
 				}
-			}else{
-				$next_player = NULL;
 			}
 			$timeNow = date('Y-m-d H:i:s');
 			if($next_player != NULL){
@@ -599,7 +630,7 @@
 						WHERE id=$id_jogo";
 			}
 			if($this->db->query($sql)){
-				if($next_player == $this->getGameOwner($id_jogo)){
+				if($next_player == $this->getGameLastRaised($id_jogo) || $next_player == $this->getGameOwner($id_jogo)){
 					$sql = "UPDATE proj_game_players
 							SET betted = 0
 							WHERE id=$id_jogo";
@@ -610,6 +641,9 @@
 					}
 					$checkBet = $this->checksPlayerBet($id_jogo);
 					$round    = $this->getGameRound($id_jogo);
+					if($next_player != NULL){
+						$round = 3;
+					}
 					if($checkBet && $round < 4){
 						$sql = "UPDATE proj_game_status
 								SET round = round+1
