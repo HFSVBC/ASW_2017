@@ -36,6 +36,12 @@ var cards_table = {"As de paus":[-5, 5],"Rei de paus":[-1905, 5],"Dama de paus":
                    "Rei de ouros":[-1905, -595],"Dama de ouros":[-1745, -595],"Valete de ouros":[-1590, -595],"10 de ouros":[-1430, -595],"9 de ouros":[-1270, -595],"8 de ouros":[-1115, -595],"7 de ouros":[-955, -595],"6 de ouros":[-795, -595],
                    "5 de ouros":[-640, -595],"4 de ouros":[-480, -595],"3 de ouros":[-325, -595],"2 de ouros":[-165, -595]}
 
+// var cardsIdConv = function(card){
+//     card = card.split(" ");
+//     return card[0]
+
+// }
+
 var gameCssChanges = function (){
     var h, w;
     var tableTop = $('#tableTop');
@@ -113,9 +119,8 @@ var cheksTimeOut = function(){
                         dataType: 'json',
                         success:function(response) {
                             if(response.success === true){
-                                if(response.messages < 0 && jogador_timer){
+                                if(response.messages <= 0 && jogador_timer){
                                     PlayerAction("Desistir", "Desistiu da sua mao" );
-
                                 }
                                 else if(response.messages < 10){
                                     $('#erroGame-msg').html("O seu tempo esta a terminar: " + response.messages);

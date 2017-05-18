@@ -187,7 +187,7 @@
 			$row   = $query->row();
 
 			if(!empty($row)){
-				return $row->owner;
+				return $row->last_to_raise;
 			}else{
 				return false;
 			}
@@ -300,7 +300,7 @@
 		{
 			$sql   = "SELECT count(player_id) as total
 					  FROM proj_game_players
-					  WHERE id='$id' AND player_folded=0 AND allIn=0";
+					  WHERE id='$id' AND player_folded=0";
 			$query = $this->db->query($sql);
 			$row   = $query->row();
 
@@ -571,8 +571,8 @@
 	  		$userBalance = $this->getPlayerBalance($player_id);
 	  		$currentBet  = $this->getGameCurrentBet($id_jogo);
 	  		$raise   = $this->input->post('raiseAmount');
-	  		if ($raise > $currentBet){
-	  			if($userBalance >= $raise){
+	  		if ($flag == 1 || $raise > $currentBet){
+	  			if($flag == 1 || $userBalance >= $raise){
 	  				$sql = "UPDATE proj_game_players
 	  						SET player_bet=player_bet+$raise, last_bet = $raise, betted=1, allIn=$flag
 	  						WHERE id=$id_jogo AND player_id=$player_id";
@@ -601,7 +601,7 @@
 	  	public function setCurrentPlayer($player_id, $id_jogo, $value)
 	  	{
 	  		$next_player = NULL;
-	  		if($this->activePlayersCount($player_id) > 1){
+	  		if($this->activePlayersCount($id_jogo) > 1){
 	  			$next_player = $this->getGameOwner($id_jogo);
 		  		$sql = "SELECT player_id, betted
 						FROM proj_game_players
@@ -630,7 +630,7 @@
 						WHERE id=$id_jogo";
 			}
 			if($this->db->query($sql)){
-				if($next_player == $this->getGameLastRaised($id_jogo) || $next_player == $this->getGameOwner($id_jogo)){
+				if($next_player != NULL && ($next_player == $this->getGameLastRaised($id_jogo) || $next_player == $this->getGameOwner($id_jogo))){
 					$sql = "UPDATE proj_game_players
 							SET betted = 0
 							WHERE id=$id_jogo";
@@ -641,24 +641,17 @@
 					}
 					$checkBet = $this->checksPlayerBet($id_jogo);
 					$round    = $this->getGameRound($id_jogo);
-					if($next_player != NULL){
-						$round = 3;
-					}
-					if($checkBet && $round < 4){
+					if($checkBet && $round < 5){
 						$sql = "UPDATE proj_game_status
 								SET round = round+1
 								WHERE id=$id_jogo";
 						$this->db->query($sql);
 					}
-					$resultFold = $this->checksPlayerFolded($next_player, $id_jogo);
-					$resultALL  = $this->checksAllInPlayer($next_player, $id_jogo);
-					$result     = $this->checksAllIn($id_jogo);
-					if($result && ($resultFold || $resultALL)){
-						$sql = "UPDATE proj_game_status
-								SET round = 4
-								WHERE id=$id_jogo";
-						$this->db->query($sql);
-					}
+				}else if ($next_player == NULL){
+					$sql = "UPDATE proj_game_status
+							SET round = 4
+							WHERE id=$id_jogo";
+					$this->db->query($sql);
 				}
 				return true;
 			}else{
