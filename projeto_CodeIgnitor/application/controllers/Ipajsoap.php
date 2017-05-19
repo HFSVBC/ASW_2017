@@ -7,7 +7,7 @@ class Ipajsoap extends CI_Controller {
 	{
 		parent::__construct();
 		
-		$this->load->library("nuSoap_lib");
+		$this->load->library("Nusoap_lib");
 		$this->nusoap_server = new soap_server();
 		$this->nusoap_server->configureWSDL("cartWSDL", "urn:cartWSDL");
 		$this->nusoap_server->wsdl->addComplexType(
