@@ -7,35 +7,23 @@ class Ipajsoap extends CI_Controller {
 	{
 		parent::__construct();
 		
+		$this->load->model("game_model");
 		$this->load->library("Nusoap_lib");
 		$this->nusoap_server = new soap_server();
-		$this->nusoap_server->configureWSDL("cartWSDL", "urn:cartWSDL");
-		$this->nusoap_server->wsdl->addComplexType(
-			"Member",
-			"complexType",
-			"array",
-			"",
-			"SOAP-ENC:Array",
-			array(
-				"id"=>array("name"=>"id", "type"=>"xsd:int"),
-				"first_name"=>array("name"=>"first_name", "type"=>"xsd:string"),
-				"surname"=>array("name"=>"surname", "type"=>"xsd:string")
-				)
-		);
+		$this->nusoap_server->configureWSDL("Ipajsoap", "urn:Ipajsoap");
 		$this->nusoap_server->register(
-			"getMember",
-			array(
-			"id" => "xsd:int",
-		),
-		array("return"=>"tns:Member"),
-			"urn:cartWSDL",
-			"urn:cartWSDL#getMember",
+			"getInfoPartida", 
+			array("return"=>"xsd:string"), //mudar o tipo de retorno conforme pretendido
+			"urn:Ipajsoap",
+			"urn:Ipajsoap#getInfoPartida",
 			"rpc",
 			"encoded",
-			"Returns the information of a certain member"
+			"Returns the information of a game"
 		);
 	}
-	function index() {
+	
+	public function index()
+	{
 		if($this->uri->segment(3) == "wsdl") {
 			$_SERVER['QUERY_STRING'] = "wsdl";
 		} else {
@@ -43,18 +31,23 @@ class Ipajsoap extends CI_Controller {
 		}
 		$this->nusoap_server->service(file_get_contents("php://input"));
 	}
-	
-	function get_member() {
-		function getMember($id) {
-			echo "True";
-			/* //in this example i just return "True" ..if you want to access next model and fetch the DB value, it is written here
-			$CI =& get_instance();
-			$CI->load->model("Customer");
-			$row = $CI->Customer->getMemberInfo($id);
-			return $row;
-			*/
+
+	public function getInfoPartida()
+	{
+		$config = array(
+	        array(
+	                'field' => 'id_jogo',
+	                'label' => 'Game id',
+	                'rules' => 'trim|integer|required|strip_tags',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+		if($this->form_validation->run() === true){
+			$resultGame = $this->game_model->gameInfo();
 		}
-	$this->nusoap_server->service(file_get_contents("php://input"));
 	}
 }
 ?>
