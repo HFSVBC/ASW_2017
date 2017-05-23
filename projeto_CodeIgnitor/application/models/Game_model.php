@@ -373,12 +373,9 @@
         {
             $gameId         = $this->db->escape($this->input->post('id_jogo'));
             $timeNow        = date('Y-m-d H:i:s');
-            $deck           = array("As de paus","Rei de paus","Dama de paus","Valete de paus", "10 de paus","9 de paus","8 de paus","7 de paus","6 de paus",
-                               "5 de paus","4 de paus","3 de paus","2 de paus","As de copas","Rei de copas","Dama de copas","Valete de copas", "10 de copas","9 de copas",
-                               "8 de copas","7 de copas","6 de copas","5 de copas","4 de copas","3 de copas","2 de copas","As de espadas","Rei de espadas","Dama de espadas",
-                               "Valete de espadas", "10 de espadas","9 de espadas","8 de espadas","7 de espadas","6 de espadas","5 de espadas","4 de espadas","3 de espadas",
-                               "2 de espadas","As de ouros","Rei de ouros","Dama de ouros","Valete de ouros", "10 de ouros","9 de ouros","8 de ouros","7 de ouros","6 de ouros",
-                               "5 de ouros","4 de ouros","3 de ouros","2 de ouros");
+            $deck           = array("AC","RC","DC","VC", "10C","9C","8C","7C","6C","5C","4C","3C","2C","AH","RH","DH","VH", "10H","9H",
+                               "8H","7H","6H","5H","4H","3H","2H","AS","RS","DS","VS", "10S","9S","8S","7S","6S","5S","4S","3S",
+                               "2S","AD","RD","DD","VD", "10D","9D","8D","7D","6D","5D","4D","3D","2D");
             shuffle($deck);
             $table_cards    = array();
             //Dar cartas a players
@@ -652,11 +649,34 @@
 							SET round = 4
 							WHERE id=$id_jogo";
 					$this->db->query($sql);
+					$this->finishGame($id_jogo);
 				}
 				return true;
 			}else{
 				return false;
 			}
+	  	}
+	  	public function getHands_finishGame($game_id)
+	  	{
+	  		$hands = "";
+	  		$sql = "SELECT player_cards
+	  				FROM proj_game_players
+	  				WHERE player_folded=0 id=$game_id";
+
+	  		$query = $this->db->query($sql);
+			foreach ($query->result_array() as $row){
+				$cards = json_encode($row['player_cards']);
+				$card = explode(' ', $cards[0])
+				$hands .= $card[0].$card[2].'+';
+			}
+	  	}
+	  	public function finishGame($game_id)
+	  	{
+	  		$hands = "";
+	  		$group = "asw004";
+	  		$url   = "http://appserver-01.alunos.di.fc.ul.pt/~asw000/cgi-bin/findwinners.py?hands=".$hands."&group=".$group;
+
+	  		$xml = file_get_contents($url);
 	  	}
 	  	public function updateHist($player_id, $id_jogo, $op)
 	  	{
