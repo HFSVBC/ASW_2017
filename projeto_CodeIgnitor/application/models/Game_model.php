@@ -928,5 +928,20 @@
 				return false;
 			}
 	  	}
+	  	public function getCurrentPlayer($id){
+	  		$sql = "SELECT current_player
+	  				FROM proj_game_status
+	  				WHERE id='$id'
+	  				LIMIT 1";
+
+	  		$query = $this->db->query($sql);
+	  		$row   = $query->row();
+	  		if(!empty($row)){
+	  			return $row->active;
+	  		}else{
+	  			return false;
+			}
+	  	}
+
   	}
 ?>

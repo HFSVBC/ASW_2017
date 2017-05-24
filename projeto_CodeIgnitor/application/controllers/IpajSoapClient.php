@@ -30,27 +30,38 @@ class IpajSoapClient extends CI_Controller {
         try {
             switch ($func) {
                 case 'InfoPartida':
-                    $result = $client->call('InfoPartida', array("ID"=>60), '', '', false, true);
+                    $result = $client->call('InfoPartida', array("ID"=>$_GET['id']), '', '', false, true);
                     //handle errors
                     if ($client->fault) {
                         //check faults
                         echo $client->getError();
                     } else {
                         //handle errors
-                        echo "<h2>$result</h2>";
+                        echo $result;
                     } 
                     break;
                 
                 case 'ApostaJogo':
-                    $param  = array();
-                    $result = $client->call("InfoPartida", $param,  '', '', false, true);
+                    if (isset($_POST['value'])){
+                        $value = $_POST['value'];
+                    }else{
+                        $value = NULL;
+                    }
+                    $param  = array(
+                            'ID'       => $_POST['id'],
+                            'username' => $_POST['username'],
+                            'password' => $_POST['password'],
+                            'jogada'   => $_POST['play'],
+                            'valor'    => $value
+                        );
+                    $result = $client->call("ApostaJogo", $param,  '', '', false, true);
                     //handle errors
                     if ($client->fault) {
                         //check faults
                         echo $client->getError();
                     } else {
                         //handle errors
-                        echo "<h2>$result</h2>";
+                        echo $result;
                     } 
                     break;
 
@@ -59,11 +70,6 @@ class IpajSoapClient extends CI_Controller {
                     echo '</pre>';
                     break;
             }
-            // $param = array('tmp' => 'XYZ');
-            // $result = $client->call('echoTest', $param, '', '', false, true);
-            // echo '<h2>Result</h2><pre>';
-            // print_r($result);
-            // echo '</pre>';
         } catch (SoapFault $exception) {
             echo $exception;
         }

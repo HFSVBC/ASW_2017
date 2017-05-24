@@ -38,19 +38,7 @@ class IpajSoapServer extends CI_Controller {
 		function InfoPartida($ID)
 		{
 			$ci =& get_instance();
-			
-			// $data = [
-			// 	$info_game->id,
-			// 	$info_game->started_at,
-			// 	$info_game->ended_at,
-			// 	$info_game->current_player,
-			// 	$info_game->current_bet,
-			// 	$info_game->current_pot,
-			// 	$info_game->last_to_raise,
-			// 	$info_game->deck,
-			// 	$info_game->table_cards,
 
-			// ];
 			$resultGame    = $ci->game_model->gameInfo($ID);
 			$cardsRound    = $ci->game_model->getGameRound($ID);
 
@@ -92,20 +80,39 @@ class IpajSoapServer extends CI_Controller {
 			return substr($output, 0, -1);
 		}
 
-		function ApostaJogo($ID, $username, $password, $jogada, $valor)
+		function ApostaJogo($ID, $username, $password, $jogada, $valor = NULL)
 		{
 			$ci =& get_instance();
-			if($jogada === "raise"){
-				$result = $ci->game_model->PlayerRaised($username, $ID); //FALTA A FLAG E O VALOR ESTA A SER BUSCADO LA
-			} elseif ($jogada === "fold"){
-				$result = $ci->game_model->PlayerFolded($username, $ID);
-			} else{
-				$result = $ci->game_model->PlayerCalled($username, $ID);
+			$result = $ci->user_model->loginUser($ci->db->escape($username), $password);
+			
+			if($ci->game_model->getGameState($ID) != "Terminado" && $ci->game_model->getCurrentPlayer($ID) == $ci->game_model->getIdByUsername($username)){
+				if($result['success']){
+					$id_user = $result['messages']['id'];
+					switch ($jogada) {
+						case 'check':
+							$result = $ci->game_model->PlayerCalled($id_user, $ID);
+							break;
+						case 'fold':
+							$result = $ci->game_model->PlayerFolded($id_user, $ID);
+							break;
+						case 'raise':
+							$result = $ci->game_model->PlayerRaised($id_user, $ID, 0);
+							break;
+						default:
+							$result = FALSE;
+							break;
+					}
+					if($result == TRUE){
+						return 'Aceite';
+					}else{
+						return 'Nao Aceite';
+					}
+				}else{
+					return 'Nao Aceite';
+				}
+			}else{
+				return 'Nao Aceite';
 			}
-			if($result){
-				return json_encode("Aceite");
-			}
-			return json_encode("Nao aceite");
 		}
 	}
 	function index() {

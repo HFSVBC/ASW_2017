@@ -322,7 +322,7 @@ class User extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 		if($this->form_validation->run() === true){
-			$loginResult = $this->user_model->loginUser();
+			$loginResult = $this->user_model->loginUser_post();
 			if($loginResult['success'] === true){
 				$validator['success']  = true;
 				$validator['messages'] = 'Utilizador autentificado com sucesso';

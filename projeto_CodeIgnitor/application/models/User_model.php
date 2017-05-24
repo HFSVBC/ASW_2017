@@ -103,13 +103,17 @@
 			}
 
 		}
-
-		public function loginUser(){
-			$validator = array('success' => false, 'messages' => array());
-
+		public function loginUser_post()
+		{
 			$username  = $this->db->escape($this->input->post('username'));
 			$password  = $this->input->post('password');
 			$remember_me = $this->input->post('rememberMe');
+			$this->loginUser($username, $password, $remember_me);
+		}
+		public function loginUser($username, $password, $remember_me = NULL){
+			$validator = array('success' => false, 'messages' => array());
+
+			
 			$cookie = array(
 			        'name'   => 'remember',
 							'value' => $this->input->post('username'),
