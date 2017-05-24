@@ -30,7 +30,7 @@ class IpajSoapClient extends CI_Controller {
         try {
             switch ($func) {
                 case 'InfoPartida':
-                    $result = $client->call("InfoPartida", array("nif"=>80),  '', '', false, true);
+                    $result = $client->call('InfoPartida', array("ID"=>60), '', '', false, true);
                     //handle errors
                     if ($client->fault) {
                         //check faults
@@ -42,12 +42,18 @@ class IpajSoapClient extends CI_Controller {
                     break;
                 
                 case 'ApostaJogo':
-                    $param = array('tmp' => 'XYZ');
-                    $result = $client->call('echoTest', $param, '', '', false, true);
-                    echo '<h2>Result</h2><pre>';
-                    print_r($result);
-                    echo '</pre>';
+                    $param  = array();
+                    $result = $client->call("InfoPartida", $param,  '', '', false, true);
+                    //handle errors
+                    if ($client->fault) {
+                        //check faults
+                        echo $client->getError();
+                    } else {
+                        //handle errors
+                        echo "<h2>$result</h2>";
+                    } 
                     break;
+
                 default:
                     echo '<h2>Função Inexistente</h2><pre>';
                     echo '</pre>';
