@@ -937,7 +937,7 @@
 	  		$query = $this->db->query($sql);
 	  		$row   = $query->row();
 	  		if(!empty($row)){
-	  			return $row->active;
+	  			return $row->current_player;
 	  		}else{
 	  			return false;
 			}

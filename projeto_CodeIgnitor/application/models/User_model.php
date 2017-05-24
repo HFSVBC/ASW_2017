@@ -108,7 +108,7 @@
 			$username  = $this->db->escape($this->input->post('username'));
 			$password  = $this->input->post('password');
 			$remember_me = $this->input->post('rememberMe');
-			$this->loginUser($username, $password, $remember_me);
+			return $this->loginUser($username, $password, $remember_me);
 		}
 		public function loginUser($username, $password, $remember_me = NULL){
 			$validator = array('success' => false, 'messages' => array());

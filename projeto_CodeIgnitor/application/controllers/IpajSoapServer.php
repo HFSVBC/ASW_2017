@@ -84,10 +84,9 @@ class IpajSoapServer extends CI_Controller {
 		{
 			$ci =& get_instance();
 			$result = $ci->user_model->loginUser($ci->db->escape($username), $password);
-			
-			if($ci->game_model->getGameState($ID) != "Terminado" && $ci->game_model->getCurrentPlayer($ID) == $ci->game_model->getIdByUsername($username)){
+			$id_user = $result['messages']['id'];
+			if($ci->game_model->getGameState($ID) != "Terminado" && $ci->game_model->getCurrentPlayer($ID) == $id_user){
 				if($result['success']){
-					$id_user = $result['messages']['id'];
 					switch ($jogada) {
 						case 'check':
 							$result = $ci->game_model->PlayerCalled($id_user, $ID);
