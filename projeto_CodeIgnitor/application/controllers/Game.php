@@ -12,7 +12,10 @@ class Game extends CI_Controller {
 		$this->load->model('game_model');
 
 	}
-
+	public function test_getHands_finishGame($idGame){
+		$result = $this->game_model->finishGame($idGame);
+		echo json_encode($result);
+	}
 	public function create()
 	{
 		$validator = array('success' => false, 'messages' => array());

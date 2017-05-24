@@ -373,9 +373,9 @@
         {
             $gameId         = $this->db->escape($this->input->post('id_jogo'));
             $timeNow        = date('Y-m-d H:i:s');
-            $deck           = array("AC","RC","DC","VC", "10C","9C","8C","7C","6C","5C","4C","3C","2C","AH","RH","DH","VH", "10H","9H",
-                               "8H","7H","6H","5H","4H","3H","2H","AS","RS","DS","VS", "10S","9S","8S","7S","6S","5S","4S","3S",
-                               "2S","AD","RD","DD","VD", "10D","9D","8D","7D","6D","5D","4D","3D","2D");
+            $deck           = array("AC","KC","QC","JC", "10C","9C","8C","7C","6C","5C","4C","3C","2C","AH","KH","QH","JH", "10H","9H",
+                               "8H","7H","6H","5H","4H","3H","2H","AS","KS","QS","JS", "10S","9S","8S","7S","6S","5S","4S","3S",
+                               "2S","AD","KD","QD","JD", "10D","9D","8D","7D","6D","5D","4D","3D","2D");
             shuffle($deck);
             $table_cards    = array();
             //Dar cartas a players
@@ -397,20 +397,6 @@
                 return false;
             }
         }
-
-		public function endGame(){
-			$gameId = $this->db->escape($this->input->post('id_jogo'));
-			$timeNow        = date('Y-m-d H:i:s');
-
-			$sql = "UPDATE proj_game_status
-					SET ended_at=$timeNow
-					id=$id";
-			if($this->db->query($sql)){
-                return true;
-            }else{
-                return false;
-            }		
-		}
         private function giveCardsToPlayers($deck)
         {
             $gameId = $this->input->post('id_jogo');
@@ -649,7 +635,7 @@
 							SET round = 4
 							WHERE id=$id_jogo";
 					$this->db->query($sql);
-					$this->finishGame($id_jogo);
+					// $this->finishGame($id_jogo);
 				}
 				return true;
 			}else{
@@ -658,25 +644,42 @@
 	  	}
 	  	public function getHands_finishGame($game_id)
 	  	{
-	  		$hands = "";
-	  		$sql = "SELECT player_cards
-	  				FROM proj_game_players
-	  				WHERE player_folded=0 id=$game_id";
+	  		$sql        = "SELECT table_cards
+	  					   FROM proj_game_status
+	  					   WHERE id=$game_id
+	  					   LIMIT 1";
+	  		$query      = $this->db->query($sql);
+	  		$row        = $query->row();
+			$cardsTable = $row->table_cards;
+
+			$hands      = "";
+			$players    = "";
+	  		$sql        = "SELECT player_cards, player_id
+	  				  	   FROM proj_game_players
+	  				       WHERE player_folded=0 AND id=$game_id";
 
 	  		$query = $this->db->query($sql);
 			foreach ($query->result_array() as $row){
-				$cards = json_encode($row['player_cards']);
-				$card = explode(' ', $cards[0])
-				$hands .= $card[0].$card[2].'+';
+				$hands   .= implode("+", json_decode($cardsTable))."+";
+				$hands   .= implode("+", json_decode($row['player_cards']));
+				$hands   .= ",";
+				$players .= $row['player_id'].",";
 			}
+			return array(substr($hands, 0, -1), substr($players, 0, -1));
 	  	}
 	  	public function finishGame($game_id)
 	  	{
-	  		$hands = "";
-	  		$group = "asw004";
-	  		$url   = "http://appserver-01.alunos.di.fc.ul.pt/~asw000/cgi-bin/findwinners.py?hands=".$hands."&group=".$group;
+	  		$hands   = $this->getHands_finishGame($game_id);
+	  		$players = explode(",", $hands[1]);
+	  		$hands   = $hands[0];
+	  		$group   = "asw004";
+	  		$url     = "http://appserver-01.alunos.di.fc.ul.pt/~asw000/cgi-bin/findwinners.py?hands=".$hands."&group=".$group;
 
-	  		$xml = file_get_contents($url);
+	  		$xml     = (array) simplexml_load_string(file_get_contents($url)) or die("Error: Cannot create object");
+	  		$winner  = $xml['indices'];
+	  		$ranking = $xml['winning-rank'];
+
+	  		return array($winner, $ranking, $players);
 	  	}
 	  	public function updateHist($player_id, $id_jogo, $op)
 	  	{
