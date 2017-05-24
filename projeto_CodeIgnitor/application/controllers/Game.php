@@ -228,7 +228,7 @@ class Game extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 		if($this->form_validation->run() === true){
-			$resultGame = $this->game_model->gameInfo();
+			$resultGame = $this->game_model->gameInfoPost();
 			if($resultGame != false){
 				$validator['success']  = true;
 				$resultPlayer  = $this->game_model->PlayerOnGame($this->session->userdata['loggedIn_asw004']['id']);

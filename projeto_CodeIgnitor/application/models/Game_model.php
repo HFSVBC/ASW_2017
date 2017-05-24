@@ -81,10 +81,12 @@
 			$query = $this->db->query($sql);
 			return $query->result_array();
 		}
-		public function gameInfo()
-		{
+		public function gameInfoPost(){
 			$gameId = $this->db->escape($this->input->post('id_jogo'));
-
+			return $this->gameInfo($gameId);
+		}
+		public function gameInfo($gameId)
+		{
 			$sql = "SELECT *
 					FROM proj_game_status
 					WHERE id=$gameId";

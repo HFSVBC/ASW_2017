@@ -49,8 +49,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['soap/infopartida'] = 'ipajsoap/index/wsdl';
-$route['default_controller']    = 'userpages/view';
-$route['(:any)']                = 'userpages/view/$1';
-$route['404_override']          = '';
-$route['translate_uri_dashes']  = FALSE;
+$route['SOAP/IpajSoapServer']        = 'ipajSoapServer/index';
+$route['SOAP/IpajSoapClient/(:any)'] = 'ipajSoapClient/index/$1';
+$route['default_controller']         = 'userpages/view';
+$route['(:any)']                     = 'userpages/view/$1';
+$route['404_override']               = '';
+$route['translate_uri_dashes']       = FALSE;
