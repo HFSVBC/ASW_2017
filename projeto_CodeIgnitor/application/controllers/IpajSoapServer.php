@@ -6,7 +6,8 @@ class IpajSoapServer extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model("game_model");
+		$this->load->model('user_model');
+		$this->load->model('game_model');
 
 		$this->load->library("Nusoap_lib"); //load the library here
 		$this->nusoap_server = new soap_server();
@@ -37,20 +38,58 @@ class IpajSoapServer extends CI_Controller {
 		function InfoPartida($ID)
 		{
 			$ci =& get_instance();
-			$info_game = $ci->game_model->gameInfo($ID);
-			$data = [
-				$info_game->id,
-				$info_game->started_at,
-				$info_game->ended_at,
-				$info_game->current_player,
-				$info_game->current_bet,
-				$info_game->current_pot,
-				$info_game->last_to_raise,
-				$info_game->deck,
-				$info_game->table_cards,
+			
+			// $data = [
+			// 	$info_game->id,
+			// 	$info_game->started_at,
+			// 	$info_game->ended_at,
+			// 	$info_game->current_player,
+			// 	$info_game->current_bet,
+			// 	$info_game->current_pot,
+			// 	$info_game->last_to_raise,
+			// 	$info_game->deck,
+			// 	$info_game->table_cards,
 
-			];
+			// ];
+			$resultGame    = $ci->game_model->gameInfo($ID);
+			$cardsRound    = $ci->game_model->getGameRound($ID);
+
+			$data = array(
+				'inicio'              => $resultGame->started_at,
+				'jogadorAtual'        => $ci->game_model->getUsernameById($resultGame->current_player),
+				'cartasNaMesa'        => _cardsOnTableNow($resultGame->table_cards, $cardsRound),
+				'apostaAtual'         => $resultGame->current_bet,
+				'apostaDeCadaJogador' => _gameHistory($ID), //pedido ao modelo
+			);
+			
+
 			return json_encode($data);
+		}
+
+		function _cardsOnTableNow($cards, $round)
+		{
+			$cards = json_decode($cards);
+			switch($round){
+		    	case 1:
+		            return [$cards[0],$cards[1],$cards[2]];
+		    	case 2:
+		            return [$cards[0],$cards[1],$cards[2],$cards[3]];
+		    	case 3:
+
+		        case 4:
+		            return [$cards[0],$cards[1],$cards[2],$cards[3],$cards[4]];
+	    	}
+		}
+		function _gameHistory($game_id)
+		{
+			$ci =& get_instance();
+			$result = $ci->game_model->getGameHistory($game_id);
+			$output = "";
+			foreach ($result as $row) {
+				$username = $ci->game_model->getUsernameById($row['player_id']);
+				$output  .=$username.": ".$row['operation'].",";
+			}
+			return substr($output, 0, -1);
 		}
 
 		function ApostaJogo($ID, $username, $password, $jogada, $valor)
@@ -72,7 +111,5 @@ class IpajSoapServer extends CI_Controller {
 	function index() {
         $this->nusoap_server->service(file_get_contents("php://input")); //shows the standard info about service
     }
-
-
 }
 ?>
