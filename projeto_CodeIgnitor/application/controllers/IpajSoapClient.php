@@ -38,20 +38,20 @@ class IpajSoapClient extends CI_Controller {
                     } else {
                         //handle errors
                         echo $result;
-                    } 
+                    }
                     break;
-                
+
                 case 'ApostaJogo':
-                    if (isset($_POST['value'])){
-                        $value = $_POST['value'];
+                    if (isset($_GET['value'])){
+                        $value = $_GET['value'];
                     }else{
                         $value = NULL;
                     }
                     $param  = array(
-                            'ID'       => $_POST['id'],
-                            'username' => $_POST['username'],
-                            'password' => $_POST['password'],
-                            'jogada'   => $_POST['play'],
+                            'ID'       => $_GET['id'],
+                            'username' => $_GET['username'],
+                            'password' => $_GET['password'],
+                            'jogada'   => $_GET['play'],
                             'valor'    => $value
                         );
                     $result = $client->call("ApostaJogo", $param,  '', '', false, true);
@@ -62,7 +62,7 @@ class IpajSoapClient extends CI_Controller {
                     } else {
                         //handle errors
                         echo $result;
-                    } 
+                    }
                     break;
 
                 default:
