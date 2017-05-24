@@ -629,13 +629,16 @@
 								SET round = round+1
 								WHERE id=$id_jogo";
 						$this->db->query($sql);
+						if($round+1 == 4){
+							$this->finishGame($id_jogo);
+						}
 					}
 				}else if ($next_player == NULL){
 					$sql = "UPDATE proj_game_status
 							SET round = 4
 							WHERE id=$id_jogo";
 					$this->db->query($sql);
-					// $this->finishGame($id_jogo);
+					$this->finishGame($id_jogo);
 				}
 				return true;
 			}else{
@@ -676,10 +679,45 @@
 	  		$url     = "http://appserver-01.alunos.di.fc.ul.pt/~asw000/cgi-bin/findwinners.py?hands=".$hands."&group=".$group;
 
 	  		$xml     = (array) simplexml_load_string(file_get_contents($url)) or die("Error: Cannot create object");
-	  		$winner  = $xml['indices'];
-	  		$ranking = $xml['winning-rank'];
+	  		$winner  = (array) $xml['indices'];
+	  		$ranking = $this->db->escape(trim($xml['winning-rank'], " \t\n\r\0\x0B"));
 
-	  		return array($winner, $ranking, $players);
+	  		$this->db->trans_start();
+	  		// updates status table with end date
+	  		$timeNow     = date('Y-m-d H:i:s');
+	  		$sql     = "UPDATE proj_game_status
+	  					SET ended_at = '$timeNow'
+	  					WHERE id = $game_id";
+	  		$this->db->query($sql);
+	  		// updates winner(s) table with winner(s)
+	  		foreach ($winner as $key => $value) {
+	  			$player_id = $this->db->escape($players[$value]);
+	  			$sql = "INSERT INTO proj_game_winner (id, user_id, ranking)
+	  					VALUES ($game_id, $player_id, $ranking)";
+	  			$this->db->query($sql);
+	  		}
+	  		$this->db->trans_complete();
+	  		
+	  		if ($this->db->trans_status() === FALSE){
+	  			return false;
+	  		}else{
+	  			return true;
+	  		}
+	  	}
+	  	public function getWinners()
+	  	{
+	  		$id_jogo = $this->db->escape($this->input->post('game_id'));
+
+	  		$sql     = "SELECT user_id, ranking
+	  				    FROM proj_game_winner
+	  				    WHERE id = $id_jogo";
+
+	  		$query   = $this->db->query($sql);
+			if($query){
+				return $query->result_array();
+			}else{
+				return false;
+			}
 	  	}
 	  	public function updateHist($player_id, $id_jogo, $op)
 	  	{

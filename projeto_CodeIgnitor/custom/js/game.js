@@ -27,7 +27,7 @@ $(window).on('load', function(){
         gameCssChanges();
     });
 });
-var cleanAlert, firstTimeRun = true, counter = 0, jogador_timer = true;
+var cleanAlert, firstTimeRun = true, counter = 0, jogador_timer = true, gameTimer;
 var cards_table = {"AC":[-5, 5],"KC":[-1905, 5],"QC":[-1745, 5],"JC":[-1590, 5], "10C":[-1430, 5],"9C":[-1270, 5],"8C":[-1115, 5],"7C":[-955, 5],"6C":[-795, 5],
                    "5C":[-640, 5],"4C":[-480, 5],"3C":[-325, 5],"2C":[-165, 5],"AS":[-5, -195],"KS":[-1905, -195],"QS":[-1745, -195],"JS":[-1590, -195],
                    "10S":[-1430, -195],"9S":[-1270, -195],"8S":[-1115, -195],"7S":[-955, -195],"6S":[-795, -195],"5S":[-640, -195],"4S":[-480, -195],"3S":[-325, -195],
@@ -86,23 +86,46 @@ var loadPlayers = function(players){
 }
 var gameControl = function(nowUsername, cardsOnTable, round)
 {
-    //isto e o flop
-	if(nowUsername == myUsername){
-        if (round == '4'){
-            $('#gameBody button, #gameBody input').prop('disabled', true);
-            $('#nowPlayer-Game').html('Terminou');
-        }else{
+    if (round < '4'){
+        //isto e o flop
+    	if(nowUsername == myUsername){
             $('#gameBody button, #gameBody input').prop('disabled', false);
             cheksTimeOut();
-        }
-        // ativa escuta de botoes
-	}else{
+            // ativa escuta de botoes
+    	}else{
+            $('#gameBody button, #gameBody input').prop('disabled', true);
+    	}
+    }else{
         $('#gameBody button, #gameBody input').prop('disabled', true);
-	}
+        clearInterval(gameTimer);
+
+        var data  = {game_id: gameId};
+        $.ajax({
+            url:  baseURL + "index.php/game/getGameWinners",
+            type: "post",
+            data: data,
+            dataType: 'json',
+            success:function(response) {
+                if(response.success === true){
+                    var winners = "";
+                    for(UW in response.messages){
+                        $('#nowPlayer-Game-label').html('Vencedor - '+ response.messages[UW][1])
+                        winners += '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>\
+                                    <span>'+response.messages[UW][0]+'</span>';
+                    }
+                    $('#nowPlayer-Game').html(winners); 
+                }else{
+                    $('#erroGame-msg').html(response.messages);
+                    $('#erroGame').show();
+                    cleanAlert = true;
+                }
+            }
+        });
+        
+    }
     showCards(cardsOnTable, '#table');
 }
 var cheksTimeOut = function(){
-    console.log('entrou');
     var data  = {id_jogo: gameId};
     $.ajax({
         url:  baseURL + "index.php/game/checkIfTimeOutActive",
@@ -158,14 +181,14 @@ var loadGameInfo = function()
                     loadTimer(response.messages[0][0]);
                     // cheksTimeOut();
                 }
-                // console.log(response.messages)
                 $('.actualBet-Game').html(response.messages[0][1]);
                 $("#pot-Game").html(response.messages[0][2]);
                 showCards($.parseJSON(response.messages[0][3]), '#myCards')
 
                 $("#gameHistory").html(response.messages[0][6]);
                 loadPlayers(response.messages[0][7]);
-        		$('#nowPlayer-Game').html(response.messages[0][9]);
+        		$('#nowPlayer-Game').html('<span class="glyphicon glyphicon-user" aria-hidden="true"></span>\
+                                           <span>'+response.messages[0][9]+'</span>');
         		$("#userPoints").html(response.messages[0][10]);
 
         		gameControl(response.messages[0][9], response.messages[0][8], response.messages[0][5]);
@@ -219,7 +242,8 @@ var PlayerAction = function(action, msg)
 
 var loadTimer = function(counter)
 {
-    setInterval(function(){
+    $(".TimerCounter").html(convertTime(counter));
+    gameTimer = setInterval(function(){
         $(".TimerCounter").html(convertTime(counter));
         counter++;
     }, 1000);

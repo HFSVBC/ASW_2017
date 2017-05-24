@@ -298,6 +298,41 @@ class Game extends CI_Controller {
 		}
 		return $output;
 	}
+	public function getGameWinners()
+	{
+		$validator = array('success' => false, 'messages' => array());
+
+		$config = array(
+	        array(
+	                'field' => 'game_id',
+	                'label' => 'Game id',
+	                'rules' => 'trim|integer|required|strip_tags',
+	        ),
+		);
+
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+		if($this->form_validation->run() === true){
+			$result = $this->game_model->getWinners();
+			if($result != false){
+				$out = array();
+				foreach ($result as $row) {
+					array_push($out, array($this->game_model->getUsernameById($row['user_id']), $row['ranking']));				
+				}
+				$validator['success']  = true;
+				$validator['messages'] = $out;
+			}else{
+				$validator['success']  = true;
+				$validator['messages'] = 'N&atilde;o foram encontrados vencedores para o jogo pedido';
+			}
+		} else{
+			$validator['success']  = false;
+			$validator['messages'] = 'Erro a validar a informa&ccedil;&atilde;o';
+		}
+
+		echo json_encode($validator);
+		
+	}
 	private function cardsOnTableNow($cards, $round){
 		$cards = json_decode($cards);
 		switch($round){

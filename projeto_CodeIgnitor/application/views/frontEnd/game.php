@@ -29,8 +29,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						</h4>
 					</div>
 					<div id="nowPlayer" class="hideBeforeGame">
-						<h3>Próximo a Jogar:</h3>
-						<h4>
+						<h3 id="nowPlayer-Game-label">Próximo a Jogar:</h3>
+						<h4 id="nowPlayer-Game">
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 							<span id="nowPlayer-Game"></span>
 						</h4>

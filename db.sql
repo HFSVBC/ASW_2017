@@ -89,3 +89,11 @@ CREATE TABLE proj_game_hist(
     FOREIGN KEY (game_id) REFERENCES proj_game_request (id),
     FOREIGN KEY (player_id) REFERENCES proj_users (id)
 );
+CREATE TABLE proj_game_winner(
+    id int NOT NULL,
+    user_id int(5) unsigned NOT NULL,
+    ranking varchar(200) NOT NULL,
+    PRIMARY KEY (id, user_id),
+    FOREIGN KEY (id) REFERENCES proj_game_request (id),
+    FOREIGN KEY (user_id) REFERENCES proj_users(id)
+);
