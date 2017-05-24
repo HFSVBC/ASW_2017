@@ -37,18 +37,36 @@ class IpajSoapServer extends CI_Controller {
 		function InfoPartida($ID)
 		{
 			$ci =& get_instance();
-			return json_encode($ci->game_model->gameInfo($ID));
+			$info_game = $ci->game_model->gameInfo($ID);
+			$data = [
+				$info_game->id,
+				$info_game->started_at,
+				$info_game->ended_at,
+				$info_game->current_player,
+				$info_game->current_bet,
+				$info_game->current_pot,
+				$info_game->last_to_raise,
+				$info_game->deck,
+				$info_game->table_cards,
+
+			];
+			return json_encode($data);
 		}
 
 		function ApostaJogo($ID, $username, $password, $jogada, $valor)
 		{
+			$ci =& get_instance();
 			if($jogada === "raise"){
-				$this->game_model->PlayerRaised($username, $ID); //FALTA A FLAG E O VALOR ESTA A SER BUSCADO LA
+				$result = $ci->game_model->PlayerRaised($username, $ID); //FALTA A FLAG E O VALOR ESTA A SER BUSCADO LA
 			} elseif ($jogada === "fold"){
-				$this->game_model->PlayerFolded($username, $ID);
+				$result = $ci->game_model->PlayerFolded($username, $ID);
 			} else{
-				$this->game_model->PlayerCalled($username, $ID);
+				$result = $ci->game_model->PlayerCalled($username, $ID);
 			}
+			if($result){
+				return json_encode("Aceite");
+			}
+			return json_encode("Nao aceite");
 		}
 	}
 	function index() {
