@@ -66,7 +66,8 @@ class Userpages extends CI_Controller {
 		$data['districts']      = $this->getDistricts();
 		$data['counties']       = $this->getCounties();
 		$data['gamesOwner'] = $this->getGamesOwner();
-
+		$data['usersAula'] = $this->user_model->getUserDataAdmin();
+ 
 		$this->load->view("frontEnd/templates/header", $data);
 		$this->load->view("frontEnd/".$page, $data);
 		$this->load->view("frontEnd/templates/footer", $data);
