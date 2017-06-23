@@ -1,19 +1,19 @@
 # ASW 2017
 ### Project: Online Poker Game
 
-This project was made as part of the evaluation of Web Applications and Services (ASW), Degree in Information Technology.
+This project was made as part of the Web Applications and Services (ASW) course in Information Technology degree at the Faculty of Science, University of Lisbon.
 
-The project consisted in developing a web app for users to play the version of poker Texas hold 'em. To do so our group used a LAMP approach with a MVC pattern applied using the CodeIgniter Framework. The app supports user registration, game management and admin functionalities. 
+The project consisted in developing a web app for users to play Texas hold 'em poker. To do so the authors used a LAMP approach with an MVC pattern applied using the CodeIgniter Framework. The app supports user registration, game management and admin functionalities. 
 
 User functionalities:
-* profile page, for updating their personal info, password change, account charging, and avatar upload
-* dashboard for managing their games and joining new ones
+* profile page, for updating personal info, password change, account charging, and avatar upload
+* dashboard for managing games and joining new ones
 * game page. 
 
 Admin functionalities:
 * user management
-
 * game management
+
 ## Demo
 Main app:
 [https://college.hugocurado.info/PokerOnline](https://college.hugocurado.info/PokerOnline)
@@ -37,7 +37,7 @@ Web Service:
 * Hugo Curado (1)
 * Pedro Neto (1)
 
-(1) Departamento de Informática, Faculdade de Ciências, Universidade de Lisboa, Lisboa, Portugal
+(1) Informatics Department, Faculty of Science, University of Lisbon, Lisbon, Portugal
 
 ## License
 2017 © Faculdade de Ciências da Universidade de Lisboa
