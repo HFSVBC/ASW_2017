@@ -16,12 +16,14 @@ Admin functionalities:
 * game management
 ## Demo
 Main app:
-(https://college.hugocurado.info/PokerOnline)[https://college.hugocurado.info/PokerOnline]
+[https://college.hugocurado.info/PokerOnline](https://college.hugocurado.info/PokerOnline)
+
 User: my_name
 Pass: my_password
 
 Admin:
-(https://college.hugocurado.info/PokerOnline/admin)[https://college.hugocurado.info/PokerOnline/admin]
+[https://college.hugocurado.info/PokerOnline/admin](https://college.hugocurado.info/PokerOnline/admin)
+
 User: admin001
 Pass: Admin07
 
