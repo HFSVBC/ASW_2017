@@ -3,9 +3,29 @@
 
 This project was made as part of the evaluation of Web Applications and Services (ASW), Degree in Information Technology.
 
-The project consisted in developing a web app for users to play the version of poker Texas hold 'em. To do so our group used a LAMP approach with a MVC pattern applied using the CodeIgniter Framework. The app suports registration of users, creation of games and admin functionalities. Users have access to profile page, where they can complete their profile, dashboard for admistrating their games and joining new ones, and a game page. Admin users have access to an admin page with stats of all users and games.
+The project consisted in developing a web app for users to play the version of poker Texas hold 'em. To do so our group used a LAMP approach with a MVC pattern applied using the CodeIgniter Framework. The app supports user registration, game managing and admin functionalities. 
 
+User functionalities:
+* profile page, for updating their personal info, password change, account charging, and avatar upload
+* dashboard for managing their games and joining new ones
+* game page. 
+
+Admin functionalities:
+* user management
+
+* game management
 ## Demo
+Main app:
+(https://college.hugocurado.info/PokerOnline)[https://college.hugocurado.info/PokerOnline]
+User: my_name
+Pass: my_password
+
+Admin:
+(https://college.hugocurado.info/PokerOnline/admin)[https://college.hugocurado.info/PokerOnline/admin]
+User: admin001
+Pass: Admin07
+
+Web Service:
 
 
 ## Authors
